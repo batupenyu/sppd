@@ -39,13 +39,25 @@
                                     {{ $names ? implode(', ', $names) : '-' }}
                                 </td>
                                 <td class="px-4 py-2">
-                                    <div class="flex items-center gap-2">
-                                        <a href="{{ route('surat-tugas.print', $st) }}" class="text-blue-600 hover:text-blue-800" title="Cetak">Cetak</a>
-                                        <a href="{{ route('surat-tugas.edit', $st) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit">Edit</a>
+                                    <div class="flex items-center gap-3">
+                                        <a href="{{ route('surat-tugas.print', $st) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z"/>
+                                            </svg>
+                                        </a>
+                                        <a href="{{ route('surat-tugas.edit', $st) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit" aria-label="Edit">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                            </svg>
+                                        </a>
                                         <form action="{{ route('surat-tugas.destroy', $st) }}" method="POST" class="inline" onsubmit="return confirm('Hapus surat tugas ini?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="text-red-600 hover:text-red-800" title="Hapus">Hapus</button>
+                                            <button type="submit" class="text-red-600 hover:text-red-800" title="Hapus" aria-label="Hapus">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m2 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14zM10 11v6M14 11v6"/>
+                                                </svg>
+                                            </button>
                                         </form>
                                     </div>
                                 </td>
