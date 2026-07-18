@@ -15,7 +15,9 @@ use App\Http\Controllers\SuratPanggilanSiswaController;
 use App\Http\Controllers\SuratPengantarController;
 use App\Http\Controllers\SuratRekomendasiController;
 use App\Http\Controllers\SuratResmiController;
+use App\Http\Controllers\SuratSantunanController;
 use App\Http\Controllers\SuratTugasController;
+use App\Http\Controllers\SuratUmumController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -93,3 +95,11 @@ Route::resource('surat-resmis', SuratResmiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-resmis/{surat_resmi}', [SuratResmiController::class, 'destroy'])->name('surat-resmis.destroy');
 Route::get('surat-resmis/{surat_resmi}/print', [SuratResmiController::class, 'print'])->name('surat-resmis.print');
+Route::resource('surat-santunans', SuratSantunanController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-santunans/{surat_santunan}', [SuratSantunanController::class, 'destroy'])->name('surat-santunans.destroy');
+Route::get('surat-santunans/{surat_santunan}/print', [SuratSantunanController::class, 'print'])->name('surat-santunans.print');
+Route::resource('surat-umums', SuratUmumController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-umums/{surat_umum}', [SuratUmumController::class, 'destroy'])->name('surat-umums.destroy');
+Route::get('surat-umums/{surat_umum}/print', [SuratUmumController::class, 'print'])->name('surat-umums.print');
