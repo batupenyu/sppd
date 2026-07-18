@@ -186,7 +186,7 @@
                     Mengetahui,<br />
                     {{ $penandatangan->tugas_tambahan ?? ($penandatangan->jenis_ptk ?? '') }}
                 </p>
-                <br /><br />
+                <br /><br /><br />
                 <p>
                     <u>{{ $penandatangan->nama }}</u><br />
                     {{ $penandatangan->pangkat_golongan ?? '' }}<br />
