@@ -15,6 +15,7 @@
                 <div class="flex justify-between h-16">
                     <div class="flex items-center gap-4">
                         <a href="{{ route('asns.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Data ASN</a>
+                        <a href="{{ route('data-siswa.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Data Siswa</a>
                         <a href="{{ route('spds.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPD</a>
                         <a href="{{ route('logos.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Logo</a>
                         <a href="{{ route('surat-tugas.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Tugas</a>

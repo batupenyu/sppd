@@ -9,6 +9,7 @@ use App\Http\Controllers\DrhSatyalancanaController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\SpmtController;
 use App\Http\Controllers\SuratCutiController;
+use App\Http\Controllers\DataSiswaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,6 +20,13 @@ Route::get('asns/import', [AsnController::class, 'import'])->name('asns.import')
 Route::post('asns/import', [AsnController::class, 'importStore'])->name('asns.import.store');
 Route::delete('asns/destroy-all', [AsnController::class, 'destroyAll'])->name('asns.destroy.all');
 Route::resource('asns', AsnController::class);
+
+Route::get('data-siswa/export/csv', [DataSiswaController::class, 'exportCsv'])->name('data-siswa.export.csv');
+Route::get('data-siswa/export/xlsx', [DataSiswaController::class, 'exportXlsx'])->name('data-siswa.export.xlsx');
+Route::get('data-siswa/import', [DataSiswaController::class, 'import'])->name('data-siswa.import');
+Route::post('data-siswa/import', [DataSiswaController::class, 'importStore'])->name('data-siswa.import.store');
+Route::delete('data-siswa/destroy-all', [DataSiswaController::class, 'destroyAll'])->name('data-siswa.destroy.all');
+Route::resource('data-siswa', DataSiswaController::class)->parameter('data-siswa', 'siswa');
 
 Route::resource('spds', SpdController::class)->except(['show', 'destroy']);
 Route::delete('spds/{spd}', [SpdController::class, 'destroy'])->name('spds.destroy');
