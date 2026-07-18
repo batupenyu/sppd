@@ -8,32 +8,115 @@
         <title>{{ config('app.name', 'Laravel') }} - CRUD ASN</title>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <style>
+            @media (min-width: 1024px) {
+                .main-wrapper {
+                    margin-left: 256px;
+                }
+            }
+        </style>
     </head>
     <body class="bg-gray-50 dark:bg-gray-900">
-        <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between h-16">
-                    <div class="flex items-center gap-4">
-                        <a href="{{ route('asns.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Data ASN</a>
-                        <a href="{{ route('data-siswa.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Data Siswa</a>
-                        <a href="{{ route('spds.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPD</a>
-                        <a href="{{ route('logos.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Logo</a>
-                        <a href="{{ route('surat-tugas.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Tugas</a>
-                        <a href="{{ route('drh-satyalancana.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">DRH Satyalancana</a>
-                        <a href="{{ route('sptjms.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPTJM</a>
-                        <a href="{{ route('spmts.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPMT</a>
-                        <a href="{{ route('surat-cutis.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Cuti</a>
-                        <a href="{{ route('surat-dispensasis.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Dispensasi</a>
-                        <a href="{{ route('surat-keterangans.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Keterangan</a>
-                        <a href="{{ route('surat-kp4s.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat KP4</a>
-                        <a href="{{ route('surat-panggilan-siswas.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Panggilan Siswa</a>
-                    </div>
+        <div class="flex min-h-screen">
+            <!-- Sidebar -->
+            <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0">
+                <div class="flex items-center justify-between h-16 px-4 border-b border-gray-200 dark:border-gray-700">
+                    <a href="{{ route('asns.index') }}" class="text-lg font-bold text-gray-800 dark:text-gray-100">Menu</a>
+                    <button id="close-sidebar" class="lg:hidden p-2 rounded-md text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </button>
                 </div>
-            </div>
-        </nav>
+                <nav class="p-4 space-y-1 overflow-y-auto h-[calc(100vh-4rem)]">
+                    <a href="{{ route('asns.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('asns.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Data ASN
+                    </a>
+                    <a href="{{ route('data-siswa.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('data-siswa.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Data Siswa
+                    </a>
+                    <a href="{{ route('spds.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('spds.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        SPD
+                    </a>
+                    <a href="{{ route('logos.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('logos.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Logo
+                    </a>
+                    <a href="{{ route('surat-tugas.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-tugas.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Surat Tugas
+                    </a>
+                    <a href="{{ route('drh-satyalancana.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('drh-satyalancana.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        DRH Satyalancana
+                    </a>
+                    <a href="{{ route('sptjms.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('sptjms.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        SPTJM
+                    </a>
+                    <a href="{{ route('spmts.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('spmts.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        SPMT
+                    </a>
+                    <a href="{{ route('surat-cutis.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-cutis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Surat Cuti
+                    </a>
+                    <a href="{{ route('surat-dispensasis.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-dispensasis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Surat Dispensasi
+                    </a>
+                    <a href="{{ route('surat-keterangans.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-keterangans.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Surat Keterangan
+                    </a>
+                    <a href="{{ route('surat-kp4s.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-kp4s.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Surat KP4
+                    </a>
+                    <a href="{{ route('surat-panggilan-siswas.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-panggilan-siswas.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Surat Panggilan Siswa
+                    </a>
+                </nav>
+            </aside>
 
-        <main>
-            @yield('content')
-        </main>
+            <!-- Overlay -->
+            <div id="sidebar-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden lg:hidden"></div>
+
+            <!-- Main Content -->
+            <div class="flex-1 flex flex-col min-w-0 main-wrapper">
+                <!-- Top Header -->
+                <header class="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 h-16 flex items-center justify-between px-4">
+                    <button id="open-sidebar" class="lg:hidden p-2 rounded-md text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">
+                        @yield('header-title', '')
+                    </div>
+                </header>
+
+                <main class="flex-1 p-6">
+                    @yield('content')
+                </main>
+            </div>
+        </div>
+
+        <script>
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('sidebar-overlay');
+            const openBtn = document.getElementById('open-sidebar');
+            const closeBtn = document.getElementById('close-sidebar');
+
+            function openSidebar() {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+            }
+
+            function closeSidebar() {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            }
+
+            openBtn.addEventListener('click', openSidebar);
+            closeBtn.addEventListener('click', closeSidebar);
+            overlay.addEventListener('click', closeSidebar);
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeSidebar();
+            });
+        </script>
     </body>
 </html>

@@ -102,14 +102,29 @@
         .signature-space {
             height: 60px;
         }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 18mm;
+            margin: 20px auto;
+            background: white;
+            position: relative;
+            box-shadow: 0 0 6px rgba(0,0,0,0.3);
+        }
         .no-print { margin-top: 20px; text-align: center; }
         @media print {
+            body { background: white; }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
             .no-print { display: none !important; }
         }
     </style>
 </head>
 <body>
-    <div class="document-container">
+    <div class="page document-container">
         @if ($kopSuratBase64)
         <div class="kop-container">
             <img src="{{ $kopSuratBase64 }}" alt="Kop Surat">

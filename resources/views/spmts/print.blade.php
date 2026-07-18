@@ -26,6 +26,24 @@
             max-height: 200px;
             object-fit: contain;
         }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 18mm;
+            margin: 20px auto;
+            background: white;
+            position: relative;
+            box-shadow: 0 0 6px rgba(0,0,0,0.3);
+        }
+        @media print {
+            body { background: white; }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+            }
+            .no-print { display: none !important; }
+        }
         @page {
             size: A4;
             margin: 1cm 2cm 0.5cm 2cm;
@@ -36,6 +54,7 @@
 @php
     $fmt = [\App\Http\Controllers\DrhSatyalancanaController::class, 'formatTanggal'];
 @endphp
+    <div class="page">
     <div class="kop-surat-container">
         @if ($kopSuratBase64)
             <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
@@ -110,6 +129,7 @@
     <div class="no-print" style="margin-top:20px; text-align:center;">
         <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
         <a href="{{ route('spmts.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+    </div>
     </div>
 </body>
 </html>

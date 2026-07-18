@@ -14,6 +14,15 @@
         margin: 0;
       }
       .container { max-width: 800px; margin: 0 auto; }
+      .page {
+        width: 210mm;
+        min-height: 297mm;
+        padding: 15mm 18mm;
+        margin: 20px auto;
+        background: white;
+        position: relative;
+        box-shadow: 0 0 6px rgba(0,0,0,0.3);
+      }
       .text-right { text-align: right; font-weight: bold; margin-bottom: 20px; }
       .header { text-align: center; font-weight: bold; text-transform: uppercase; margin-bottom: 30px; }
       .header h2 { font-size: 16px; margin: 0 0 5px 0; text-decoration: underline; }
@@ -35,6 +44,12 @@
       .signature-name { font-weight: bold; text-decoration: underline; }
       .no-print { margin-top: 20px; text-align: center; }
       @media print {
+        body { background: white; }
+        .page {
+          box-shadow: none;
+          margin: 0;
+          page-break-after: always;
+        }
         .no-print { display: none !important; }
       }
     </style>
@@ -46,7 +61,7 @@
       $penandatangan = $suratKp4->penandatangan;
     @endphp
 
-    <div class="container">
+    <div class="container page">
       <div class="text-right">KP4</div>
 
       <div class="header">

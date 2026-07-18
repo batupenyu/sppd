@@ -221,10 +221,25 @@
             margin-top: 35px;
             color: #444;
         }
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 18mm;
+            margin: 20px auto;
+            background: white;
+            position: relative;
+            box-shadow: 0 0 6px rgba(0,0,0,0.3);
+        }
         @media print {
             body {
                 margin: 0;
                 padding: 0;
+                background: white;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
             }
             .signature-wrapper {
                 break-inside: avoid;
@@ -237,6 +252,7 @@
 </head>
 <body>
 
+    <div class="page">
     @if($kopSuratBase64)
     <div class="kop-container">
         <img src="{{ $kopSuratBase64 }}" alt="Kop Surat Sekolah">
@@ -366,6 +382,7 @@
     <div class="no-print" style="margin-top: 20px; text-align: center;">
         <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
         <a href="{{ route('surat-panggilan-siswas.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+    </div>
     </div>
 </body>
 </html>

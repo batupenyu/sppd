@@ -44,14 +44,29 @@
   .doc-meta { margin: 10px 0; }
   .doc-meta table td { padding: 2px 0; }
   .doc-meta .label { width: 75px; white-space: nowrap; }
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 15mm 18mm;
+    margin: 20px auto;
+    background: white;
+    position: relative;
+    box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  }
   @media print {
-    body { margin: 0; padding: 1cm 40px; }
+    body { margin: 0; padding: 1cm 40px; background: white; }
+    .page {
+      box-shadow: none;
+      margin: 0;
+      page-break-after: always;
+    }
     .no-print { display: none !important; }
   }
 </style>
 </head>
 <body>
 
+  <div class="page">
   <div class="kop-surat-container">
     @if ($kopSuratBase64)
       <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
@@ -190,6 +205,7 @@
   <div class="no-print">
     <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
     <a href="{{ route('surat-tugas.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+  </div>
   </div>
 
 </body>
