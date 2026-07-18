@@ -11,6 +11,9 @@
                         <a href="{{ route('asns.export') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                             Export CSV
                         </a>
+                        <a href="{{ route('asns.export.xlsx') }}" class="bg-emerald-600 hover:bg-emerald-800 text-white font-bold py-2 px-4 rounded">
+                            Export XLSX
+                        </a>
                         <a href="{{ route('asns.import') }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                             Import CSV
                         </a>

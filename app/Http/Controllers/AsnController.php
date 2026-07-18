@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Asn;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class AsnController extends Controller
 {
@@ -289,6 +291,138 @@ class AsnController extends Controller
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="' . $filename . '"',
         ]);
+    }
+
+    public function exportXlsx()
+    {
+        $asns = Asn::all();
+        $filename = 'data_asn_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->fromArray([
+            'Nama',
+            'NUPTK',
+            'JK',
+            'Tempat Lahir',
+            'Tanggal Lahir',
+            'NIP',
+            'Status Kepegawaian',
+            'Jenis PTK',
+            'Agama',
+            'Alamat Jalan',
+            'RT',
+            'RW',
+            'Nama Dusun',
+            'Desa/Kelurahan',
+            'Kecamatan',
+            'Kode Pos',
+            'Telepon',
+            'HP',
+            'Email',
+            'Tugas Tambahan',
+            'SK CPNS',
+            'Tanggal CPNS',
+            'SK Pengangkatan',
+            'TMT Pengangkatan',
+            'Lembaga Pengangkatan',
+            'Pangkat Golongan',
+            'Sumber Gaji',
+            'Nama Ibu Kandung',
+            'Status Perkawinan',
+            'Nama Suami/Istri',
+            'NIP Suami/Istri',
+            'Pekerjaan Suami/Istri',
+            'TMT PNS',
+            'Sudah Lisensi Kepala Sekolah',
+            'Pernah Diklat Kepengawasan',
+            'Keahlian Braille',
+            'Keahlian Bahasa Isyarat',
+            'NPWP',
+            'Nama Wajib Pajak',
+            'Kewarganegaraan',
+            'Bank',
+            'Nomor Rekening Bank',
+            'Rekening Atas Nama',
+            'NIK',
+            'No KK',
+            'Karpeg',
+            'Karis/Karsu',
+            'Lintang',
+            'Bujur',
+            'NUKS',
+        ], null, 'A1');
+
+        $row = 2;
+        foreach ($asns as $asn) {
+            $sheet->fromArray([
+                $asn->nama,
+                $asn->nuptk,
+                $asn->jk,
+                $asn->tempat_lahir,
+                $asn->tanggal_lahir,
+                $asn->nip,
+                $asn->status_kepegawaian,
+                $asn->jenis_ptk,
+                $asn->agama,
+                $asn->alamat_jalan,
+                $asn->rt,
+                $asn->rw,
+                $asn->nama_dusun,
+                $asn->desa_kelurahan,
+                $asn->kecamatan,
+                $asn->kode_pos,
+                $asn->telepon,
+                $asn->hp,
+                $asn->email,
+                $asn->tugas_tambahan,
+                $asn->sk_cpns,
+                $asn->tanggal_cpns,
+                $asn->sk_pengangkatan,
+                $asn->tmt_pengangkatan,
+                $asn->lembaga_pengangkatan,
+                $asn->pangkat_golongan,
+                $asn->sumber_gaji,
+                $asn->nama_ibu_kandung,
+                $asn->status_perkawinan,
+                $asn->nama_suami_istri,
+                $asn->nip_suami_istri,
+                $asn->pekerjaan_suami_istri,
+                $asn->tmt_pns,
+                $asn->sudah_lisensi_kepala_sekolah,
+                $asn->pernah_diklat_kepengawasan,
+                $asn->keahlian_braille,
+                $asn->keahlian_bahasa_isyarat,
+                $asn->npwp,
+                $asn->nama_wajib_pajak,
+                $asn->kewarganegaraan,
+                $asn->bank,
+                $asn->nomor_rekening_bank,
+                $asn->rekening_atas_nama,
+                $asn->nik,
+                $asn->no_kk,
+                $asn->karpeg,
+                $asn->karis_karsu,
+                $asn->lintang,
+                $asn->bujur,
+                $asn->nuks,
+            ], null, 'A' . $row);
+            $row++;
+        }
+
+        foreach (range('A', 'AU') as $column) {
+            $sheet->getColumnDimension($column)->setAutoSize(true);
+        }
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+
+        $tempFile = tempnam(sys_get_temp_dir(), 'asn');
+        $writer->save($tempFile);
+
+        return Response::download($tempFile, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ])->deleteFileAfterSend(true);
     }
 
     public function import()

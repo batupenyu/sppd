@@ -27,6 +27,7 @@ Route::get('/', function () {
 });
 
 Route::get('asns/export', [AsnController::class, 'export'])->name('asns.export');
+Route::get('asns/export/xlsx', [AsnController::class, 'exportXlsx'])->name('asns.export.xlsx');
 Route::get('asns/import', [AsnController::class, 'import'])->name('asns.import');
 Route::post('asns/import', [AsnController::class, 'importStore'])->name('asns.import.store');
 Route::delete('asns/destroy-all', [AsnController::class, 'destroyAll'])->name('asns.destroy.all');
