@@ -88,7 +88,7 @@
         font-size: 11pt;
       }
       .signature-name {
-        font-weight: bold;
+        font-weight: normal;
         font-size: 11pt;
       }
       .clearfix::after {
@@ -232,13 +232,16 @@
     <div class="clearfix">
       <div class="signature-container">
         <div class="signature-title">
-          {{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @if(stripos($suratNodin->penandatangan->jabatan ?? '', 'kepala dinas') !== false)
+                {{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @else
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @endif
           <span class="signature-unit">{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
         </div>
         <div class="signature-body">
-          <div class="signature-nip">
+          <div class="signature-name">{{ $suratNodin->penandatangan->nama ?? '' }}<br>
             @if($suratNodin->penandatangan->pangkat && $suratNodin->penandatangan->pangkat != '-' && $suratNodin->penandatangan->golongan && $suratNodin->penandatangan->golongan != '-')
-              {{ $suratNodin->penandatangan->nama ?? '' }}<br>
               {{ $suratNodin->penandatangan->pangkat }}<br>
             @endif
             NIP. {{ $suratNodin->penandatangan->nip ?? '' }}
