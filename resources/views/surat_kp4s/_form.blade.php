@@ -105,6 +105,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     const pegawaiSelect = document.querySelector('select[name="pegawai_id"]');
     const pegawaiNamaSuamiIstri = {!! json_encode($asns->pluck('nama_suami_istri', 'id')->toArray()) !!};
+    const pegawaiJk = {!! json_encode($asns->pluck('jk', 'id')->toArray()) !!};
 
     function autoFillNamaForRow(row, pegawaiId) {
         const namaInput = row.querySelector('input[name$="[nama]"]');
@@ -120,18 +121,31 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    function autoFillKeteranganForRow(row, pegawaiId) {
+        const keteranganInput = row.querySelector('input[name$="[keterangan]"]');
+        if (!keteranganInput || !pegawaiId || !pegawaiJk[pegawaiId]) return;
+
+        if (pegawaiJk[pegawaiId] === 'L') {
+            keteranganInput.value = 'Istri';
+        } else if (pegawaiJk[pegawaiId] === 'P') {
+            keteranganInput.value = 'Suami';
+        }
+
+        autoFillNamaForRow(row, pegawaiId);
+    }
+
     if (pegawaiSelect) {
         pegawaiSelect.addEventListener('change', function () {
             const firstRow = document.querySelector('.anggota-row');
             if (firstRow) {
-                autoFillNamaForRow(firstRow, this.value);
+                autoFillKeteranganForRow(firstRow, this.value);
             }
         });
 
         if (pegawaiSelect.value) {
             const firstRow = document.querySelector('.anggota-row');
             if (firstRow) {
-                autoFillNamaForRow(firstRow, pegawaiSelect.value);
+                autoFillKeteranganForRow(firstRow, pegawaiSelect.value);
             }
         }
     }
