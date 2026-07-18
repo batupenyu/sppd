@@ -25,6 +25,7 @@
                         <a href="{{ route('surat-cutis.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Cuti</a>
                         <a href="{{ route('surat-dispensasis.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Dispensasi</a>
                         <a href="{{ route('surat-keterangans.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Keterangan</a>
+                        <a href="{{ route('surat-kp4s.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat KP4</a>
                     </div>
                 </div>
             </div>
