@@ -10,9 +10,19 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class DataSiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $siswas = DataSiswa::latest()->paginate(10);
+        $search = $request->query('search');
+
+        $siswas = DataSiswa::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nisn', 'like', "%{$search}%")
+                    ->orWhere('nis', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('data_siswa.index', compact('siswas'));
     }

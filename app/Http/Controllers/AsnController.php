@@ -10,9 +10,19 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class AsnController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $asns = Asn::latest()->paginate(10);
+        $search = $request->query('search');
+
+        $asns = Asn::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('nama', 'like', "%{$search}%")
+                    ->orWhere('nip', 'like', "%{$search}%")
+                    ->orWhere('nuptk', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
 
         return view('asns.index', compact('asns'));
     }

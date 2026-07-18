@@ -36,6 +36,16 @@
                     </div>
                 @endif
 
+                <form method="GET" action="{{ route('asns.index') }}" class="mb-4">
+                    <div class="flex gap-2">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari nama, NIP, atau NUPTK..." class="w-full max-w-md border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Cari</button>
+                        @if(request('search'))
+                        <a href="{{ route('asns.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Reset</a>
+                        @endif
+                    </div>
+                </form>
+
                 <div class="overflow-x-auto">
                     <table class="min-w-full table-auto">
                         <thead class="bg-gray-50 dark:bg-gray-700">
