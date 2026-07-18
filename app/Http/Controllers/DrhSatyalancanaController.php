@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asn;
 use App\Models\DrhSatyalancana;
+use App\Models\LogoSetting;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -20,19 +21,21 @@ class DrhSatyalancanaController extends Controller
     public function create(Request $request): View
     {
         $asns = Asn::orderBy('nama')->get();
+        $logos = LogoSetting::orderBy('name')->get();
         $selectedAsn = null;
 
         if ($request->filled('asn_id')) {
             $selectedAsn = Asn::find($request->input('asn_id'));
         }
 
-        return view('drh_satyalancana.create', compact('asns', 'selectedAsn'));
+        return view('drh_satyalancana.create', compact('asns', 'selectedAsn', 'logos'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
             'asn_id' => 'required|exists:asns,id',
+            'kop_surat' => 'nullable|string|max:255',
             'nip_lama' => 'nullable|string|max:50',
             'pendidikan_terakhir' => 'nullable|string|max:255',
             'pangkat' => 'nullable|string|max:255',
@@ -59,15 +62,17 @@ class DrhSatyalancanaController extends Controller
     public function edit(DrhSatyalancana $drh): View
     {
         $asns = Asn::orderBy('nama')->get();
+        $logos = LogoSetting::orderBy('name')->get();
         $drh->load('asn');
 
-        return view('drh_satyalancana.edit', compact('asns', 'drh'));
+        return view('drh_satyalancana.edit', compact('asns', 'drh', 'logos'));
     }
 
     public function update(Request $request, DrhSatyalancana $drh): RedirectResponse
     {
         $validated = $request->validate([
             'asn_id' => 'required|exists:asns,id',
+            'kop_surat' => 'nullable|string|max:255',
             'nip_lama' => 'nullable|string|max:50',
             'pendidikan_terakhir' => 'nullable|string|max:255',
             'pangkat' => 'nullable|string|max:255',
@@ -102,7 +107,17 @@ class DrhSatyalancanaController extends Controller
     {
         $drh->load('asn');
 
-        return view('drh_satyalancana.print', compact('drh'));
+        $kopSuratBase64 = null;
+        if ($drh->kop_surat) {
+            $logo = LogoSetting::where('name', $drh->kop_surat)->first();
+        } else {
+            $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
+        }
+        if ($logo && $logo->image) {
+            $kopSuratBase64 = 'data:'.($logo->mime ?: 'image/png').';base64,'.base64_encode($logo->image);
+        }
+
+        return view('drh_satyalancana.print', compact('drh', 'kopSuratBase64'));
     }
 
     public static function formatTanggal($date, string $format = '%d %B %Y'): string

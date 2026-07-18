@@ -34,7 +34,7 @@ class AsnController extends Controller
             'status_kepegawaian' => 'nullable|string|max:255',
             'jenis_ptk' => 'nullable|string|max:255',
             'agama' => 'nullable|string|max:255',
-            'alamat_jalan' => 'nullable|text',
+            'alamat_jalan' => 'nullable|string',
             'rt' => 'nullable|string|max:10',
             'rw' => 'nullable|string|max:10',
             'nama_dusun' => 'nullable|string|max:255',
@@ -44,7 +44,7 @@ class AsnController extends Controller
             'telepon' => 'nullable|string|max:20',
             'hp' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
-            'tugas_tambahan' => 'nullable|text',
+            'tugas_tambahan' => 'nullable|string',
             'sk_cpns' => 'nullable|string|max:255',
             'tanggal_cpns' => 'nullable|date',
             'sk_pengangkatan' => 'nullable|string|max:255',
@@ -105,7 +105,7 @@ class AsnController extends Controller
             'status_kepegawaian' => 'nullable|string|max:255',
             'jenis_ptk' => 'nullable|string|max:255',
             'agama' => 'nullable|string|max:255',
-            'alamat_jalan' => 'nullable|text',
+            'alamat_jalan' => 'nullable|string',
             'rt' => 'nullable|string|max:10',
             'rw' => 'nullable|string|max:10',
             'nama_dusun' => 'nullable|string|max:255',
@@ -115,7 +115,7 @@ class AsnController extends Controller
             'telepon' => 'nullable|string|max:20',
             'hp' => 'nullable|string|max:20',
             'email' => 'nullable|email|max:255',
-            'tugas_tambahan' => 'nullable|text',
+            'tugas_tambahan' => 'nullable|string',
             'sk_cpns' => 'nullable|string|max:255',
             'tanggal_cpns' => 'nullable|date',
             'sk_pengangkatan' => 'nullable|string|max:255',
@@ -411,8 +411,8 @@ class AsnController extends Controller
             $row++;
         }
 
-        foreach (range('A', 'AU') as $column) {
-            $sheet->getColumnDimension($column)->setAutoSize(true);
+        foreach ($sheet->getColumnIterator() as $column) {
+            $sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
         }
 
         $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');

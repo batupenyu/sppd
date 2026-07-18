@@ -11,6 +11,7 @@ class DrhSatyalancana extends Model
 
     protected $fillable = [
         'asn_id',
+        'kop_surat',
         'nip_lama',
         'pendidikan_terakhir',
         'pangkat',

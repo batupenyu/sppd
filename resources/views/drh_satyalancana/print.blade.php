@@ -65,6 +65,19 @@
             position: relative;
             box-shadow: 0 0 6px rgba(0,0,0,0.3);
         }
+        .kop-surat-container {
+            text-align: center;
+            margin-bottom: 20px;
+            margin-left: -2cm;
+            margin-right: -2cm;
+        }
+        .kop-surat-image {
+            width: 80%;
+            max-width: 21cm;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+        }
         .no-print { margin-top: 20px; text-align: center; }
         @media print {
             body { background: white; }
@@ -87,6 +100,12 @@
     @endphp
 
     <div class="page">
+    <!-- <div class="kop-surat-container">
+        @if($kopSuratBase64)
+            <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
+        @endif
+    </div> -->
+
     <div class="header">
         DAFTAR RIWAYAT HIDUP<br>
         USUL TANDA KEHORMATAN SATYALANCANA KARYA SATYA

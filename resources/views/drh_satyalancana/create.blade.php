@@ -32,6 +32,18 @@
                             @error('asn_id')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Kop Surat</label>
+                            <select name="kop_surat" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                <option value="">-- Pilih Kop Surat --</option>
+                                @foreach($logos as $logo)
+                                    <option value="{{ $logo->name }}" {{ old('kop_surat') == $logo->name ? 'selected' : '' }}>
+                                        {{ $logo->name ?: 'Tanpa Nama' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div>
                             <label class="block font-medium mb-1">NIP Lama (jika ada)</label>
                             <input type="text" name="nip_lama" value="{{ old('nip_lama') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
