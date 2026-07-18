@@ -33,7 +33,7 @@
 
     <div>
         <label class="block font-medium mb-1">Digaji Menurut</label>
-        <input type="text" name="digaji_menurut" value="{{ old('digaji_menurut', $kp4->digaji_menurut ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <textarea name="digaji_menurut" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" rows="3">{{ old('digaji_menurut', $kp4->digaji_menurut ?? 'PP Nomor 05 Tahun 2024 (CPNS dan PNS), Perpres Nomor 11 Tahun 2024 (PPPK)') }}</textarea>
     </div>
 
     <div class="md:col-span-2">
