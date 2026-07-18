@@ -9,6 +9,7 @@ use App\Http\Controllers\SpmtController;
 use App\Http\Controllers\SptjmController;
 use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratDispensasiController;
+use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratTugasController;
 use Illuminate\Support\Facades\Route;
 
@@ -62,3 +63,7 @@ Route::resource('surat-dispensasis', SuratDispensasiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-dispensasis/{surat_dispensasi}', [SuratDispensasiController::class, 'destroy'])->name('surat-dispensasis.destroy');
 Route::get('surat-dispensasis/{surat_dispensasi}/print', [SuratDispensasiController::class, 'print'])->name('surat-dispensasis.print');
+Route::resource('surat-keterangans', SuratKeteranganController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-keterangans/{surat_keterangan}', [SuratKeteranganController::class, 'destroy'])->name('surat-keterangans.destroy');
+Route::get('surat-keterangans/{surat_keterangan}/print', [SuratKeteranganController::class, 'print'])->name('surat-keterangans.print');
