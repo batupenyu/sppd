@@ -11,36 +11,27 @@
       body {
         font-family: "Helvetica", sans-serif;
         font-size: 11pt;
+        line-height: 1.5;
         color: #000;
       }
       td.label {
         width: 150px;
         white-space: nowrap;
-        vertical-align: top;
-      }
-      td.colon {
-        width: 10px;
-        white-space: nowrap;
-        vertical-align: top;
       }
       td.value {
         white-space: nowrap;
       }
-      .content p {
-        margin-top: 0;
-        margin-bottom: 0;
-        line-height: 1.5;
-        text-align: justify;
-      }
-      .content ol {
-        margin-bottom: 0;
+      td.colon {
+        width: 15px;
       }
       .page {
         width: 210mm;
         min-height: 297mm;
+        padding: 15mm 18mm;
         margin: 20px auto;
         background: white;
         position: relative;
+        box-shadow: 0 0 6px rgba(0,0,0,0.3);
       }
       .no-print {
         margin-top: 20px;
@@ -48,8 +39,14 @@
       }
       @media print {
         body { background: white; }
-        .page { margin: 0; }
-        .no-print { display: none !important; }
+        .page {
+          box-shadow: none;
+          margin: 0;
+          page-break-after: always;
+        }
+        .no-print {
+          display: none !important;
+        }
       }
     </style>
   </head>
