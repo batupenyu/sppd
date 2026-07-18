@@ -47,7 +47,8 @@ Route::resource('sptjms', SptjmController::class)
 Route::delete('sptjms/{sptjm}', [SptjmController::class, 'destroy'])->name('sptjms.destroy');
 Route::get('sptjms/{sptjm}/print', [SptjmController::class, 'print'])->name('sptjms.print');
 Route::resource('drh-satyalancana', DrhSatyalancanaController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update']);
+    ->only(['index', 'create', 'store', 'edit', 'update'])
+    ->parameter('drh-satyalancana', 'drh');
 Route::delete('drh-satyalancana/{drh}', [DrhSatyalancanaController::class, 'destroy'])->name('drh-satyalancana.destroy');
 Route::get('drh-satyalancana/{drh}/print', [DrhSatyalancanaController::class, 'print'])->name('drh-satyalancana.print');
 Route::resource('surat-tugas', SuratTugasController::class)
