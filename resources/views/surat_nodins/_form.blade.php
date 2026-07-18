@@ -63,7 +63,7 @@
             @php $pesertaIndex = 0; @endphp
             @if(old('peserta') && is_array(old('peserta')))
                 @foreach(old('peserta') as $item)
-                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item])
+                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
                 @endforeach
             @elseif(isset($suratNodin) && $suratNodin->pesertaSuratUsulans->count() > 0)
                 @foreach($suratNodin->pesertaSuratUsulans as $peserta)
@@ -75,11 +75,13 @@
                             'tempat_kegiatan' => $peserta->tempat_kegiatan ?? '',
                         ];
                     @endphp
-                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item])
+                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
                 @endforeach
             @endif
+            @if($pesertaIndex == 0)
+                @include('surat_nodins._peserta_row', ['index' => 0, 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ''], 'asns' => $asns, 'siswas' => $siswas])
+            @endif
         </div>
-        <button type="button" id="add-peserta" class="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Tambah Peserta</button>
     </div>
 
     <div class="md:col-span-2">
@@ -112,13 +114,4 @@
     </div>
 </div>
 
-@push('scripts')
-<script>
-document.getElementById('add-peserta')?.addEventListener('click', function() {
-    const container = document.getElementById('peserta-container');
-    const index = container.children.length;
-    const html = `@include('surat_nodins._peserta_row', ['index' => '__INDEX__', 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => '']])`.replace(/__INDEX__/g, index);
-    container.insertAdjacentHTML('beforeend', html);
-});
-</script>
-@endpush
+

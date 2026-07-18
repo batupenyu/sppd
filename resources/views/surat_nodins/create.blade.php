@@ -32,30 +32,3 @@
     </div>
 </div>
 @endsection
-
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.peserta-jenis').forEach(function(select) {
-        togglePesertaFields(select);
-        select.addEventListener('change', function() {
-            togglePesertaFields(this);
-        });
-    });
-
-    function togglePesertaFields(select) {
-        const row = select.closest('.peserta-row');
-        if (!row) return;
-        const pegawaiField = row.querySelector('.pegawai-field');
-        const siswaField = row.querySelector('.siswa-field');
-        if (select.value === 'pegawai') {
-            pegawaiField.classList.remove('hidden');
-            siswaField.classList.add('hidden');
-        } else {
-            pegawaiField.classList.add('hidden');
-            siswaField.classList.remove('hidden');
-        }
-    }
-});
-</script>
-@endpush
