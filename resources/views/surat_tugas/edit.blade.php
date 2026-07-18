@@ -76,7 +76,7 @@
                                 @foreach($asns as $asn)
                                     <option value="{{ $asn->id }}"
                                         data-nama="{{ $asn->nama }}"
-                                        data-jabatan="{{ $asn->tugas_tambahan ?: ($asn->jenis_ptk ?: '') }}"
+                                        data-jabatan="{{ $asn->tugas_tambahan ?: ($asn->jenis_ptk ?: ($asn->pangkat_golongan ?: '')) }}"
                                         data-nip="{{ $asn->nip ?: '' }}"
                                         {{ old('penandatangan_id', $suratTugas->penandatangan_id) == $asn->id ? 'selected' : '' }}>
                                         {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }} {{ $asn->tugas_tambahan ? '- ' . $asn->tugas_tambahan : '' }}
@@ -98,12 +98,15 @@
                     <input type="hidden" name="nip_penandatangan" id="nip_penandatangan" value="{{ old('nip_penandatangan', $suratTugas->nip_penandatangan) }}">
 
                     <script>
-                        document.getElementById('penandatangan_select').addEventListener('change', function () {
-                            const opt = this.options[this.selectedIndex];
+                        function isiPenandatangan() {
+                            const select = document.getElementById('penandatangan_select');
+                            const opt = select.options[select.selectedIndex];
                             document.getElementById('nama_penandatangan').value = opt.dataset.nama || '';
                             document.getElementById('jabatan_penandatangan').value = opt.dataset.jabatan || '';
                             document.getElementById('nip_penandatangan').value = opt.dataset.nip || '';
-                        });
+                        }
+                        document.getElementById('penandatangan_select').addEventListener('change', isiPenandatangan);
+                        isiPenandatangan();
                     </script>
 
                     <div class="mt-6 flex gap-4">

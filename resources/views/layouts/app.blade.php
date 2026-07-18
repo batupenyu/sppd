@@ -18,6 +18,8 @@
                         <a href="{{ route('spds.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPD</a>
                         <a href="{{ route('logos.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Logo</a>
                         <a href="{{ route('surat-tugas.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Tugas</a>
+                        <a href="{{ route('drh-satyalancana.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">DRH Satyalancana</a>
+                        <a href="{{ route('sptjms.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPTJM</a>
                     </div>
                 </div>
             </div>

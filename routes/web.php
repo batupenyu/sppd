@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AsnController;
 use App\Http\Controllers\SpdController;
 use App\Http\Controllers\LogoController;
+use App\Http\Controllers\SptjmController;
+use App\Http\Controllers\DrhSatyalancanaController;
 use App\Http\Controllers\SuratTugasController;
 
 Route::get('/', function () {
@@ -24,6 +26,14 @@ Route::resource('logos', LogoController::class)->except(['show']);
 Route::get('logos/{logo}/image', [LogoController::class, 'show'])->name('logos.image');
 Route::get('api/kop-surat', [LogoController::class, 'apiKopSurat'])->name('api.kop-surat');
 
+Route::resource('sptjms', SptjmController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('sptjms/{sptjm}', [SptjmController::class, 'destroy'])->name('sptjms.destroy');
+Route::get('sptjms/{sptjm}/print', [SptjmController::class, 'print'])->name('sptjms.print');
+Route::resource('drh-satyalancana', DrhSatyalancanaController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('drh-satyalancana/{drh}', [DrhSatyalancanaController::class, 'destroy'])->name('drh-satyalancana.destroy');
+Route::get('drh-satyalancana/{drh}/print', [DrhSatyalancanaController::class, 'print'])->name('drh-satyalancana.print');
 Route::resource('surat-tugas', SuratTugasController::class)
     ->except(['show', 'destroy'])
     ->parameter('surat-tugas', 'surat_tugas');
