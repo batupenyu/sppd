@@ -54,7 +54,7 @@
                                 <th class="px-4 py-2 text-left">NUPTK</th>
                                 <th class="px-4 py-2 text-left">JK</th>
                                 <th class="px-4 py-2 text-left">NIP</th>
-                                <th class="px-4 py-2 text-left">Agama</th>
+                                <!-- <th class="px-4 py-2 text-left">Agama</th> -->
                                 <th class="px-4 py-2 text-left">Status Kepegawaian</th>
                                 <th class="px-4 py-2 text-left">Aksi</th>
                             </tr>
@@ -66,7 +66,7 @@
                                 <td class="px-4 py-2">{{ $asn->nuptk }}</td>
                                 <td class="px-4 py-2">{{ $asn->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                 <td class="px-4 py-2">{{ $asn->nip }}</td>
-                                <td class="px-4 py-2">{{ $asn->agama }}</td>
+                                <!-- <td class="px-4 py-2">{{ $asn->agama }}</td> -->
                                 <td class="px-4 py-2">{{ $asn->status_kepegawaian }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex items-center gap-2">
