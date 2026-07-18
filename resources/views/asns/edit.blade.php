@@ -196,6 +196,12 @@
                         </div>
 
                         <div>
+                            <label class="block font-medium mb-1">Unit Kerja</label>
+                            <input type="text" name="unit_kerja" value="{{ old('unit_kerja', $asn->unit_kerja ?? 'SMK Negeri 1 Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            @error('unit_kerja')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
+                        </div>
+
+                        <div>
                             <label class="block font-medium mb-1">Pangkat Golongan</label>
                             <input type="text" name="pangkat_golongan" value="{{ old('pangkat_golongan', $asn->pangkat_golongan) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                             @error('pangkat_golongan')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
