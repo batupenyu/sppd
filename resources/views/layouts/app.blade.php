@@ -71,6 +71,9 @@
                     <a href="{{ route('surat-pengantars.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-pengantars.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                         Surat Pengantar
                     </a>
+                    <a href="{{ route('surat-rekomendasis.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-rekomendasis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                        Surat Rekomendasi
+                    </a>
                 </nav>
             </aside>
 

@@ -7,7 +7,7 @@
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <h1 class="text-2xl font-bold mb-6">Edit Daftar Riwayat Hidup - Satyalancana</h1>
 
-                <form action="{{ route('drh-satyalancana.update', $drh) }}" method="POST">
+                <form action="{{ route('drh-satyalancana.update', $drh->id) }}" method="POST">
                     @csrf
                     @method('PUT')
 
