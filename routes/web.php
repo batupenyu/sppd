@@ -3,6 +3,7 @@
 use App\Http\Controllers\AsnController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\DrhSatyalancanaController;
+use App\Http\Controllers\LaporanCutiController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\SpdController;
 use App\Http\Controllers\SpmtController;
@@ -11,12 +12,12 @@ use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratDispensasiController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratKp4Controller;
+use App\Http\Controllers\SuratNodinController;
 use App\Http\Controllers\SuratPanggilanSiswaController;
 use App\Http\Controllers\SuratPengantarController;
 use App\Http\Controllers\SuratRekomendasiController;
 use App\Http\Controllers\SuratResmiController;
 use App\Http\Controllers\SuratSantunanController;
-use App\Http\Controllers\SuratNodinController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\SuratUmumController;
 use App\Http\Controllers\SuratUndanganController;
@@ -70,6 +71,10 @@ Route::resource('surat-cutis', SuratCutiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-cutis/{surat_cuti}', [SuratCutiController::class, 'destroy'])->name('surat-cutis.destroy');
 Route::get('surat-cutis/{surat_cuti}/print', [SuratCutiController::class, 'print'])->name('surat-cutis.print');
+Route::resource('laporan-cutis', LaporanCutiController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('laporan-cutis/{laporan_cuti}', [LaporanCutiController::class, 'destroy'])->name('laporan-cutis.destroy');
+Route::get('laporan-cutis/{laporan_cuti}/print', [LaporanCutiController::class, 'print'])->name('laporan-cutis.print');
 Route::resource('surat-dispensasis', SuratDispensasiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-dispensasis/{surat_dispensasi}', [SuratDispensasiController::class, 'destroy'])->name('surat-dispensasis.destroy');

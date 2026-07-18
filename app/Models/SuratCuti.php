@@ -21,6 +21,7 @@ class SuratCuti extends Model
         'alasan_cuti',
         'tanggal_mulai_cuti',
         'tanggal_selesai_cuti',
+        'jumlah_hari',
         'pegawai_id',
         'penandatangan_id',
     ];

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Asn;
 use App\Models\LogoSetting;
 use App\Models\SuratCuti;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -43,6 +45,11 @@ class SuratCutiController extends Controller
             'penandatangan_id' => 'nullable|exists:asns,id',
         ]);
 
+        $validated['jumlah_hari'] = $this->calculateLeaveDays(
+            $validated['tanggal_mulai_cuti'] ?? null,
+            $validated['tanggal_selesai_cuti'] ?? null
+        );
+
         $suratCuti = SuratCuti::create($validated);
 
         return redirect()->route('surat-cutis.print', $suratCuti)
@@ -75,6 +82,11 @@ class SuratCutiController extends Controller
             'penandatangan_id' => 'nullable|exists:asns,id',
         ]);
 
+        $validated['jumlah_hari'] = $this->calculateLeaveDays(
+            $validated['tanggal_mulai_cuti'] ?? null,
+            $validated['tanggal_selesai_cuti'] ?? null
+        );
+
         $suratCuti->update($validated);
 
         return redirect()->route('surat-cutis.print', $suratCuti)
@@ -95,7 +107,7 @@ class SuratCutiController extends Controller
         $kopSuratBase64 = null;
         $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
         if ($logo && $logo->image) {
-            $kopSuratBase64 = 'data:' . ($logo->mime ?: 'image/png') . ';base64,' . base64_encode($logo->image);
+            $kopSuratBase64 = 'data:'.($logo->mime ?: 'image/png').';base64,'.base64_encode($logo->image);
         }
 
         $leaveDurationText = $this->formatLeaveDuration($suratCuti);
@@ -108,7 +120,7 @@ class SuratCutiController extends Controller
         $mulai = $suratCuti->tanggal_mulai_cuti;
         $selesai = $suratCuti->tanggal_selesai_cuti;
 
-        if (!$mulai || !$selesai) {
+        if (! $mulai || ! $selesai) {
             return '';
         }
 
@@ -118,11 +130,11 @@ class SuratCutiController extends Controller
             $days = 1;
             $daysTerbilang = 'satu';
         } else {
-            $days = $mulai->diffInDays($selesai) + 1;
+            $days = abs($mulai->diffInDays($selesai)) + 1;
             $daysTerbilang = $this->terbilangHari($days);
         }
 
-        return 'selama ' . $days . ' (' . $daysTerbilang . ') hari, yaitu tanggal ' . $fmt($mulai, '%d %B %Y') . ' sampai dengan tanggal ' . $fmt($selesai, '%d %B %Y');
+        return 'selama '.$days.' ('.$daysTerbilang.') hari, yaitu tanggal '.$fmt($mulai, '%d %B %Y').' sampai dengan tanggal '.$fmt($selesai, '%d %B %Y');
     }
 
     private function terbilangHari(int $n): string
@@ -137,7 +149,7 @@ class SuratCutiController extends Controller
             return $ones[$n];
         }
         if ($n < 20) {
-            return $ones[$n - 10] . ' belas';
+            return $ones[$n - 10].' belas';
         }
         if ($n < 100) {
             $tens = intdiv($n, 10);
@@ -147,10 +159,23 @@ class SuratCutiController extends Controller
                 5 => 'lima puluh', 6 => 'enam puluh', 7 => 'tujuh puluh',
                 8 => 'delapan puluh', 9 => 'sembilan puluh',
             ];
-            return $tensWord[$tens] . ($unit ? ' ' . $ones[$unit] : '');
+
+            return $tensWord[$tens].($unit ? ' '.$ones[$unit] : '');
         }
 
         return (string) $n;
+    }
+
+    private function calculateLeaveDays($mulai, $selesai): int
+    {
+        if (! $mulai || ! $selesai) {
+            return 0;
+        }
+
+        $start = Carbon::parse($mulai);
+        $end = Carbon::parse($selesai);
+
+        return abs($start->diffInDays($end)) + 1;
     }
 
     public static function formatTanggal($date, string $format = '%d %B %Y'): string
@@ -159,9 +184,9 @@ class SuratCutiController extends Controller
             return '-';
         }
 
-        $carbon = $date instanceof \Carbon\CarbonInterface
+        $carbon = $date instanceof CarbonInterface
             ? $date
-            : \Carbon\Carbon::parse($date);
+            : Carbon::parse($date);
 
         $months = [
             1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',

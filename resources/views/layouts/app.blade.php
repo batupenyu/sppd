@@ -41,7 +41,7 @@
                     <a href="{{ route('logos.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('logos.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                         Logo
                     </a>
-                    @php($isSuratActive = request()->is('surat-tugas*','drh-satyalancana*','sptjms*','spmts*','surat-cutis*','surat-dispensasis*','surat-keterangans*','surat-kp4s*','surat-panggilan-siswas*','surat-pengantars*','surat-rekomendasis*','surat-resmis*','surat-santunans*','surat-umums*','surat-undangans*','surat-nodins*'))
+                    @php($isSuratActive = request()->is('surat-tugas*','drh-satyalancana*','sptjms*','spmts*','surat-cutis*','laporan-cutis*','surat-dispensasis*','surat-keterangans*','surat-kp4s*','surat-panggilan-siswas*','surat-pengantars*','surat-rekomendasis*','surat-resmis*','surat-santunans*','surat-umums*','surat-undangans*','surat-nodins*'))
                     <button type="button" id="surat-toggle" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ $isSuratActive ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                         <span>Surat &amp; Dokumen</span>
                         <svg id="surat-chevron" class="w-4 h-4 transition-transform {{ $isSuratActive ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -63,6 +63,9 @@
                         </a>
                         <a href="{{ route('surat-cutis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-cutis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                             Surat Cuti
+                        </a>
+                        <a href="{{ route('laporan-cutis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('laporan-cutis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                            Laporan Cuti
                         </a>
                         <a href="{{ route('surat-dispensasis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-dispensasis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                             Surat Dispensasi
