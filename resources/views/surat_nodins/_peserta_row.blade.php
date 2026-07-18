@@ -1,4 +1,4 @@
-@php
+<?php
     $item = $item ?? [
         'pegawai_id' => '',
         'siswa_id' => '',
@@ -7,7 +7,7 @@
     ];
     $asns = $asns ?? [];
     $siswas = $siswas ?? [];
-@endphp
+?>
 <div class="peserta-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 p-4 border rounded">
     <div>
         <label class="block font-medium mb-1">Pegawai</label>

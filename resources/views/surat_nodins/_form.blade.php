@@ -67,15 +67,13 @@
                 @endforeach
             @elseif(isset($suratNodin) && $suratNodin->pesertaSuratUsulans->count() > 0)
                 @foreach($suratNodin->pesertaSuratUsulans as $peserta)
-                    @php
-                        $item = [
-                            'pegawai_id' => $peserta->pegawai_id ?? '',
-                            'siswa_id' => $peserta->siswa_id ?? '',
-                            'tanggal_kegiatan' => optional($peserta->tanggal_kegiatan)->format('Y-m-d') ?? '',
-                            'tempat_kegiatan' => $peserta->tempat_kegiatan ?? '',
-                        ];
-                    @endphp
-                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
+                    <?php
+                        $pegawaiId = $peserta->pegawai_id ?? '';
+                        $siswaId = $peserta->siswa_id ?? '';
+                        $tanggalKegiatan = $peserta->tanggal_kegiatan ? \Carbon\Carbon::parse($peserta->tanggal_kegiatan)->format('Y-m-d') : '';
+                        $tempatKegiatan = $peserta->tempat_kegiatan ?? '';
+                    ?>
+                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiId, 'siswa_id' => $siswaId, 'tanggal_kegiatan' => $tanggalKegiatan, 'tempat_kegiatan' => $tempatKegiatan], 'asns' => $asns, 'siswas' => $siswas])
                 @endforeach
             @endif
             @if($pesertaIndex == 0)
