@@ -60,7 +60,7 @@
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Total Alokasi Awal</label>
-                            <input type="number" name="total_alokasi_awal" value="{{ old('total_alokasi_awal', $laporanCuti->total_alokasi_awal) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="number" id="total_alokasi_awal" name="total_alokasi_awal" value="{{ old('total_alokasi_awal', $laporanCuti->total_alokasi_awal) }}" readonly class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
 
                         <div class="md:col-span-2">
@@ -90,6 +90,28 @@
                         <a href="{{ route('laporan-cutis.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Batal</a>
                     </div>
                 </form>
+
+                <script>
+                    (function() {
+                        const nInput = document.querySelector('input[name="alokasi_awal_tahun_n"]');
+                        const n1Input = document.querySelector('input[name="alokasi_awal_tahun_n_1"]');
+                        const n2Input = document.querySelector('input[name="alokasi_awal_tahun_n_2"]');
+                        const totalInput = document.getElementById('total_alokasi_awal');
+
+                        function updateTotal() {
+                            const n = parseInt(nInput.value || '0', 10);
+                            const n1 = parseInt(n1Input.value || '0', 10);
+                            const n2 = parseInt(n2Input.value || '0', 10);
+                            totalInput.value = n + n1 + n2;
+                        }
+
+                        [nInput, n1Input, n2Input].forEach(function(el) {
+                            el.addEventListener('input', updateTotal);
+                        });
+
+                        updateTotal();
+                    })();
+                </script>
             </div>
         </div>
     </div>
