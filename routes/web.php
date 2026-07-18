@@ -18,6 +18,7 @@ use App\Http\Controllers\SuratResmiController;
 use App\Http\Controllers\SuratSantunanController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\SuratUmumController;
+use App\Http\Controllers\SuratUndanganController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -103,3 +104,7 @@ Route::resource('surat-umums', SuratUmumController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-umums/{surat_umum}', [SuratUmumController::class, 'destroy'])->name('surat-umums.destroy');
 Route::get('surat-umums/{surat_umum}/print', [SuratUmumController::class, 'print'])->name('surat-umums.print');
+Route::resource('surat-undangans', SuratUndanganController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-undangans/{surat_undangan}', [SuratUndanganController::class, 'destroy'])->name('surat-undangans.destroy');
+Route::get('surat-undangans/{surat_undangan}/print', [SuratUndanganController::class, 'print'])->name('surat-undangans.print');
