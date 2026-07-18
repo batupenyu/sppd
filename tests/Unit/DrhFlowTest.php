@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use App\Models\Asn;
 use App\Models\DrhSatyalancana;
+use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
 class DrhFlowTest extends TestCase
@@ -11,7 +12,7 @@ class DrhFlowTest extends TestCase
     public function test_store_then_print_shows_data(): void
     {
         $asn = Asn::first();
-        if (!$asn) {
+        if (! $asn) {
             $asn = Asn::create([
                 'nama' => 'Al Fikri',
                 'nip' => '12345',
@@ -44,11 +45,11 @@ class DrhFlowTest extends TestCase
         $printById->assertStatus(200);
 
         // Direct render check (bypass HTTP) to isolate view vs routing
-        $fresh = \App\Models\DrhSatyalancana::find($id);
+        $fresh = DrhSatyalancana::find($id);
         $direct = view('drh_satyalancana.print', ['drh' => $fresh])->render();
-        echo "\n[DEBUG] direct has S1 TEST: " . (str_contains($direct, 'S1 TEST') ? 'YES' : 'NO') . "\n";
-        echo "[DEBUG] http  has S1 TEST: " . (str_contains($printById->getContent(), 'S1 TEST') ? 'YES' : 'NO') . "\n";
-        echo "[DEBUG] db connection: " . \Illuminate\Support\Facades\DB::connection()->getDatabaseName() . "\n";
+        echo "\n[DEBUG] direct has S1 TEST: ".(str_contains($direct, 'S1 TEST') ? 'YES' : 'NO')."\n";
+        echo '[DEBUG] http  has S1 TEST: '.(str_contains($printById->getContent(), 'S1 TEST') ? 'YES' : 'NO')."\n";
+        echo '[DEBUG] db connection: '.DB::connection()->getDatabaseName()."\n";
 
         $printById->assertSee('S1 TEST');
         $printById->assertSee('Penata TEST');

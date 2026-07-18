@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Asn;
 use App\Models\DrhSatyalancana;
 use App\Models\LogoSetting;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -126,9 +128,9 @@ class DrhSatyalancanaController extends Controller
             return '-';
         }
 
-        $carbon = $date instanceof \Carbon\CarbonInterface
+        $carbon = $date instanceof CarbonInterface
             ? $date
-            : \Carbon\Carbon::parse($date);
+            : Carbon::parse($date);
 
         $months = [
             1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',

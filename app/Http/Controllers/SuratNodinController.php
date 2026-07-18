@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Asn;
 use App\Models\DataSiswa;
 use App\Models\LogoSetting;
-use App\Models\PesertaSuratUsulan;
 use App\Models\SuratNodin;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -113,7 +112,7 @@ class SuratNodinController extends Controller
     private function syncPeserta(SuratNodin $suratNodin, Request $request): void
     {
         $peserta = $request->input('peserta', []);
-        if (!is_array($peserta)) {
+        if (! is_array($peserta)) {
             return;
         }
 

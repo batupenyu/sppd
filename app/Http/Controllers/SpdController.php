@@ -115,12 +115,12 @@ class SpdController extends Controller
         $kopSuratBase64 = null;
         $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
         if ($logo && $logo->image) {
-            $kopSuratBase64 = 'data:' . ($logo->mime ?: 'image/png') . ';base64,' . base64_encode($logo->image);
+            $kopSuratBase64 = 'data:'.($logo->mime ?: 'image/png').';base64,'.base64_encode($logo->image);
         }
 
         $lamaHuruf = null;
         if ($spd->lama_perjalanan) {
-            $lamaHuruf = $spd->lama_perjalanan . ' (' . $this->terbilangHari($spd->lama_perjalanan) . ') hari';
+            $lamaHuruf = $spd->lama_perjalanan.' ('.$this->terbilangHari($spd->lama_perjalanan).') hari';
         }
 
         return view('spds.print', compact('spd', 'kopSuratBase64', 'lamaHuruf'));
@@ -138,7 +138,7 @@ class SpdController extends Controller
             return $ones[$n];
         }
         if ($n < 20) {
-            return $ones[$n - 10] . ' belas';
+            return $ones[$n - 10].' belas';
         }
         if ($n < 100) {
             $tens = intdiv($n, 10);
@@ -148,7 +148,8 @@ class SpdController extends Controller
                 5 => 'lima puluh', 6 => 'enam puluh', 7 => 'tujuh puluh',
                 8 => 'delapan puluh', 9 => 'sembilan puluh',
             ];
-            return $tensWord[$tens] . ($unit ? ' ' . $ones[$unit] : '');
+
+            return $tensWord[$tens].($unit ? ' '.$ones[$unit] : '');
         }
 
         return (string) $n;

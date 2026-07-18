@@ -55,7 +55,7 @@ class SptjmController extends Controller
         $kopSuratBase64 = null;
         $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
         if ($logo && $logo->image) {
-            $kopSuratBase64 = 'data:' . ($logo->mime ?: 'image/png') . ';base64,' . base64_encode($logo->image);
+            $kopSuratBase64 = 'data:'.($logo->mime ?: 'image/png').';base64,'.base64_encode($logo->image);
         }
 
         return view('sptjms.print', compact('sptjm', 'kopSuratBase64'));

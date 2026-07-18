@@ -63,7 +63,7 @@ class Asn extends Model
 
     public function getPangkatAttribute(): string
     {
-        if (!$this->pangkat_golongan) {
+        if (! $this->pangkat_golongan) {
             return '';
         }
 
@@ -74,7 +74,7 @@ class Asn extends Model
 
     public function getGolonganAttribute(): string
     {
-        if (!$this->pangkat_golongan) {
+        if (! $this->pangkat_golongan) {
             return '';
         }
 

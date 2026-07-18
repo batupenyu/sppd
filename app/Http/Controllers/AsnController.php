@@ -13,6 +13,7 @@ class AsnController extends Controller
     public function index()
     {
         $asns = Asn::latest()->paginate(10);
+
         return view('asns.index', compact('asns'));
     }
 
@@ -172,7 +173,7 @@ class AsnController extends Controller
     public function export()
     {
         $asns = Asn::all();
-        $filename = 'data_asn_' . date('Y-m-d_H-i-s') . '.csv';
+        $filename = 'data_asn_'.date('Y-m-d_H-i-s').'.csv';
 
         $headers = [
             'Nama',
@@ -291,16 +292,16 @@ class AsnController extends Controller
 
         return Response::stream($callback, 200, [
             'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
         ]);
     }
 
     public function exportXlsx()
     {
         $asns = Asn::all();
-        $filename = 'data_asn_' . date('Y-m-d_H-i-s') . '.xlsx';
+        $filename = 'data_asn_'.date('Y-m-d_H-i-s').'.xlsx';
 
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->fromArray([
@@ -409,7 +410,7 @@ class AsnController extends Controller
                 $asn->lintang,
                 $asn->bujur,
                 $asn->nuks,
-            ], null, 'A' . $row);
+            ], null, 'A'.$row);
             $row++;
         }
 
@@ -540,20 +541,20 @@ class AsnController extends Controller
             }
 
             try {
-                if (!empty($data)) {
+                if (! empty($data)) {
                     Asn::create($data);
                     $rowCount++;
                 }
             } catch (\Exception $e) {
-                $errorRows[] = 'Baris ' . ($rowCount + 2) . ': ' . $e->getMessage();
+                $errorRows[] = 'Baris '.($rowCount + 2).': '.$e->getMessage();
             }
         }
 
         fclose($file);
 
         $message = "Import selesai. {$rowCount} data berhasil diimport.";
-        if (!empty($errorRows)) {
-            $message .= '<br>Error:<br>' . implode('<br>', $errorRows);
+        if (! empty($errorRows)) {
+            $message .= '<br>Error:<br>'.implode('<br>', $errorRows);
         }
 
         return redirect()->route('asns.index')->with('success', $message);

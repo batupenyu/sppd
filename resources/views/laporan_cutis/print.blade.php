@@ -5,7 +5,7 @@
     <title>Kartu Kendali Cuti - {{ $laporanCuti->asn->nama ?? 'Pegawai' }}</title>
     <style>
         @page {
-            size: A4 landscape;
+            size: 297mm 210mm;
             margin: 0.5cm 2cm 1cm 2cm;
         }
         body {
@@ -14,11 +14,25 @@
             line-height: 1.5;
             color: #000;
         }
-        .outer-container {
-            border: 1px solid black;
-            padding: 10px;
-            height: 98%;
-            box-sizing: border-box;
+        .page {
+            width: 297mm;
+            min-height: 210mm;
+            padding: 15mm 18mm;
+            margin: 20px auto;
+            background: white;
+            position: relative;
+            box-shadow: 0 0 6px rgba(0,0,0,0.3);
+        }
+        .no-print { margin-top: 20px; text-align: center; }
+        @media print {
+            body { background: white; }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                page-break-after: always;
+                border: 1px solid #000;
+            }
+            .no-print { display: none !important; }
         }
         .header {
             text-align: center;
@@ -114,14 +128,10 @@
         .signature-block .nip {
             margin-top: 5px;
         }
-        .no-print { margin-top: 20px; text-align: center; }
-        @media print {
-            .no-print { display: none !important; }
-        }
     </style>
 </head>
 <body>
-    <div class="outer-container">
+    <div class="page container">
         <div class="header">
             <h4>KARTU KENDALI CUTI PEGAWAI NEGERI SIPIL</h4>
             <h4>SMK NEGERI 1 KOBA</h4>

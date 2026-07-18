@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AnggotaKeluargaKp4;
 use App\Models\Asn;
 use App\Models\LogoSetting;
 use App\Models\SuratKp4;

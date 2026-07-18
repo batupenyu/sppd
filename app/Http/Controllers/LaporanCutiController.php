@@ -99,15 +99,24 @@ class LaporanCutiController extends Controller
 
         $pages = [];
         $globalNumber = 1;
+        $runningBalance = (int) ($laporanCuti->total_alokasi_awal ?: 24);
+
         foreach ($chunks as $chunk) {
             $rows = [];
             foreach ($chunk as $suratCuti) {
+                $lhc = $this->calculateLeaveDays($suratCuti->tanggal_mulai_cuti, $suratCuti->tanggal_selesai_cuti);
+
+                $atbForRow = $runningBalance;
+                $stbForRow = max(0, $runningBalance - $lhc);
+
+                $runningBalance = $stbForRow;
+
                 $rows[] = [
                     'number' => $globalNumber++,
                     'surat_cuti' => $suratCuti,
-                    'lhc' => $this->calculateLeaveDays($suratCuti->tanggal_mulai_cuti, $suratCuti->tanggal_selesai_cuti),
-                    'atb_for_row' => '0',
-                    'stb_for_row' => '0',
+                    'lhc' => $lhc,
+                    'atb_for_row' => $atbForRow,
+                    'stb_for_row' => $stbForRow,
                 ];
             }
             $pages[] = ['rows' => $rows];

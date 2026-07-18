@@ -13,6 +13,7 @@ class DataSiswaController extends Controller
     public function index()
     {
         $siswas = DataSiswa::latest()->paginate(10);
+
         return view('data_siswa.index', compact('siswas'));
     }
 
@@ -80,7 +81,7 @@ class DataSiswaController extends Controller
     public function exportCsv()
     {
         $siswas = DataSiswa::all();
-        $filename = 'data_siswa_' . date('Y-m-d_H-i-s') . '.csv';
+        $filename = 'data_siswa_'.date('Y-m-d_H-i-s').'.csv';
 
         $headers = [
             'Nama',
@@ -111,16 +112,16 @@ class DataSiswaController extends Controller
 
         return Response::stream($callback, 200, [
             'Content-Type' => 'text/csv',
-            'Content-Disposition' => 'attachment; filename="' . $filename . '"',
+            'Content-Disposition' => 'attachment; filename="'.$filename.'"',
         ]);
     }
 
     public function exportXlsx()
     {
         $siswas = DataSiswa::all();
-        $filename = 'data_siswa_' . date('Y-m-d_H-i-s') . '.xlsx';
+        $filename = 'data_siswa_'.date('Y-m-d_H-i-s').'.xlsx';
 
-        $spreadsheet = new Spreadsheet();
+        $spreadsheet = new Spreadsheet;
         $sheet = $spreadsheet->getActiveSheet();
 
         $sheet->fromArray([
@@ -141,7 +142,7 @@ class DataSiswaController extends Controller
                 $siswa->tgl_lahir,
                 $siswa->kelas,
                 $siswa->alamat,
-            ], null, 'A' . $row);
+            ], null, 'A'.$row);
             $row++;
         }
 
@@ -177,7 +178,7 @@ class DataSiswaController extends Controller
             $sheet = $spreadsheet->getActiveSheet();
             $rows = $sheet->toArray();
         } catch (\Exception $e) {
-            return redirect()->back()->with('success', 'Gagal membaca file: ' . $e->getMessage());
+            return redirect()->back()->with('success', 'Gagal membaca file: '.$e->getMessage());
         }
 
         if (empty($rows)) {
@@ -200,7 +201,7 @@ class DataSiswaController extends Controller
         $errorRows = [];
 
         foreach ($rows as $r) {
-            if (array_filter($r, fn($v) => $v !== null && $v !== '') === []) {
+            if (array_filter($r, fn ($v) => $v !== null && $v !== '') === []) {
                 continue;
             }
 
@@ -222,18 +223,18 @@ class DataSiswaController extends Controller
             }
 
             try {
-                if (!empty($data['nama'])) {
+                if (! empty($data['nama'])) {
                     DataSiswa::create($data);
                     $rowCount++;
                 }
             } catch (\Exception $e) {
-                $errorRows[] = 'Baris ' . ($rowCount + 2) . ': ' . $e->getMessage();
+                $errorRows[] = 'Baris '.($rowCount + 2).': '.$e->getMessage();
             }
         }
 
         $message = "Import selesai. {$rowCount} data berhasil diimport.";
-        if (!empty($errorRows)) {
-            $message .= '<br>Error:<br>' . implode('<br>', $errorRows);
+        if (! empty($errorRows)) {
+            $message .= '<br>Error:<br>'.implode('<br>', $errorRows);
         }
 
         return redirect()->route('data-siswa.index')->with('success', $message);

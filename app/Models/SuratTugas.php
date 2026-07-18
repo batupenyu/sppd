@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SuratTugas extends Model
 {
@@ -36,7 +37,7 @@ class SuratTugas extends Model
         'tanggal_dikeluarkan' => 'date',
     ];
 
-    public function penandatangan(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function penandatangan(): BelongsTo
     {
         return $this->belongsTo(Asn::class, 'penandatangan_id');
     }

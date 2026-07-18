@@ -76,7 +76,7 @@ class LogoController extends Controller
 
     public function show(LogoSetting $logo)
     {
-        if (!$logo->image) {
+        if (! $logo->image) {
             abort(404);
         }
 
@@ -90,7 +90,7 @@ class LogoController extends Controller
         $logo = LogoSetting::where('name', $name)->first()
             ?? LogoSetting::latest()->first();
 
-        if (!$logo || !$logo->image) {
+        if (! $logo || ! $logo->image) {
             return response()->json([
                 'success' => false,
                 'message' => 'Logo tidak ditemukan',
