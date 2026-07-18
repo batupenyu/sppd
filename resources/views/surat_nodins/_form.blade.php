@@ -1,4 +1,5 @@
 @php($suratNodin = $suratNodin ?? null)
+@php($pesertaIndex = 0)
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="md:col-span-2">
@@ -60,7 +61,6 @@
 
     <div class="md:col-span-2">
         <div id="peserta-container">
-            @php $pesertaIndex = 0; @endphp
             @if(old('peserta') && is_array(old('peserta')))
                 @foreach(old('peserta') as $item)
                     @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
