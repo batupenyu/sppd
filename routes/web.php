@@ -1,15 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AsnController;
-use App\Http\Controllers\SpdController;
-use App\Http\Controllers\LogoController;
-use App\Http\Controllers\SptjmController;
-use App\Http\Controllers\DrhSatyalancanaController;
-use App\Http\Controllers\SuratTugasController;
-use App\Http\Controllers\SpmtController;
-use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\DataSiswaController;
+use App\Http\Controllers\DrhSatyalancanaController;
+use App\Http\Controllers\LogoController;
+use App\Http\Controllers\SpdController;
+use App\Http\Controllers\SpmtController;
+use App\Http\Controllers\SptjmController;
+use App\Http\Controllers\SuratCutiController;
+use App\Http\Controllers\SuratDispensasiController;
+use App\Http\Controllers\SuratTugasController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
@@ -57,3 +58,7 @@ Route::resource('surat-cutis', SuratCutiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-cutis/{surat_cuti}', [SuratCutiController::class, 'destroy'])->name('surat-cutis.destroy');
 Route::get('surat-cutis/{surat_cuti}/print', [SuratCutiController::class, 'print'])->name('surat-cutis.print');
+Route::resource('surat-dispensasis', SuratDispensasiController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-dispensasis/{surat_dispensasi}', [SuratDispensasiController::class, 'destroy'])->name('surat-dispensasis.destroy');
+Route::get('surat-dispensasis/{surat_dispensasi}/print', [SuratDispensasiController::class, 'print'])->name('surat-dispensasis.print');
