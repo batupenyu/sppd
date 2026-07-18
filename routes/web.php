@@ -7,6 +7,8 @@ use App\Http\Controllers\LogoController;
 use App\Http\Controllers\SptjmController;
 use App\Http\Controllers\DrhSatyalancanaController;
 use App\Http\Controllers\SuratTugasController;
+use App\Http\Controllers\SpmtController;
+use App\Http\Controllers\SuratCutiController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,3 +41,11 @@ Route::resource('surat-tugas', SuratTugasController::class)
     ->parameter('surat-tugas', 'surat_tugas');
 Route::delete('surat-tugas/{surat_tugas}', [SuratTugasController::class, 'destroy'])->name('surat-tugas.destroy');
 Route::get('surat-tugas/{surat_tugas}/print', [SuratTugasController::class, 'print'])->name('surat-tugas.print');
+Route::resource('spmts', SpmtController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('spmts/{spmt}', [SpmtController::class, 'destroy'])->name('spmts.destroy');
+Route::get('spmts/{spmt}/print', [SpmtController::class, 'print'])->name('spmts.print');
+Route::resource('surat-cutis', SuratCutiController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-cutis/{surat_cuti}', [SuratCutiController::class, 'destroy'])->name('surat-cutis.destroy');
+Route::get('surat-cutis/{surat_cuti}/print', [SuratCutiController::class, 'print'])->name('surat-cutis.print');

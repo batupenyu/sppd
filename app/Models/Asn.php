@@ -59,4 +59,26 @@ class Asn extends Model
         'bujur',
         'nuks',
     ];
+
+    public function getPangkatAttribute(): string
+    {
+        if (!$this->pangkat_golongan) {
+            return '';
+        }
+
+        $parts = explode(',', $this->pangkat_golongan, 2);
+
+        return trim($parts[0]);
+    }
+
+    public function getGolonganAttribute(): string
+    {
+        if (!$this->pangkat_golongan) {
+            return '';
+        }
+
+        $parts = explode(',', $this->pangkat_golongan, 2);
+
+        return isset($parts[1]) ? trim($parts[1]) : '';
+    }
 }
