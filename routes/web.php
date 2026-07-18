@@ -14,6 +14,7 @@ use App\Http\Controllers\SuratKp4Controller;
 use App\Http\Controllers\SuratPanggilanSiswaController;
 use App\Http\Controllers\SuratPengantarController;
 use App\Http\Controllers\SuratRekomendasiController;
+use App\Http\Controllers\SuratResmiController;
 use App\Http\Controllers\SuratTugasController;
 use Illuminate\Support\Facades\Route;
 
@@ -88,3 +89,7 @@ Route::resource('surat-rekomendasis', SuratRekomendasiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-rekomendasis/{surat_rekomendasi}', [SuratRekomendasiController::class, 'destroy'])->name('surat-rekomendasis.destroy');
 Route::get('surat-rekomendasis/{surat_rekomendasi}/print', [SuratRekomendasiController::class, 'print'])->name('surat-rekomendasis.print');
+Route::resource('surat-resmis', SuratResmiController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-resmis/{surat_resmi}', [SuratResmiController::class, 'destroy'])->name('surat-resmis.destroy');
+Route::get('surat-resmis/{surat_resmi}/print', [SuratResmiController::class, 'print'])->name('surat-resmis.print');
