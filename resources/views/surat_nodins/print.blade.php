@@ -203,7 +203,11 @@
     <div class="clearfix">
       <div class="signature-container">
         <div class="signature-title">
-          {{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @if(stripos($suratNodin->penandatangan->jabatan ?? '', 'kepala dinas') !== false)
+                {{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @else
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @endif
           <span class="signature-unit">{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
         </div>
         <div class="signature-body">
