@@ -21,6 +21,7 @@
                         <a href="{{ route('drh-satyalancana.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">DRH Satyalancana</a>
                         <a href="{{ route('sptjms.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPTJM</a>
                         <a href="{{ route('spmts.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">SPMT</a>
+                        <a href="{{ route('surat-cutis.index') }}" class="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">Surat Cuti</a>
                     </div>
                 </div>
             </div>
