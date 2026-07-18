@@ -91,8 +91,8 @@
     text-align: center;
     font-weight: bold;
   }
-  table.spd td.desc { width: 34%; }
-  table.spd td.sub-letter { width: 33%; text-align: left; }
+  table.spd td.desc { width: 40%; }
+  table.spd td.sub-letter { width: 31%; text-align: left; }
   .sub-list td { border-top: none; }
   .footnote {
     font-size: 12px;
