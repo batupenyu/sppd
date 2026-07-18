@@ -92,7 +92,7 @@
           <td class="num">4.</td>
           <td class="label">Jenis Kelamin</td>
           <td class="colon">:</td>
-          <td class="value">{{ $pegawai ? $pegawai->jk : '' }}</td>
+          <td class="value">{{ $pegawai->jk === 'L' ? 'Laki-laki' : ($pegawai->jk === 'P' ? 'Perempuan' : ($pegawai->jk ?? '')) }}</td>
         </tr>
         <tr>
           <td class="num">5.</td>

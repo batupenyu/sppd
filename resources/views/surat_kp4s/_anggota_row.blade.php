@@ -2,7 +2,7 @@
 @php($i = $i ?? 0)
 <tr class="anggota-row border-t">
     <td class="px-2 py-2">
-        <input type="text" name="anggota[{{ $i }}][nama]" value="{{ old('anggota.' . $i . '.nama', $a['nama'] ?? '') }}" class="w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="anggota[{{ $i }}][nama]" value="{{ old('anggota.' . $i . '.nama', $a['nama'] ?? '') }}" placeholder="Nama" class="w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
     </td>
     <td class="px-2 py-2">
         <input type="date" name="anggota[{{ $i }}][tanggal_kelahiran]" value="{{ old('anggota.' . $i . '.tanggal_kelahiran', isset($a['tanggal_kelahiran']) ? (is_array($a['tanggal_kelahiran']) ? ($a['tanggal_kelahiran']['date'] ?? '') : \Carbon\Carbon::parse($a['tanggal_kelahiran'])->format('Y-m-d')) : '') }}" class="w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">

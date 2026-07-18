@@ -12,6 +12,7 @@ class AnggotaKeluargaKp4 extends Model
     protected $fillable = [
         'surat_kp4_id',
         'nama',
+        'nama_suami_istri',
         'tanggal_kelahiran',
         'tanggal_perkawinan',
         'pekerjaan',

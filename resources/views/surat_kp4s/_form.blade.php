@@ -95,14 +95,57 @@
     </div>
 </div>
 
-<template id="anggota-template">
-    @include('surat_kp4s._anggota_row', ['a' => null, 'i' => '__INDEX__'])
-</template>
+<table style="display:none;">
+    <tbody id="anggota-template">
+        @include('surat_kp4s._anggota_row', ['a' => null, 'i' => '__INDEX__'])
+    </tbody>
+</table>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    const pegawaiSelect = document.querySelector('select[name="pegawai_id"]');
+    const pegawaiNamaSuamiIstri = {!! json_encode($asns->pluck('nama_suami_istri', 'id')->toArray()) !!};
+
+    function autoFillNamaForRow(row, pegawaiId) {
+        const namaInput = row.querySelector('input[name$="[nama]"]');
+        const keteranganInput = row.querySelector('input[name$="[keterangan]"]');
+
+        if (!namaInput || !keteranganInput || !pegawaiId) return;
+
+        const ket = keteranganInput.value.toLowerCase().trim();
+        if (ket === 'istri' || ket === 'suami') {
+            if (pegawaiNamaSuamiIstri[pegawaiId]) {
+                namaInput.value = pegawaiNamaSuamiIstri[pegawaiId];
+            }
+        }
+    }
+
+    if (pegawaiSelect) {
+        pegawaiSelect.addEventListener('change', function () {
+            const firstRow = document.querySelector('.anggota-row');
+            if (firstRow) {
+                autoFillNamaForRow(firstRow, this.value);
+            }
+        });
+
+        if (pegawaiSelect.value) {
+            const firstRow = document.querySelector('.anggota-row');
+            if (firstRow) {
+                autoFillNamaForRow(firstRow, pegawaiSelect.value);
+            }
+        }
+    }
+
     const list = document.querySelector('.anggota-list');
-    const template = document.getElementById('anggota-template');
+    list.addEventListener('input', function (e) {
+        if (e.target.matches('input[name$="[keterangan]"]')) {
+            const row = e.target.closest('tr');
+            const pegawaiId = pegawaiSelect ? pegawaiSelect.value : '';
+            autoFillNamaForRow(row, pegawaiId);
+        }
+    });
+
+    const templateRow = document.querySelector('#anggota-template tr');
     const btnTambah = document.getElementById('tambah-anggota');
 
     function nextIndex() {
@@ -110,8 +153,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     btnTambah.addEventListener('click', function () {
-        let html = template.innerHTML.replaceAll('__INDEX__', nextIndex());
-        list.insertAdjacentHTML('beforeend', html);
+        const clone = templateRow.cloneNode(true);
+        const index = nextIndex();
+        clone.querySelectorAll('input, select, textarea').forEach(function(el) {
+            if (el.name) {
+                el.name = el.name.replace('__INDEX__', index);
+            }
+            if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'date')) {
+                el.value = '';
+            } else if (el.tagName === 'INPUT' && el.type === 'checkbox') {
+                el.checked = false;
+            }
+        });
+        list.appendChild(clone);
     });
 
     list.addEventListener('click', function (e) {

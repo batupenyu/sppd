@@ -112,6 +112,7 @@ class SuratKp4Controller extends Controller
 
             $suratKp4->anggotaKeluarga()->create([
                 'nama' => $item['nama'],
+                'nama_suami_istri' => $item['nama_suami_istri'] ?? null,
                 'tanggal_kelahiran' => $item['tanggal_kelahiran'] ?? null,
                 'tanggal_perkawinan' => $item['tanggal_perkawinan'] ?? null,
                 'pekerjaan' => $item['pekerjaan'] ?? null,
