@@ -21,7 +21,7 @@
             background-color: white;
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm;
+            padding: 0.5cm 20mm 20mm 20mm;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             box-sizing: border-box;
         }
@@ -161,13 +161,9 @@
                 <td class="signature-space"></td>
             </tr>
             <tr>
-                <td><strong><u>{{ $suratMewakili->penunjuk_nama ?: ($suratMewakili->penunjuk->nama ?? '') }}</u></strong></td>
-            </tr>
-            <tr>
-                <td>{{ $suratMewakili->penunjuk_pangkat_gol ?: (($suratMewakili->penunjuk->pangkat ?? '') . ' / ' . ($suratMewakili->penunjuk->golongan ?? '')) }}</td>
-            </tr>
-            <tr>
-                <td>NIP {{ $suratMewakili->penunjuk_nip ?: ($suratMewakili->penunjuk->nip ?? '') }}</td>
+                <td><strong><u>{{ $suratMewakili->penunjuk_nama ?: ($suratMewakili->penunjuk->nama ?? '') }}</u></strong><br>
+                {{ $suratMewakili->penunjuk_pangkat_gol ?: (($suratMewakili->penunjuk->pangkat ?? '') . ' / ' . ($suratMewakili->penunjuk->golongan ?? '')) }}<br>
+                NIP {{ $suratMewakili->penunjuk_nip ?: ($suratMewakili->penunjuk->nip ?? '') }}</td>
             </tr>
         </table>
     </div>
