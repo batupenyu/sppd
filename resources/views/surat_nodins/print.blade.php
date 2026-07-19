@@ -248,7 +248,7 @@
             <?php $rowspan = count($group['items']); ?>
             @foreach($group['items'] as $index => $peserta)
                 <tr>
-                  <td class="text-center"><?php echo e($no + $index + 1); ?>.</td>
+                  <td style="text-align: center;"><?php echo e($no + $index + 1); ?>.</td>
                   <td>
                     @if($peserta->pegawai)
                       {{ $peserta->pegawai->nama }}
