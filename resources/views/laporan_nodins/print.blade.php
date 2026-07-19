@@ -75,7 +75,7 @@
             vertical-align: top;
         }
         .section-table td.num {
-            width: 40px;
+            width: 20px;
         }
         .section-table td.sub-label {
             width: 120px;
