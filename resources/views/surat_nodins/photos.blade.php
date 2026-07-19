@@ -7,7 +7,11 @@
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold">Foto Lampiran - {{ $suratNodin->nomor ?: 'Tanpa Nomor' }}</h1>
-                    <a href="{{ route('surat-nodins.index') }}" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Kembali</a>
+                    <div class="flex gap-2">
+                        <a href="{{ route('surat-nodins.photo-lampiran', $suratNodin) }}" target="_blank" style="background:#16a34a; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; font-weight:bold;">Lampiran Foto</a>
+                        <a href="{{ route('surat-nodins.photo-lampiran', $suratNodin) }}" target="_blank" style="background:#dc2626; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; font-weight:bold;">Cetak (PDF)</a>
+                        <a href="{{ route('surat-nodins.index') }}" style="background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; font-weight:bold;">Kembali</a>
+                    </div>
                 </div>
 
                 @if(session('success'))
@@ -27,12 +31,12 @@
                             @endif
                             <div class="p-3">
                                 <p class="text-sm mb-2">{{ $photo->caption ?: '-' }}</p>
-                                <div class="flex gap-2">
-                                    <a href="{{ route('surat-nodins.photos.edit', [$suratNodin, $photo]) }}" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium rounded-full bg-yellow-100 text-yellow-800 hover:bg-yellow-200">Ubah</a>
+                    <div class="flex gap-2 flex-wrap">
+                                    <a href="{{ route('surat-nodins.photos.edit', [$suratNodin, $photo]) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-3 rounded text-sm">Ubah</a>
                                     <form action="{{ route('surat-nodins.photos.destroy', [$suratNodin, $photo]) }}" method="POST" class="inline" onsubmit="return confirm('Hapus foto ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="inline-flex items-center px-2.5 py-1.5 text-xs font-medium rounded-full bg-red-100 text-red-800 hover:bg-red-200">Hapus</button>
+                                        <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded text-sm">Hapus</button>
                                     </form>
                                 </div>
                             </div>

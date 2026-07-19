@@ -76,7 +76,7 @@ class SuratNodinController extends Controller
 
     public function print(SuratNodin $suratNodin): View
     {
-        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa', 'photos');
+        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
 
         $kopSuratBase64 = null;
         $logoName = $suratNodin->kop_surat ?: 'kop_smk';
@@ -93,6 +93,13 @@ class SuratNodinController extends Controller
         $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
 
         return view('surat_nodins.lampiran', compact('suratNodin'));
+    }
+
+    public function photoLampiran(SuratNodin $suratNodin): View
+    {
+        $suratNodin->load('penandatangan', 'photos');
+
+        return view('surat_nodins.photo_lampiran', compact('suratNodin'));
     }
 
     public function photos(SuratNodin $suratNodin): View
