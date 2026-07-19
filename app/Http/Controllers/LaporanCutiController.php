@@ -24,7 +24,9 @@ class LaporanCutiController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('laporan_cutis.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('laporan_cutis.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -50,7 +52,9 @@ class LaporanCutiController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $laporanCuti->load('penandatangan', 'asn');
 
-        return view('laporan_cutis.edit', compact('asns', 'laporanCuti'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('laporan_cutis.edit', compact('asns', 'laporanCuti', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, LaporanCuti $laporanCuti): RedirectResponse

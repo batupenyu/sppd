@@ -26,7 +26,9 @@ class SuratDispensasiController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $siswas = DataSiswa::orderBy('nama')->get();
 
-        return view('surat_dispensasis.create', compact('asns', 'siswas'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_dispensasis.create', compact('asns', 'siswas', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -95,7 +97,9 @@ class SuratDispensasiController extends Controller
             }
         }
 
-        return view('surat_dispensasis.edit', compact('asns', 'siswas', 'suratDispensasi', 'selectedPeserta'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_dispensasis.edit', compact('asns', 'siswas', 'suratDispensasi', 'selectedPeserta', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratDispensasi $suratDispensasi): RedirectResponse

@@ -28,7 +28,9 @@ class SuratKeteranganController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $siswas = DataSiswa::orderBy('nama')->get();
 
-        return view('surat_keterangans.create', compact('asns', 'siswas'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_keterangans.create', compact('asns', 'siswas', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -47,7 +49,9 @@ class SuratKeteranganController extends Controller
         $siswas = DataSiswa::orderBy('nama')->get();
         $suratKeterangan->load('penandatangan', 'pegawai', 'siswa');
 
-        return view('surat_keterangans.edit', compact('asns', 'siswas', 'suratKeterangan'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_keterangans.edit', compact('asns', 'siswas', 'suratKeterangan', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratKeterangan $suratKeterangan): RedirectResponse

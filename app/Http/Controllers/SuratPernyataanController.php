@@ -26,7 +26,9 @@ class SuratPernyataanController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_pernyataans.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_pernyataans.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -44,7 +46,9 @@ class SuratPernyataanController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $suratPernyataan->load('penandatangan', 'pegawai');
 
-        return view('surat_pernyataans.edit', compact('asns', 'suratPernyataan'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_pernyataans.edit', compact('asns', 'suratPernyataan', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratPernyataan $suratPernyataan): RedirectResponse

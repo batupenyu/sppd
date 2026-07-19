@@ -27,7 +27,9 @@ class LaporanNodinController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $logos = LogoSetting::orderBy('name')->get();
 
-        return view('laporan_nodins.create', compact('asns', 'logos'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('laporan_nodins.create', compact('asns', 'logos', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,7 +48,9 @@ class LaporanNodinController extends Controller
         $logos = LogoSetting::orderBy('name')->get();
         $laporanNodin->load('penandatangan');
 
-        return view('laporan_nodins.edit', compact('asns', 'logos', 'laporanNodin'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('laporan_nodins.edit', compact('asns', 'logos', 'laporanNodin', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, LaporanNodin $laporanNodin): RedirectResponse

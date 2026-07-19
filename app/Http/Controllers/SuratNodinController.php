@@ -30,7 +30,9 @@ class SuratNodinController extends Controller
         $siswas = DataSiswa::orderBy('nama')->get();
         $logos = \App\Models\LogoSetting::orderBy('name')->get();
 
-        return view('surat_nodins.create', compact('asns', 'siswas', 'logos'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_nodins.create', compact('asns', 'siswas', 'logos', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -51,7 +53,9 @@ class SuratNodinController extends Controller
         $logos = \App\Models\LogoSetting::orderBy('name')->get();
         $suratNodin->load('penandatangan', 'pesertaSuratUsulans');
 
-        return view('surat_nodins.edit', compact('asns', 'siswas', 'logos', 'suratNodin'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_nodins.edit', compact('asns', 'siswas', 'logos', 'suratNodin', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratNodin $suratNodin): RedirectResponse

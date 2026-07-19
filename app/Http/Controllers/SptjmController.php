@@ -22,7 +22,9 @@ class SptjmController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('sptjms.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('sptjms.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -66,7 +68,9 @@ class SptjmController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $sptjm->load('pegawai');
 
-        return view('sptjms.edit', compact('asns', 'sptjm'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('sptjms.edit', compact('asns', 'sptjm', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, Sptjm $sptjm): RedirectResponse

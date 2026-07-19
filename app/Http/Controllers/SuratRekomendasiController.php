@@ -26,7 +26,9 @@ class SuratRekomendasiController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_rekomendasis.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_rekomendasis.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -44,7 +46,9 @@ class SuratRekomendasiController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $suratRekomendasi->load('penandatangan', 'pegawai');
 
-        return view('surat_rekomendasis.edit', compact('asns', 'suratRekomendasi'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_rekomendasis.edit', compact('asns', 'suratRekomendasi', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratRekomendasi $suratRekomendasi): RedirectResponse

@@ -22,7 +22,9 @@ class SpmtController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('spmts.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('spmts.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -53,7 +55,9 @@ class SpmtController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $spmt->load('penandatangan', 'pegawai');
 
-        return view('spmts.edit', compact('asns', 'spmt'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('spmts.edit', compact('asns', 'spmt', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, Spmt $spmt): RedirectResponse

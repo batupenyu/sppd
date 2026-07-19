@@ -82,4 +82,11 @@ class Asn extends Model
 
         return isset($parts[1]) ? trim($parts[1]) : '';
     }
+
+    public static function defaultPenandatanganId(): ?int
+    {
+        $asn = static::where('nama', 'like', '%Syahryanto%')->first();
+
+        return $asn?->id;
+    }
 }

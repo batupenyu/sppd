@@ -26,7 +26,9 @@ class SuratResmiController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_resmis.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_resmis.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -48,7 +50,9 @@ class SuratResmiController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $suratResmi->load('penandatangan', 'pegawai');
 
-        return view('surat_resmis.edit', compact('asns', 'suratResmi'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_resmis.edit', compact('asns', 'suratResmi', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratResmi $suratResmi): RedirectResponse

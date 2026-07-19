@@ -48,7 +48,7 @@
                                         data-nip="{{ $asn->nip ?: '' }}"
                                         data-jabatan="{{ $asn->tugas_tambahan ?: ($asn->jenis_ptk ?: ($asn->pangkat_golongan ?: '')) }}"
                                         data-pangkat="{{ $asn->pangkat_golongan ?: '' }}"
-                                        {{ old('penandatangan_id', $sptjm->penandatangan_id) == $asn->id ? 'selected' : '' }}>
+                                        {{ old('penandatangan_id', $sptjm->penandatangan_id ?? $defaultPenandatanganId) == $asn->id ? 'selected' : '' }}>
                                         {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
                                     </option>
                                 @endforeach

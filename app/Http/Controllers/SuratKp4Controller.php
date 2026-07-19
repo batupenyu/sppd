@@ -26,7 +26,9 @@ class SuratKp4Controller extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_kp4s.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_kp4s.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,7 +48,9 @@ class SuratKp4Controller extends Controller
         $asns = Asn::orderBy('nama')->get();
         $suratKp4->load('pegawai', 'penandatangan', 'anggotaKeluarga');
 
-        return view('surat_kp4s.edit', compact('asns', 'suratKp4'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_kp4s.edit', compact('asns', 'suratKp4', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratKp4 $suratKp4): RedirectResponse

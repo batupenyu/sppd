@@ -57,7 +57,7 @@
         <select name="penandatangan_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
             <option value="">-- Pilih Penandatangan --</option>
             @foreach($asns as $asn)
-                <option value="{{ $asn->id }}" {{ old('penandatangan_id', $kp4->penandatangan_id ?? '') == $asn->id ? 'selected' : '' }}>
+                <option value="{{ $asn->id }}" {{ old('penandatangan_id', $kp4->penandatangan_id ?? $defaultPenandatanganId) == $asn->id ? 'selected' : '' }}>
                     {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
                 </option>
             @endforeach

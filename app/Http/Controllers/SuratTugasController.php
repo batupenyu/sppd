@@ -22,7 +22,9 @@ class SuratTugasController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_tugas.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_tugas.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -52,7 +54,9 @@ class SuratTugasController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_tugas.edit', compact('suratTugas', 'asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_tugas.edit', compact('suratTugas', 'asns', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratTugas $suratTugas): RedirectResponse

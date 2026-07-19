@@ -26,7 +26,9 @@ class SuratSantunanController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_santunans.create', compact('asns'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_santunans.create', compact('asns', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -44,7 +46,9 @@ class SuratSantunanController extends Controller
         $asns = Asn::orderBy('nama')->get();
         $suratSantunan->load('penandatangan', 'pegawai');
 
-        return view('surat_santunans.edit', compact('asns', 'suratSantunan'));
+        $defaultPenandatanganId = Asn::defaultPenandatanganId();
+
+        return view('surat_santunans.edit', compact('asns', 'suratSantunan', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratSantunan $suratSantunan): RedirectResponse
