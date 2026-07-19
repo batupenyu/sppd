@@ -380,10 +380,10 @@
         * Surat ini bersifat resmi dan harap dibawa saat pertemuan.
     </footer>
 
-    <div class="no-print" style="margin-top: 20px; text-align: center;">
-        <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
-        <a href="{{ route('surat-panggilan-siswas.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
-    </div>
+    <div class="no-print" style="text-align:center; margin-top:20px;padding-left:15px">
+    <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
+    <a href="{{ route('surat-panggilan-siswas.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+</div>
     </div>
 </body>
 </html>
