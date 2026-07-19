@@ -162,7 +162,7 @@
             <tr>
                 <td class="center-text">10.</td>
                 <td>Tanda Kehormatan yang sudah dimiliki (Nomor dan tanggal Keppres)</td>
-                <td>sudah mendapatkan SLKS yang ke {{ $drh->tanda_kehormatan ?: '-' }} ({{ $fmt($drh->tgl_kepres, '%d %B %Y') }} dan {{ $drh->no_kepres ?: '-' }})</td>
+                <td>{{ $drh->tanda_kehormatan ? ('sudah mendapatkan SLKS yang ke ' . $drh->tanda_kehormatan . ' (' . $fmt($drh->tgl_kepres, '%d %B %Y') . ' dan ' . ($drh->no_kepres ?: '-') . ')') : '-' }}</td>
             </tr>
             <tr>
                 <td class="center-text">11.</td>
