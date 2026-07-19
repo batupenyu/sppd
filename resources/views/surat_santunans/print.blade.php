@@ -130,8 +130,8 @@
     </table>
     <br /><br />
     <div class="address-block">
-      Kepada<br />
-      Yth.{{ $suratSantunan->instansi_tujuan_surat }}<br />
+      Kepada Yth.<br />
+      {{ $suratSantunan->instansi_tujuan_surat }}<br />
       di<br />
       {{ $suratSantunan->kota_tujuan_surat }}
     </div>

@@ -15,7 +15,7 @@
         color: #000;
       }
       td.label {
-        width: 150px;
+        width: 100px;
         white-space: nowrap;
       }
       td.value {
@@ -123,8 +123,8 @@
       <br />
 
       <p>
-        Kepada<br />
-        Yth. {{ $suratResmi->pejabat_tujuan_surat }}<br />
+        Kepada Yth.<br />
+        {{ $suratResmi->pejabat_tujuan_surat }}<br />
         di<br />
         <strong>{{ $suratResmi->kota_tujuan_surat }}</strong>
       </p>
