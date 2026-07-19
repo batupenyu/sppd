@@ -8,9 +8,8 @@
     $asns = $asns ?? [];
     $siswas = $siswas ?? [];
 ?>
-<div class="peserta-row grid grid-cols-1 md:grid-cols-5 gap-4 mb-4 p-4 border rounded">
-    <div>
-        <label class="block font-medium mb-1">Pegawai</label>
+<tr class="peserta-row border-t">
+    <td class="px-2 py-2">
         <select name="peserta[{{ $index }}][pegawai_id]" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
             <option value="">-- Pilih Pegawai --</option>
             @foreach($asns as $asn)
@@ -19,9 +18,8 @@
                 </option>
             @endforeach
         </select>
-    </div>
-    <div>
-        <label class="block font-medium mb-1">Siswa</label>
+    </td>
+    <td class="px-2 py-2">
         <select name="peserta[{{ $index }}][siswa_id]" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
             <option value="">-- Pilih Siswa --</option>
             @foreach($siswas as $siswa)
@@ -30,13 +28,14 @@
                 </option>
             @endforeach
         </select>
-    </div>
-    <div>
-        <label class="block font-medium mb-1">Tanggal Kegiatan</label>
+    </td>
+    <td class="px-2 py-2">
         <input type="date" name="peserta[{{ $index }}][tanggal_kegiatan]" value="{{ $item['tanggal_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
-    <div>
-        <label class="block font-medium mb-1">Tempat Kegiatan</label>
+    </td>
+    <td class="px-2 py-2">
         <input type="text" name="peserta[{{ $index }}][tempat_kegiatan]" value="{{ $item['tempat_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
-</div>
+    </td>
+    <td class="px-2 py-2 text-center">
+        <button type="button" class="hapus-peserta text-red-600 hover:text-red-800" title="Hapus">Hapus</button>
+    </td>
+</tr>

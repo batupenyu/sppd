@@ -291,7 +291,7 @@
                   </td>
                   <?php if($index == 0): ?>
                   <td rowspan="<?php echo e($rowspan); ?>">
-                    {{ $peserta->tanggal_kegiatan ? \App\Http\Controllers\SuratNodinController::formatTanggal($peserta->tanggal_kegiatan, '%d %B %Y') : '-' }} {{ $peserta->tempat_kegiatan ?: '-' }}
+                    {{ $peserta->tanggal_kegiatan ? \App\Http\Controllers\SuratNodinController::formatTanggal($peserta->tanggal_kegiatan, '%d %B %Y') : '-' }} di {{ $peserta->tempat_kegiatan ?: '-' }}
                   </td>
                   <?php endif; ?>
                 </tr>

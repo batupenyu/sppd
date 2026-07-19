@@ -1,4 +1,7 @@
-@php($suratNodin = $suratNodin ?? null)
+@php
+    $suratNodin = $suratNodin ?? null;
+    $pesertaIndex = 0;
+@endphp
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="md:col-span-2">
@@ -71,51 +74,81 @@
     </div>
 
     <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Pilih Pegawai</label>
-        <select name="pegawai_ids[]" id="pegawai-select" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-            @foreach($asns as $asn)
-                <option value="{{ $asn->id }}" {{ (old('pegawai_ids') && in_array($asn->id, old('pegawai_ids')) ?: (isset($suratNodin) && $suratNodin->pesertaSuratUsulans->where('pegawai_id', $asn->id)->count() > 0)) ? 'selected' : '' }}>
-                    {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
-                </option>
-            @endforeach
-        </select>
+        <div class="flex justify-between items-center mb-2">
+            <h2 class="text-lg font-semibold border-b pb-2">Daftar Peserta</h2>
+            <button type="button" id="tambah-peserta" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded">+ Tambah Peserta</button>
+        </div>
+        <div class="overflow-x-auto">
+            <table class="min-w-full table-auto border">
+                <thead class="bg-gray-50 dark:bg-gray-700">
+                    <tr>
+                        <th class="px-2 py-2 text-left">Pegawai</th>
+                        <th class="px-2 py-2 text-left">Siswa</th>
+                        <th class="px-2 py-2 text-left">Tanggal Kegiatan</th>
+                        <th class="px-2 py-2 text-left">Tempat Kegiatan</th>
+                        <th class="px-2 py-2 text-left"></th>
+                    </tr>
+                </thead>
+                <tbody class="peserta-list">
+                    @if(old('peserta') && is_array(old('peserta')))
+                        @foreach(old('peserta') as $item)
+                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
+                        @endforeach
+                    @elseif(isset($suratNodin) && $suratNodin->pesertaSuratUsulans->count() > 0)
+                        @foreach($suratNodin->pesertaSuratUsulans as $peserta)
+                            @php
+                                $pegawaiId = $peserta->pegawai_id ?? '';
+                                $siswaId = $peserta->siswa_id ?? '';
+                                $tanggalKegiatan = $peserta->tanggal_kegiatan ? \Carbon\Carbon::parse($peserta->tanggal_kegiatan)->format('Y-m-d') : '';
+                                $tempatKegiatan = $peserta->tempat_kegiatan ?? '';
+                            @endphp
+                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiId, 'siswa_id' => $siswaId, 'tanggal_kegiatan' => $tanggalKegiatan, 'tempat_kegiatan' => $tempatKegiatan], 'asns' => $asns, 'siswas' => $siswas])
+                        @endforeach
+                    @endif
+                    @if($pesertaIndex == 0)
+                        @include('surat_nodins._peserta_row', ['index' => 0, 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ''], 'asns' => $asns, 'siswas' => $siswas])
+                    @endif
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Pilih Siswa</label>
-        <select name="siswa_ids[]" id="siswa-select" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-            @foreach($siswas as $siswa)
-                <option value="{{ $siswa->id }}" {{ (old('siswa_ids') && in_array($siswa->id, old('siswa_ids')) ?: (isset($suratNodin) && $suratNodin->pesertaSuratUsulans->where('siswa_id', $siswa->id)->count() > 0)) ? 'selected' : '' }}>
-                    {{ $siswa->nama }} {{ $siswa->nis ? '(' . $siswa->nis . ')' : '' }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+    <table style="display:none;">
+        <tbody id="peserta-template">
+            @include('surat_nodins._peserta_row', ['index' => '__INDEX__', 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ''], 'asns' => $asns, 'siswas' => $siswas])
+        </tbody>
+    </table>
 
-    <div>
-        <label class="block font-medium mb-1">Tanggal Kegiatan</label>
-        <input type="date" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan', isset($suratNodin) && $suratNodin->pesertaSuratUsulans->first() ? \Carbon\Carbon::parse($suratNodin->pesertaSuratUsulans->first()->tanggal_kegiatan)->format('Y-m-d') : '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
-
-    <div>
-        <label class="block font-medium mb-1">Tempat Kegiatan</label>
-        <input type="text" name="tempat_kegiatan" value="{{ old('tempat_kegiatan', isset($suratNodin) && $suratNodin->pesertaSuratUsulans->first() ? $suratNodin->pesertaSuratUsulans->first()->tempat_kegiatan : '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
-
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            $('#pegawai-select').select2({
-                placeholder: '-- Pilih Pegawai --',
-                allowClear: true
+    document.addEventListener('DOMContentLoaded', function () {
+        const list = document.querySelector('.peserta-list');
+        const templateRow = document.querySelector('#peserta-template tr');
+        const btnTambah = document.getElementById('tambah-peserta');
+
+        function nextIndex() {
+            return list.querySelectorAll('tr.peserta-row').length;
+        }
+
+        btnTambah.addEventListener('click', function () {
+            const clone = templateRow.cloneNode(true);
+            const index = nextIndex();
+            clone.querySelectorAll('input, select').forEach(function(el) {
+                if (el.name) {
+                    el.name = el.name.replace('__INDEX__', index);
+                }
+                if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'date')) {
+                    el.value = '';
+                }
             });
-            $('#siswa-select').select2({
-                placeholder: '-- Pilih Siswa --',
-                allowClear: true
-            });
+            list.appendChild(clone);
         });
+
+        list.addEventListener('click', function (e) {
+            if (e.target.closest('.hapus-peserta')) {
+                e.target.closest('tr.peserta-row').remove();
+            }
+        });
+    });
     </script>
 
     <div class="md:col-span-2">
