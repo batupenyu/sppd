@@ -1,5 +1,4 @@
 @php($suratNodin = $suratNodin ?? null)
-@php($pesertaIndex = 0)
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="md:col-span-2">
@@ -60,27 +59,52 @@
     </div>
 
     <div class="md:col-span-2">
-        <div id="peserta-container">
-            @if(old('peserta') && is_array(old('peserta')))
-                @foreach(old('peserta') as $item)
-                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
-                @endforeach
-            @elseif(isset($suratNodin) && $suratNodin->pesertaSuratUsulans->count() > 0)
-                @foreach($suratNodin->pesertaSuratUsulans as $peserta)
-                    <?php
-                        $pegawaiId = $peserta->pegawai_id ?? '';
-                        $siswaId = $peserta->siswa_id ?? '';
-                        $tanggalKegiatan = $peserta->tanggal_kegiatan ? \Carbon\Carbon::parse($peserta->tanggal_kegiatan)->format('Y-m-d') : '';
-                        $tempatKegiatan = $peserta->tempat_kegiatan ?? '';
-                    ?>
-                    @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiId, 'siswa_id' => $siswaId, 'tanggal_kegiatan' => $tanggalKegiatan, 'tempat_kegiatan' => $tempatKegiatan], 'asns' => $asns, 'siswas' => $siswas])
-                @endforeach
-            @endif
-            @if($pesertaIndex == 0)
-                @include('surat_nodins._peserta_row', ['index' => 0, 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ''], 'asns' => $asns, 'siswas' => $siswas])
-            @endif
-        </div>
+        <label class="block font-medium mb-1">Pilih Pegawai</label>
+        <select name="pegawai_ids[]" id="pegawai-select" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            @foreach($asns as $asn)
+                <option value="{{ $asn->id }}" {{ (old('pegawai_ids') && in_array($asn->id, old('pegawai_ids')) ?: (isset($suratNodin) && $suratNodin->pesertaSuratUsulans->where('pegawai_id', $asn->id)->count() > 0)) ? 'selected' : '' }}>
+                    {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                </option>
+            @endforeach
+        </select>
     </div>
+
+    <div class="md:col-span-2">
+        <label class="block font-medium mb-1">Pilih Siswa</label>
+        <select name="siswa_ids[]" id="siswa-select" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            @foreach($siswas as $siswa)
+                <option value="{{ $siswa->id }}" {{ (old('siswa_ids') && in_array($siswa->id, old('siswa_ids')) ?: (isset($suratNodin) && $suratNodin->pesertaSuratUsulans->where('siswa_id', $siswa->id)->count() > 0)) ? 'selected' : '' }}>
+                    {{ $siswa->nama }} {{ $siswa->nis ? '(' . $siswa->nis . ')' : '' }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div>
+        <label class="block font-medium mb-1">Tanggal Kegiatan</label>
+        <input type="date" name="tanggal_kegiatan" value="{{ old('tanggal_kegiatan', isset($suratNodin) && $suratNodin->pesertaSuratUsulans->first() ? \Carbon\Carbon::parse($suratNodin->pesertaSuratUsulans->first()->tanggal_kegiatan)->format('Y-m-d') : '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+    </div>
+
+    <div>
+        <label class="block font-medium mb-1">Tempat Kegiatan</label>
+        <input type="text" name="tempat_kegiatan" value="{{ old('tempat_kegiatan', isset($suratNodin) && $suratNodin->pesertaSuratUsulans->first() ? $suratNodin->pesertaSuratUsulans->first()->tempat_kegiatan : '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+    </div>
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            $('#pegawai-select').select2({
+                placeholder: '-- Pilih Pegawai --',
+                allowClear: true
+            });
+            $('#siswa-select').select2({
+                placeholder: '-- Pilih Siswa --',
+                allowClear: true
+            });
+        });
+    </script>
 
     <div class="md:col-span-2">
         <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Penandatangan</h2>

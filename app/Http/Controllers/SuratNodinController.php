@@ -106,26 +106,39 @@ class SuratNodinController extends Controller
             'penandatangan_id' => 'nullable|exists:asns,id',
             'tempat_ditetapkan' => 'nullable|string|max:255',
             'tanggal_ditetapkan' => 'nullable|date',
+            'pegawai_ids' => 'nullable|array',
+            'pegawai_ids.*' => 'exists:asns,id',
+            'siswa_ids' => 'nullable|array',
+            'siswa_ids.*' => 'exists:data_siswa,id',
+            'tanggal_kegiatan' => 'nullable|date',
+            'tempat_kegiatan' => 'nullable|string|max:255',
         ]);
     }
 
     private function syncPeserta(SuratNodin $suratNodin, Request $request): void
     {
-        $peserta = $request->input('peserta', []);
-        if (! is_array($peserta)) {
-            return;
+        $suratNodin->pesertaSuratUsulans()->delete();
+
+        $pegawaiIds = $request->input('pegawai_ids', []);
+        $siswaIds = $request->input('siswa_ids', []);
+        $tanggalKegiatan = $request->input('tanggal_kegiatan') ?: null;
+        $tempatKegiatan = $request->input('tempat_kegiatan') ?: null;
+
+        foreach ($pegawaiIds as $pegawaiId) {
+            $suratNodin->pesertaSuratUsulans()->create([
+                'pegawai_id' => $pegawaiId,
+                'siswa_id' => null,
+                'tanggal_kegiatan' => $tanggalKegiatan,
+                'tempat_kegiatan' => $tempatKegiatan,
+            ]);
         }
 
-        foreach ($peserta as $item) {
-            if (empty($item['pegawai_id']) && empty($item['siswa_id'])) {
-                continue;
-            }
-
+        foreach ($siswaIds as $siswaId) {
             $suratNodin->pesertaSuratUsulans()->create([
-                'pegawai_id' => $item['pegawai_id'] ?: null,
-                'siswa_id' => $item['siswa_id'] ?: null,
-                'tanggal_kegiatan' => $item['tanggal_kegiatan'] ?: null,
-                'tempat_kegiatan' => $item['tempat_kegiatan'] ?: null,
+                'pegawai_id' => null,
+                'siswa_id' => $siswaId,
+                'tanggal_kegiatan' => $tanggalKegiatan,
+                'tempat_kegiatan' => $tempatKegiatan,
             ]);
         }
     }

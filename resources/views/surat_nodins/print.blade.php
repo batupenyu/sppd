@@ -54,6 +54,25 @@
       .meta-table td:nth-child(1) { width: 12%; }
       .meta-table td:nth-child(2) { width: 3%; text-align: center; }
       .meta-table td:nth-child(3) { width: 85%; }
+      .peserta-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        font-size: 11pt;
+        page-break-inside: auto;
+      }
+      .peserta-table th,
+      .peserta-table td {
+        border: 1px solid #000;
+        padding: 6px;
+        font-size: 11pt;
+        text-align: left;
+      }
+      .peserta-table th {
+        font-weight: bold;
+        background-color: #e6e6e6;
+        text-align: center;
+      }
       .content {
         text-align: justify;
         text-indent: 40px;
@@ -192,9 +211,102 @@
 
     @if($suratNodin->isi_surat)
     <div class="content">
-      <p>{{ $suratNodin->isi_surat }}</p>
+        <p>{{ $suratNodin->isi_surat }}</p>
     </div>
     @endif
+
+    <table class="peserta-table">
+      <thead>
+        <tr>
+          <th style="width: 5%;">No</th>
+          <th style="width: 22%;">Nama</th>
+          <th style="width: 18%;">NIP/NIS</th>
+          <th style="width: 15%;">Pangkat / Gol</th>
+          <th style="width: 15%;">Jabatan</th>
+          <th style="width: 12%;">Tanggal/Tempat Kegiatan</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+            $pesertaList = $suratNodin->pesertaSuratUsulans;
+            $groups = [];
+            foreach ($pesertaList as $peserta) {
+                $key = ($peserta->tanggal_kegiatan ?? '') . '|' . ($peserta->tempat_kegiatan ?? '');
+                if (!isset($groups[$key])) {
+                    $groups[$key] = [
+                        'items' => [],
+                        'tanggal' => $peserta->tanggal_kegiatan,
+                        'tempat' => $peserta->tempat_kegiatan,
+                    ];
+                }
+                $groups[$key]['items'][] = $peserta;
+            }
+            $no = 0;
+        ?>
+
+        @foreach($groups as $group)
+            <?php $rowspan = count($group['items']); ?>
+            @foreach($group['items'] as $index => $peserta)
+                <tr>
+                  <td class="text-center"><?php echo e($no + $index + 1); ?>.</td>
+                  <td>
+                    @if($peserta->pegawai)
+                      {{ $peserta->pegawai->nama }}
+                    @elseif($peserta->siswa)
+                      {{ $peserta->siswa->nama }}
+                    @else
+                      -
+                    @endif
+                  </td>
+                  <td>
+                    @if($peserta->pegawai)
+                      {{ $peserta->pegawai->nip ?: '-' }}
+                    @elseif($peserta->siswa)
+                      {{ $peserta->siswa->nis ?: '-' }}
+                    @else
+                      -
+                    @endif
+                  </td>
+                  <td>
+                    @if($peserta->pegawai)
+                      @if($peserta->pegawai->pangkat && $peserta->pegawai->pangkat != '-' && $peserta->pegawai->golongan && $peserta->pegawai->golongan != '-')
+                        {{ $peserta->pegawai->pangkat }},{{ $peserta->pegawai->golongan }}
+                      @else
+                        -
+                      @endif
+                    @elseif($peserta->siswa)
+                      {{ $peserta->siswa->kelas ?: '-' }}
+                    @else
+                      -
+                    @endif
+                  </td>
+                  <td>
+                    @if($peserta->pegawai)
+                      {{ $peserta->pegawai->jabatan ?: '-' }}
+                    @elseif($peserta->siswa)
+                      Siswa
+                    @else
+                      -
+                    @endif
+                  </td>
+                  <?php if($index == 0): ?>
+                  <td rowspan="<?php echo e($rowspan); ?>">
+                    {{ $peserta->tanggal_kegiatan ? \App\Http\Controllers\SuratNodinController::formatTanggal($peserta->tanggal_kegiatan, '%d %B %Y') : '-' }} {{ $peserta->tempat_kegiatan ?: '-' }}
+                  </td>
+                  <?php endif; ?>
+                </tr>
+            @endforeach
+            <?php $no += $rowspan; ?>
+        @endforeach
+        @if($suratNodin->pesertaSuratUsulans->isEmpty())
+        <tr>
+          <td colspan="6" class="text-center">Tidak ada data peserta.</td>
+        </tr>
+        @endif
+
+      </tbody>
+    </table>
+
 
     <div class="content">
       <p>Demikian surat permohonan ini kami sampaikan. Atas perhatian Bapak, Kami sampaikan terima kasih.</p>
