@@ -163,62 +163,57 @@
             <td class="num">I.</td>
             <td class="sub-label">Dasar Pelaksanaan</td>
             <td class="colon">:</td>
-            <td>{{ $laporanNodin->dasar_pelaksanaan ?: '-' }}</td>
+            <td style="text-align: justify;">{{ $laporanNodin->dasar_pelaksanaan ?: '-' }}</td>
         </tr>
         <tr>
             <td class="num">II.</td>
             <td class="sub-label">Tujuan</td>
             <td class="colon">:</td>
-            <td><strong>{{ $laporanNodin->tujuan ?: '-' }}</strong></td>
+            <td style="text-align: justify;"><strong>{{ $laporanNodin->tujuan ?: '-' }}</strong></td>
         </tr>
-        <!-- Peserta 1 -->
+        @php($pesertaList = $laporanNodin->getPeserta())
         <tr>
             <td class="num">III.</td>
             <td class="sub-label">Peserta</td>
             <td class="colon">:</td>
             <td>
+                @forelse($pesertaList as $index => $peserta)
+                <table style="width:100%; border-collapse:collapse; {{ $index > 0 ? 'margin-top:10px;' : '' }}">
+                    <tr>
+                        <td style="width:80px; padding:2px 0;">{{ $index + 1 }}. Nama</td>
+                        <td style="width:20px; text-align:center;">:</td>
+                        <td><strong>{{ $peserta->nama ?: '' }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;NIP</td>
+                        <td style="text-align:center;">:</td>
+                        <td><strong>{{ $peserta->nip ?: '' }}</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;Jabatan</td>
+                        <td style="text-align:center;">:</td>
+                        <td><strong>{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}</strong></td>
+                    </tr>
+                </table>
+                @empty
                 <table style="width:100%; border-collapse:collapse;">
                     <tr>
                         <td style="width:80px; padding:2px 0;">1. Nama</td>
                         <td style="width:20px; text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->peserta1_nama ?: '' }}</strong></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;NIP</td>
                         <td style="text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->peserta1_nip ?: '' }}</strong></td>
+                        <td></td>
                     </tr>
                     <tr>
                         <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;Jabatan</td>
                         <td style="text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->peserta1_jabatan ?: '' }}</strong></td>
+                        <td></td>
                     </tr>
                 </table>
-            </td>
-        </tr>
-        <!-- Peserta 2 -->
-        <tr>
-            <td class="num"></td>
-            <td class="sub-label"></td>
-            <td class="colon"></td>
-            <td style="padding-top:10px;">
-                <table style="width:100%; border-collapse:collapse;">
-                    <tr>
-                        <td style="width:80px; padding:2px 0;">2. Nama</td>
-                        <td style="width:20px; text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->peserta2_nama ?: '' }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;NIP</td>
-                        <td style="text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->peserta2_nip ?: '' }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;Jabatan</td>
-                        <td style="text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->peserta2_jabatan ?: '' }}</strong></td>
-                    </tr>
-                </table>
+                @endforelse
             </td>
         </tr>
         <!-- Pelaksanaan -->
@@ -282,13 +277,20 @@
             <td>
                 Yang Melaksanakan Tugas,<br>
                 <br>
-                1. <strong>{{ $laporanNodin->peserta1_nama ?: '' }}</strong><br>
-                &nbsp;&nbsp;&nbsp;&nbsp;NIP. {{ $laporanNodin->peserta1_nip ?: '' }}<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;{{ $laporanNodin->peserta1_jabatan ?: '' }}<br>
-                <br>
-                2. {{ $laporanNodin->peserta2_nama ? 'Nama : ' . $laporanNodin->peserta2_nama : 'Nama :' }}<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;NIP : {{ $laporanNodin->peserta2_nip ?: '' }}<br>
-                &nbsp;&nbsp;&nbsp;&nbsp;Jabatan : {{ $laporanNodin->peserta2_jabatan ?: '' }}
+                @forelse($pesertaList as $index => $peserta)
+                    {{ $index + 1 }}. <strong>{{ $peserta->nama ?: '' }}</strong><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;NIP. {{ $peserta->nip ?: '' }}<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}<br>
+                    <br>
+                @empty
+                    1. Nama :<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;NIP :<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan :<br>
+                    <br>
+                    2. Nama :<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;NIP :<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan :
+                @endforelse
             </td>
         </tr>
     </table>

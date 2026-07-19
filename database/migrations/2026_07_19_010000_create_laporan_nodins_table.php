@@ -18,12 +18,7 @@ return new class extends Migration
             $table->string('perihal')->nullable();
             $table->text('dasar_pelaksanaan')->nullable();
             $table->text('tujuan')->nullable();
-            $table->string('peserta1_nama')->nullable();
-            $table->string('peserta1_nip')->nullable();
-            $table->string('peserta1_jabatan')->nullable();
-            $table->string('peserta2_nama')->nullable();
-            $table->string('peserta2_nip')->nullable();
-            $table->string('peserta2_jabatan')->nullable();
+            $table->json('peserta')->nullable();
             $table->date('pelaksanaan_tanggal')->nullable();
             $table->string('pelaksanaan_jam')->nullable();
             $table->string('pelaksanaan_tempat')->nullable();

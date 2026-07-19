@@ -18,12 +18,7 @@ class LaporanNodin extends Model
         'perihal',
         'dasar_pelaksanaan',
         'tujuan',
-        'peserta1_nama',
-        'peserta1_nip',
-        'peserta1_jabatan',
-        'peserta2_nama',
-        'peserta2_nip',
-        'peserta2_jabatan',
+        'peserta',
         'pelaksanaan_tanggal',
         'pelaksanaan_jam',
         'pelaksanaan_tempat',
@@ -35,10 +30,24 @@ class LaporanNodin extends Model
     protected $casts = [
         'tanggal' => 'date',
         'pelaksanaan_tanggal' => 'date',
+        'peserta' => 'array',
     ];
 
     public function penandatangan(): BelongsTo
     {
         return $this->belongsTo(Asn::class, 'penandatangan_id');
+    }
+
+    public function getPeserta(): array
+    {
+        $ids = $this->peserta ?? [];
+        if (empty($ids)) {
+            return [];
+        }
+
+        $peserta = Asn::whereIn('id', $ids)->get();
+        $order = array_flip($ids);
+
+        return $peserta->sortBy(fn ($p) => $order[$p->id] ?? 0)->values()->all();
     }
 }

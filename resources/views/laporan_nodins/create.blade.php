@@ -46,43 +46,26 @@
 
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Dasar Pelaksanaan</label>
-                            <textarea name="dasar_pelaksanaan" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('dasar_pelaksanaan') }}</textarea>
+                            <textarea name="dasar_pelaksanaan" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100 text-justify">{{ old('dasar_pelaksanaan') }}</textarea>
                         </div>
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Tujuan</label>
-                            <textarea name="tujuan" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('tujuan') }}</textarea>
+                            <textarea name="tujuan" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100 text-justify">{{ old('tujuan') }}</textarea>
                         </div>
 
                         <div class="md:col-span-2">
-                            <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Peserta 1</h2>
-                        </div>
-                        <div>
-                            <label class="block font-medium mb-1">Nama</label>
-                            <input type="text" name="peserta1_nama" value="{{ old('peserta1_nama') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-                        </div>
-                        <div>
-                            <label class="block font-medium mb-1">NIP</label>
-                            <input type="text" name="peserta1_nip" value="{{ old('peserta1_nip') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Peserta (bisa lebih dari satu)</h2>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block font-medium mb-1">Jabatan</label>
-                            <input type="text" name="peserta1_jabatan" value="{{ old('peserta1_jabatan') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-                        </div>
-
-                        <div class="md:col-span-2">
-                            <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Peserta 2</h2>
-                        </div>
-                        <div>
-                            <label class="block font-medium mb-1">Nama</label>
-                            <input type="text" name="peserta2_nama" value="{{ old('peserta2_nama') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-                        </div>
-                        <div>
-                            <label class="block font-medium mb-1">NIP</label>
-                            <input type="text" name="peserta2_nip" value="{{ old('peserta2_nip') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-                        </div>
-                        <div class="md:col-span-2">
-                            <label class="block font-medium mb-1">Jabatan</label>
-                            <input type="text" name="peserta2_jabatan" value="{{ old('peserta2_jabatan') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <label class="block font-medium mb-1">Pilih Pegawai</label>
+                            <select name="peserta[]" id="peserta_select" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                @foreach($asns as $asn)
+                                    <option value="{{ $asn->id }}" {{ in_array($asn->id, old('peserta', [])) ? 'selected' : '' }}>
+                                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            <p class="text-sm text-gray-500 mt-1">Nama, NIP, dan Jabatan akan otomatis tampil di cetakan.</p>
                         </div>
 
                         <div class="md:col-span-2">
@@ -103,7 +86,7 @@
 
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Kesimpulan</label>
-                            <textarea name="kesimpulan" rows="4" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('kesimpulan') }}</textarea>
+                            <textarea name="kesimpulan" rows="4" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100 text-justify">{{ old('kesimpulan') }}</textarea>
                         </div>
 
                         <div class="md:col-span-2">
@@ -149,4 +132,17 @@
         </div>
     </div>
 </div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(function () {
+        $('#peserta_select').select2({
+            placeholder: '-- Pilih Pegawai --',
+            allowClear: true,
+            width: '100%'
+        });
+    });
+</script>
 @endsection
