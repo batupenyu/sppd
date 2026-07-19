@@ -307,6 +307,25 @@
       </tbody>
     </table>
 
+    @if($suratNodin->photos->count() > 0)
+    <div class="content" style="margin-top: 20px;">
+        <p><strong>Lampiran Foto Kegiatan :</strong></p>
+        @foreach($suratNodin->photos as $photo)
+            @php
+                $photoSrc = $photo->image ? 'data:' . ($photo->mime ?: 'image/png') . ';base64,' . base64_encode($photo->image) : '';
+            @endphp
+            @if($photoSrc)
+                <div style="margin-bottom: 10px;">
+                    @if($photo->caption)
+                        <p style="margin: 0 0 4px 0; font-size: 10pt;">{{ $photo->caption }}</p>
+                    @endif
+                    <img src="{{ $photoSrc }}" alt="{{ $photo->caption ?: 'Foto' }}" style="max-width: 100%; max-height: 280px; object-fit: contain; border: 1px solid #ccc;" />
+                </div>
+            @endif
+        @endforeach
+    </div>
+    @endif
+
 
     <div class="content">
       <p>Demikian surat permohonan ini kami sampaikan. Atas perhatian Bapak, Kami sampaikan terima kasih.</p>

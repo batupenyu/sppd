@@ -125,3 +125,8 @@ Route::resource('surat-nodins', SuratNodinController::class)
 Route::delete('surat-nodins/{surat_nodin}', [SuratNodinController::class, 'destroy'])->name('surat-nodins.destroy');
 Route::get('surat-nodins/{surat_nodin}/print', [SuratNodinController::class, 'print'])->name('surat-nodins.print');
 Route::get('surat-nodins/{surat_nodin}/lampiran', [SuratNodinController::class, 'lampiran'])->name('surat-nodins.lampiran');
+Route::get('surat-nodins/{surat_nodin}/photos', [SuratNodinController::class, 'photos'])->name('surat-nodins.photos');
+Route::post('surat-nodins/{surat_nodin}/photos', [SuratNodinController::class, 'storePhoto'])->name('surat-nodins.photos.store');
+Route::get('surat-nodins/{surat_nodin}/photos/{photo}/edit', [SuratNodinController::class, 'editPhoto'])->name('surat-nodins.photos.edit');
+Route::put('surat-nodins/{surat_nodin}/photos/{photo}', [SuratNodinController::class, 'updatePhoto'])->name('surat-nodins.photos.update');
+Route::delete('surat-nodins/{surat_nodin}/photos/{photo}', [SuratNodinController::class, 'destroyPhoto'])->name('surat-nodins.photos.destroy');

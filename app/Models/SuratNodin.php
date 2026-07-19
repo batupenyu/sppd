@@ -40,4 +40,9 @@ class SuratNodin extends Model
     {
         return $this->hasMany(PesertaSuratUsulan::class);
     }
+
+    public function photos(): HasMany
+    {
+        return $this->hasMany(PhotoNodin::class);
+    }
 }

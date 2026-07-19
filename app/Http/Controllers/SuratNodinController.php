@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Asn;
 use App\Models\DataSiswa;
 use App\Models\LogoSetting;
+use App\Models\PhotoNodin;
 use App\Models\SuratNodin;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -75,7 +76,7 @@ class SuratNodinController extends Controller
 
     public function print(SuratNodin $suratNodin): View
     {
-        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
+        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa', 'photos');
 
         $kopSuratBase64 = null;
         $logoName = $suratNodin->kop_surat ?: 'kop_smk';
@@ -92,6 +93,71 @@ class SuratNodinController extends Controller
         $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
 
         return view('surat_nodins.lampiran', compact('suratNodin'));
+    }
+
+    public function photos(SuratNodin $suratNodin): View
+    {
+        $suratNodin->load('photos');
+
+        return view('surat_nodins.photos', compact('suratNodin'));
+    }
+
+    public function storePhoto(Request $request, SuratNodin $suratNodin): RedirectResponse
+    {
+        $request->validate([
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            PhotoNodin::create([
+                'surat_nodin_id' => $suratNodin->id,
+                'caption' => $request->input('caption'),
+                'mime' => $file->getClientMimeType(),
+                'image' => file_get_contents($file->getRealPath()),
+            ]);
+        }
+
+        return redirect()->route('surat-nodins.photos', $suratNodin)
+            ->with('success', 'Foto berhasil ditambahkan.');
+    }
+
+    public function editPhoto(SuratNodin $suratNodin, PhotoNodin $photo): View
+    {
+        $suratNodin->load('photos');
+
+        return view('surat_nodins.photos_edit', compact('suratNodin', 'photo'));
+    }
+
+    public function updatePhoto(Request $request, SuratNodin $suratNodin, PhotoNodin $photo): RedirectResponse
+    {
+        $request->validate([
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        $photo->surat_nodin_id = $suratNodin->id;
+        $photo->caption = $request->input('caption');
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $photo->mime = $file->getClientMimeType();
+            $photo->image = file_get_contents($file->getRealPath());
+        }
+
+        $photo->save();
+
+        return redirect()->route('surat-nodins.photos', $suratNodin)
+            ->with('success', 'Foto berhasil diperbarui.');
+    }
+
+    public function destroyPhoto(Request $request, SuratNodin $suratNodin, PhotoNodin $photo): RedirectResponse
+    {
+        $photo->delete();
+
+        return redirect()->route('surat-nodins.photos', $suratNodin)
+            ->with('success', 'Foto berhasil dihapus.');
     }
 
     private function validateData(Request $request): array
