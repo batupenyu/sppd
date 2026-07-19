@@ -32,7 +32,7 @@
 
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Pilih Pegawai (bisa lebih dari satu)</label>
-                            <select name="peserta[]" multiple size="8" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
+                            <select name="peserta[]" id="peserta_select" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
                                 @foreach($asns as $asn)
                                     <option value="{{ $asn->id }}" {{ in_array($asn->id, old('peserta', $suratTugas->peserta ?? [])) ? 'selected' : '' }}>
                                         {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
@@ -107,6 +107,19 @@
                         }
                         document.getElementById('penandatangan_select').addEventListener('change', isiPenandatangan);
                         isiPenandatangan();
+                    </script>
+
+                    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+                    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+                    <script>
+                        $(function () {
+                            $('#peserta_select').select2({
+                                placeholder: '-- Pilih Pegawai --',
+                                allowClear: true,
+                                width: '100%'
+                            });
+                        });
                     </script>
 
                     <div class="mt-6 flex gap-4">
