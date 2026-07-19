@@ -23,6 +23,7 @@ class SuratNodin extends Model
         'penandatangan_id',
         'tempat_ditetapkan',
         'tanggal_ditetapkan',
+        'kop_surat',
     ];
 
     protected $casts = [

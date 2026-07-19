@@ -27,8 +27,9 @@ class SuratNodinController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
         $siswas = DataSiswa::orderBy('nama')->get();
+        $logos = \App\Models\LogoSetting::orderBy('name')->get();
 
-        return view('surat_nodins.create', compact('asns', 'siswas'));
+        return view('surat_nodins.create', compact('asns', 'siswas', 'logos'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -46,9 +47,10 @@ class SuratNodinController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
         $siswas = DataSiswa::orderBy('nama')->get();
+        $logos = \App\Models\LogoSetting::orderBy('name')->get();
         $suratNodin->load('penandatangan', 'pesertaSuratUsulans');
 
-        return view('surat_nodins.edit', compact('asns', 'siswas', 'suratNodin'));
+        return view('surat_nodins.edit', compact('asns', 'siswas', 'logos', 'suratNodin'));
     }
 
     public function update(Request $request, SuratNodin $suratNodin): RedirectResponse
@@ -76,7 +78,8 @@ class SuratNodinController extends Controller
         $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
 
         $kopSuratBase64 = null;
-        $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
+        $logoName = $suratNodin->kop_surat ?: 'kop_smk';
+        $logo = LogoSetting::where('name', $logoName)->first() ?? LogoSetting::latest()->first();
         if ($logo && $logo->image) {
             $kopSuratBase64 = 'data:'.($logo->mime ?: 'image/png').';base64,'.base64_encode($logo->image);
         }
@@ -106,6 +109,7 @@ class SuratNodinController extends Controller
             'penandatangan_id' => 'nullable|exists:asns,id',
             'tempat_ditetapkan' => 'nullable|string|max:255',
             'tanggal_ditetapkan' => 'nullable|date',
+            'kop_surat' => 'nullable|string|max:255',
             'pegawai_ids' => 'nullable|array',
             'pegawai_ids.*' => 'exists:asns,id',
             'siswa_ids' => 'nullable|array',

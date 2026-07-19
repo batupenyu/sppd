@@ -59,6 +59,18 @@
     </div>
 
     <div class="md:col-span-2">
+        <label class="block font-medium mb-1">Kop Surat</label>
+        <select name="kop_surat" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            <option value="">-- Pilih Kop Surat --</option>
+            @foreach($logos as $logo)
+                <option value="{{ $logo->name }}" {{ old('kop_surat', $suratNodin->kop_surat ?? '') == $logo->name ? 'selected' : '' }}>
+                    {{ $logo->name ?: 'Tanpa Nama' }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="md:col-span-2">
         <label class="block font-medium mb-1">Pilih Pegawai</label>
         <select name="pegawai_ids[]" id="pegawai-select" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
             @foreach($asns as $asn)
