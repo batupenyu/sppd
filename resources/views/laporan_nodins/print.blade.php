@@ -6,6 +6,7 @@
     <title>Laporan Nota Dinas</title>
     <style>
         body {
+                    background-color: #525659;
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;

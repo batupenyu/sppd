@@ -9,6 +9,7 @@
             margin: 0.5cm 2cm 2cm 2cm;
         }
         body {
+                    background-color: #525659;
             font-family: "Helvetica", sans-serif;
             font-size: 10pt;
             line-height: 1.5;

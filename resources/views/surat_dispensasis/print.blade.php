@@ -10,6 +10,7 @@
             margin: 0 2cm;
         }
         body {
+                    background-color: #525659;
             font-family: 'Times New Roman', Times, serif;
             font-size: 12pt;
             line-height: 1.0;

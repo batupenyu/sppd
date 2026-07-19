@@ -5,6 +5,7 @@
     <title>Surat Perintah Melaksanakan Tugas</title>
     <style>
         body { font-family: 'Times New Roman', serif; font-size: 12pt; }
+                    background-color: #525659;
         .center { text-align: center; }
         .left { text-align: left; }
         .justify { text-align: justify; }

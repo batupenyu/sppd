@@ -14,6 +14,7 @@
         margin: 0.5cm 2cm 0.5cm 2.5cm;
       }
       body {
+                  background-color: #525659;
         font-family: "Times New Roman", Times, serif;
         font-size: 12pt;
         line-height: 1.4;

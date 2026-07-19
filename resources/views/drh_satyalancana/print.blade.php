@@ -6,6 +6,7 @@
     <title>Daftar Riwayat Hidup - Usul Tanda Kehormatan</title>
     <style>
         body {
+                    background-color: #525659;
             font-family: Arial, sans-serif;
             line-height: 1.4;
             margin: 40px;

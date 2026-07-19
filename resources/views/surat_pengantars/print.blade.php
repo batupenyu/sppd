@@ -10,6 +10,7 @@
             margin: 1cm 1.5cm 0.5cm 1.5cm;
         }
         body {
+                    background-color: #525659;
             font-family: "Helvetica", sans-serif;
             font-size: 11pt;
             line-height: 1.4;

@@ -6,6 +6,7 @@
 <style>
   @page { size: A4; margin: 1cm 20mm; }
   body {
+              background-color: #525659;
     font-family: "Times New Roman", Times, serif;
     font-size: 12pt;
     color: #000;

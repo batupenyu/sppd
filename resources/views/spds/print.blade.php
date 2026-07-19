@@ -10,6 +10,7 @@
   }
   * { box-sizing: border-box; }
   body {
+              background-color: #525659;
     font-family: "Times New Roman", Times, serif;
     font-size: 13px;
     color: #000;
