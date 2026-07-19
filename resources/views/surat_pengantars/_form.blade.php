@@ -16,6 +16,16 @@
     </div>
 
     <div>
+        <label class="block font-medium mb-1">Yth.</label>
+        <input type="text" name="yth" value="{{ old('yth', $sp->yth ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+    </div>
+
+    <div>
+        <label class="block font-medium mb-1">Di</label>
+        <input type="text" name="di" value="{{ old('di', $sp->di ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+    </div>
+
+    <div>
         <label class="block font-medium mb-1">Nomor Telepon</label>
         <input type="text" name="nomor_telepon" value="{{ old('nomor_telepon', $sp->nomor_telepon ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>

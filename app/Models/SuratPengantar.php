@@ -12,6 +12,8 @@ class SuratPengantar extends Model
     protected $fillable = [
         'nomor_surat',
         'tujuan_surat',
+        'yth',
+        'di',
         'isi_surat',
         'banyaknya',
         'keterangan',

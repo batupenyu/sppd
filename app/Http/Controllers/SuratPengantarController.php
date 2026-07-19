@@ -83,6 +83,8 @@ class SuratPengantarController extends Controller
         return $request->validate([
             'nomor_surat' => 'nullable|string|max:255',
             'tujuan_surat' => 'nullable|string|max:255',
+            'yth' => 'nullable|string|max:255',
+            'di' => 'nullable|string|max:255',
             'isi_surat' => 'nullable|string',
             'banyaknya' => 'nullable|string|max:255',
             'keterangan' => 'nullable|string',

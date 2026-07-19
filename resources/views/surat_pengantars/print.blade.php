@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surat Pengantar Dinas</title>
+    <title>Surat Pengantar - {{ $suratPengantar->nomor_surat }}</title>
     <style>
         @page {
             size: A4;
@@ -12,38 +12,10 @@
         body {
             font-family: "Helvetica", sans-serif;
             font-size: 11pt;
-            line-height: 1.5;
+            line-height: 1.4;
             color: #000;
         }
-        td.label {
-            width: 150px;
-            white-space: nowrap;
-        }
-        td.value {
-            white-space: nowrap;
-        }
-        td.colon {
-            width: 15px;
-        }
-        .content-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        .content-table th {
-            font-weight: bold;
-            text-align: center;
-            background-color: #ffffff;
-        }
-        .content-table th, .content-table td {
-            border: 1px solid #000;
-            padding: 8px 10px;
-            vertical-align: top;
-        }
-        .footer-phone {
-            font-size: 11pt;
-        }
-        .page {
+        .printable-page {
             width: 210mm;
             min-height: 297mm;
             padding: 15mm 18mm;
@@ -52,13 +24,87 @@
             position: relative;
             box-shadow: 0 0 6px rgba(0,0,0,0.3);
         }
+        .info-surat {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .info-surat td {
+            vertical-align: top;
+            padding: 2px 0;
+        }
+        .titik-titik {
+            border-bottom: 1px dotted #000;
+            display: inline-block;
+        }
+        .judul-surat {
+            text-align: center;
+            margin-bottom: 20px;
+            page-break-after: avoid;
+        }
+        .judul-surat h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0 0 5px 0;
+        }
+        .judul-surat p {
+            margin: 0;
+            font-size: 11pt;
+        }
+        .tabel-konten {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            page-break-inside: auto;
+        }
+        .tabel-konten thead {
+            display: table-header-group;
+        }
+        .tabel-konten th,
+        .tabel-konten td {
+            border: 1px solid #000;
+            padding: 6px 8px;
+            vertical-align: top;
+            font-size: 11pt;
+        }
+        .tabel-konten .text-justify {
+            text-align: justify;
+        }
+        .tabel-konten th {
+            font-weight: bold;
+            text-align: center;
+            background-color: #ffffff;
+        }
+        .tanda-tangan-container {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+            page-break-inside: avoid;
+        }
+        .tanda-tangan-container td {
+            width: 50%;
+            vertical-align: top;
+            padding: 0 10px;
+        }
+        .ttd-box {
+            text-align: left;
+            font-size: 11pt;
+        }
+        .space-ttd {
+            height: 70px;
+        }
+        .footer-telepon {
+            margin-top: 20px;
+            font-size: 11pt;
+        }
         .no-print {
             margin-top: 20px;
             text-align: center;
         }
         @media print {
             body { background: white; }
-            .page {
+            .printable-page {
                 box-shadow: none;
                 margin: 0;
                 page-break-after: always;
@@ -71,97 +117,102 @@
 </head>
 <body>
 
-    <div class="page">
+<div class="printable-page">
 
     @if($kopSuratBase64)
     <img
         src="{{ $kopSuratBase64 }}"
-        style="max-width: 100%; height: auto; display: block; margin-bottom: 20px"
+        style="max-width: 100%; height: auto; display: block; margin-bottom: 15px"
     />
     @endif
 
-    <div class="header" style="text-align: center">
-        <p>
-            <strong>SURAT PENGANTAR</strong><br />
-            <strong>Nomor : {{ $suratPengantar->nomor_surat }}</strong>
-        </p>
-    </div>
-    <br />
-    <div class="content">
-        <table>
-            <tr>
-                <td class="label">Tempat, Tanggal</td>
-                <td class="colon">:</td>
-                <td>{{ $suratPengantar->tempat_ditetapkan }}, {{ \App\Http\Controllers\SuratPengantarController::formatTanggal($suratPengantar->tanggal_ditetapkan, '%d %B %Y') }}</td>
-            </tr>
-            <tr>
-                <td class="label">Kepada</td>
-                <td class="colon">:</td>
-                <td>
-                    Yth. {{ $suratPengantar->tujuan_surat }}<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;di -<br />
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Tempat
-                </td>
-            </tr>
-            <tr>
-                <td class="label">Pengirim</td>
-                <td class="colon">:</td>
-                <td>{{ $suratPengantar->penandatangan->nama ?? '' }}</td>
-            </tr>
-        </table>
-        <br />
-        <p style="text-align: justify">
-            Dengan ini kami sampaikan naskah dinas/barang sebagaimana terlampir
-            berikut ini:
-        </p>
-        <table class="content-table">
-            <thead>
-                <tr>
-                    <th style="width: 8%;">No.</th>
-                    <th style="width: 50%;">Naskah Dinas/Barang yang Dikirimkan</th>
-                    <th style="width: 17%;">Banyaknya</th>
-                    <th style="width: 25%;">Keterangan</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="text-align: center;">1</td>
-                    <td style="text-align: justify;">{{ $suratPengantar->isi_surat ?: '&nbsp;' }}</td>
-                    <td style="text-align: justify;">{{ $suratPengantar->banyaknya ?: '1 (satu) berkas' }}</td>
-                    <td>{{ $suratPengantar->keterangan ?: 'Demikian disampaikan untuk dapat ditindaklanjuti' }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <br />
-    <div class="signature" style="padding-left: 250pt">
-        <p>
-            {{ $suratPengantar->tempat_ditetapkan }}, {{ \App\Http\Controllers\SuratPengantarController::formatTanggal($suratPengantar->tanggal_ditetapkan, '%d %B %Y') }} <br />
-            {{ $suratPengantar->penandatangan->jabatan ?? '' }},
-        </p>
-        <br />
-        <br />
-        <br />
-        <p>
-            {{ $suratPengantar->penandatangan->nama ?? '' }} <br />
-            {{ $suratPengantar->penandatangan->pangkat ?? '' }}, {{ $suratPengantar->penandatangan->golongan ?? '' }}
-            <br />
-            NIP. {{ $suratPengantar->penandatangan->nip ?? '' }}
-        </p>
+    <!-- TANGGAL & TUJUAN -->
+    <table class="info-surat">
+        <tr>
+            <td style="width: 50%;"></td>
+            <td style="width: 50%; text-align: right;">
+                {{ $suratPengantar->tempat_ditetapkan }}, {{ \App\Http\Controllers\SuratPengantarController::formatTanggal($suratPengantar->tanggal_ditetapkan, '%d %B %Y') }}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-top: 15px;">
+                Yth. <span style="min-width: 350px;">{{ $suratPengantar->yth ?: '' }}</span><br>
+                <!-- <span style="min-width: 380px; margin-top: 5px; display: inline-block;">{{ $suratPengantar->tujuan_surat ?: '' }}</span><br> -->
+                <span style="display: inline-block; margin-top: 5px; margin-left: 30px;">di</span><br>
+                <span style="min-width: 350px; margin-left: 30px; margin-top: 5px; display: inline-block;">{{ $suratPengantar->di ?: '' }}</span>
+            </td>
+        </tr>
+    </table>
+
+    <!-- JUDUL SURAT -->
+    <div class="judul-surat">
+        <h3>Surat Pengantar</h3>
+        <p>NOMOR : <span style="min-width: 150px;"></span> {{ $suratPengantar->nomor_surat }}</p>
     </div>
 
+    <!-- TABEL UTAMA -->
+    <table class="tabel-konten">
+        <thead>
+            <tr>
+                <th style="width: 8%;">No.</th>
+                <th class="text-justify" style="width: 52%;">Naskah Dinas/Barang<br>yang Dikirimkan</th>
+                <th style="width: 15%;">Banyaknya</th>
+                <th class="text-justify" style="width: 25%;">Keterangan</th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr>
+                    <td style="text-align: center;">1.</td>
+                    <td class="text-justify">{{ $suratPengantar->isi_surat ?: '&nbsp;' }}</td>
+                    <td>{{ $suratPengantar->banyaknya ?: '1 (satu) berkas' }}</td>
+                    <td class="text-justify">{{ $suratPengantar->keterangan ?: 'Demikian disampaikan untuk dapat ditindaklanjuti' }}</td>
+                </tr>
+        </tbody>
+    </table>
+
+    <!-- TANDA TANGAN (PENERIMA & PENGIRIM) -->
+    <table class="tanda-tangan-container">
+        <tr>
+            <td>
+                <div class="ttd-box">
+                    Diterima tanggal <span class="titik-titik" style="min-width: 120px;"></span><br>
+                    <!-- <span class="titik-titik" style="min-width: 120px;"></span><br> -->
+                    <!-- <span class="titik-titik" style="min-width: 120px;"></span><br> -->
+                    <!-- Nama Jabatan,<br> -->
+                    <div class="space-ttd"></div> <br> <br>
+                    <!-- <strong><u>Nama</u></strong><br>
+                    Pangkat/Golongan<br> -->
+                    Nama. <span class="titik-titik" style="min-width: 120px;"></span> <br>
+                    NIP. <span class="titik-titik" style="min-width: 120px;"></span>
+                </div>
+            </td>
+            <td style="padding-left: 50px;">
+                <div class="ttd-box">
+                    <br>
+                    Pengirim<br>
+                    {{ $suratPengantar->penandatangan->jabatan ?? '' }},<br>
+                    <div class="space-ttd"></div>
+                    <strong><u>{{ $suratPengantar->penandatangan->nama ?? '' }}</u></strong><br>
+                    {{ $suratPengantar->penandatangan->pangkat ?? '' }}, {{ $suratPengantar->penandatangan->golongan ?? '' }}<br>
+                    NIP. {{ $suratPengantar->penandatangan->nip ?? '' }}
+                </div>
+            </td>
+        </tr>
+    </table>
+
+    <!-- FOOTER NOMOR TELEPON -->
     @if($suratPengantar->nomor_telepon)
-    <div class="footer-phone" style="margin-top: 30px; font-size: 11pt;">
-        Nomor telepon {{ $suratPengantar->nomor_telepon }}
+    <div class="footer-telepon">
+        Nomor telepon <span class="titik-titik" style="min-width: 150px;"></span> {{ $suratPengantar->nomor_telepon }}
     </div>
     @endif
 
-    <div class="no-print">
-        <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
-        <a href="{{ route('surat-pengantars.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
-    </div>
+</div>
 
-    </div>
+<div class="no-print">
+    <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
+    <a href="{{ route('surat-pengantars.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+</div>
 
 </body>
 </html>
