@@ -101,7 +101,7 @@
             vertical-align: top;
         }
         .signature-space {
-            height: 100px;
+            height: 80px;
         }
         .name-title {
             font-weight: bold;
@@ -273,25 +273,21 @@
                 <strong>Mengetahui</strong><br>
                 <strong>Kepala Sekolah</strong>
                 <div class="signature-space"></div>
-                <span class="name-title">{{ $laporanNodin->penandatangan->nama ?? '' }}</span><br>
-                NIP. {{ $laporanNodin->penandatangan->nip ?? '' }}
+                <strong>{{ $laporanNodin->penandatangan->nama ?? '' }}<br>
+                NIP.{{ $laporanNodin->penandatangan->nip ?? '' }}</strong>
             </td>
             <td>
                 Yang Melaksanakan Tugas,<br>
                 <br>
                 @forelse($pesertaList as $index => $peserta)
-                    {{ $index + 1 }}. <strong>{{ $peserta->nama ?: '' }}</strong><br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;NIP. {{ $peserta->nip ?: '' }}<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}<br>
+                    {{ $index + 1 }}. ......................................<br>
+                    <strong>{{ $peserta->nama ?: '' }}</strong><br>
                     <br>
                 @empty
-                    1. Nama :<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;NIP :<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan :<br>
+                    1. ......................................<br>
                     <br>
-                    2. Nama :<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;NIP :<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;Jabatan :
+                    2. ......................................<br>
+                    <br>
                 @endforelse
             </td>
         </tr>
