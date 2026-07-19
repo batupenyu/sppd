@@ -178,19 +178,19 @@
             <td class="colon">:</td>
             <td>
                 @forelse($pesertaList as $index => $peserta)
-                <table style="width:100%; border-collapse:collapse; {{ $index > 0 ? 'margin-top:10px;' : '' }}">
+                <table style="width:100%; border-collapse:collapse; {{ $index > 0 ? 'margin-top:0;' : '' }}">
                     <tr>
-                        <td style="width:80px; padding:2px 0;">{{ $index + 1 }}. Nama</td>
+                        <td style="width:80px; padding:0;">{{ $index + 1 }}. Nama</td>
                         <td style="width:20px; text-align:center;">:</td>
                         <td><strong>{{ $peserta->nama ?: '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;NIP</td>
+                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;NIP</td>
                         <td style="text-align:center;">:</td>
                         <td><strong>{{ $peserta->nip ?: '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;Jabatan</td>
+                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;Jabatan</td>
                         <td style="text-align:center;">:</td>
                         <td><strong>{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}</strong></td>
                     </tr>
@@ -198,17 +198,17 @@
                 @empty
                 <table style="width:100%; border-collapse:collapse;">
                     <tr>
-                        <td style="width:80px; padding:2px 0;">1. Nama</td>
+                        <td style="width:80px; padding:0;">1. Nama</td>
                         <td style="width:20px; text-align:center;">:</td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;NIP</td>
+                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;NIP</td>
                         <td style="text-align:center;">:</td>
                         <td></td>
                     </tr>
                     <tr>
-                        <td style="padding:2px 0;">&nbsp;&nbsp;&nbsp;Jabatan</td>
+                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;Jabatan</td>
                         <td style="text-align:center;">:</td>
                         <td></td>
                     </tr>
@@ -244,19 +244,21 @@
         <!-- Kesimpulan -->
         <tr>
             <td class="num">V.</td>
-            <td class="sub-label">Kesimpulan</td>
+            <td class="sub-label" >Kesimpulan</td>
             <td class="colon">:</td>
-            <td>
+            <td style="text-align: justify;">
+                @php($kesimpulanItems = array_values(array_filter(array_map('trim', explode("\n", $laporanNodin->kesimpulan ?: '')), fn ($i) => $i !== '')))
+                @if(count($kesimpulanItems) > 1)
                 <ol class="nested-list">
-                    @foreach(explode("\n", $laporanNodin->kesimpulan ?: '') as $item)
-                        @if(trim($item) !== '')
-                            <li>{{ trim($item) }}</li>
-                        @endif
+                    @foreach($kesimpulanItems as $item)
+                        <li>{{ $item }}</li>
                     @endforeach
-                    @if(!(($laporanNodin->kesimpulan ?? '') !== ''))
-                        <li>{{ $laporanNodin->kesimpulan ?: '-' }}</li>
-                    @endif
                 </ol>
+                @elseif(count($kesimpulanItems) === 1)
+                <p style="margin:0;">{{ $kesimpulanItems[0] }}</p>
+                @else
+                <p style="margin:0;">-</p>
+                @endif
             </td>
         </tr>
     </table>
