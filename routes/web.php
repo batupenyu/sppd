@@ -22,6 +22,7 @@ use App\Http\Controllers\SuratSantunanController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\SuratPernyataanController;
 use App\Http\Controllers\SuratUndanganController;
+use App\Http\Controllers\SuratMewakiliController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -120,6 +121,11 @@ Route::resource('surat-undangans', SuratUndanganController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-undangans/{surat_undangan}', [SuratUndanganController::class, 'destroy'])->name('surat-undangans.destroy');
 Route::get('surat-undangans/{surat_undangan}/print', [SuratUndanganController::class, 'print'])->name('surat-undangans.print');
+Route::resource('surat-mewakili', SuratMewakiliController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update'])
+    ->parameter('surat-mewakili', 'surat_mewakili');
+Route::delete('surat-mewakili/{surat_mewakili}', [SuratMewakiliController::class, 'destroy'])->name('surat-mewakili.destroy');
+Route::get('surat-mewakili/{surat_mewakili}/print', [SuratMewakiliController::class, 'print'])->name('surat-mewakili.print');
 Route::resource('surat-nodins', SuratNodinController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-nodins/{surat_nodin}', [SuratNodinController::class, 'destroy'])->name('surat-nodins.destroy');
