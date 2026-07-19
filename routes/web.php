@@ -4,6 +4,7 @@ use App\Http\Controllers\AsnController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\DrhSatyalancanaController;
 use App\Http\Controllers\LaporanCutiController;
+use App\Http\Controllers\LaporanNodinController;
 use App\Http\Controllers\LogoController;
 use App\Http\Controllers\SpdController;
 use App\Http\Controllers\SpmtController;
@@ -75,6 +76,10 @@ Route::resource('laporan-cutis', LaporanCutiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('laporan-cutis/{laporan_cuti}', [LaporanCutiController::class, 'destroy'])->name('laporan-cutis.destroy');
 Route::get('laporan-cutis/{laporan_cuti}/print', [LaporanCutiController::class, 'print'])->name('laporan-cutis.print');
+Route::resource('laporan-nodins', LaporanNodinController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('laporan-nodins/{laporan_nodin}', [LaporanNodinController::class, 'destroy'])->name('laporan-nodins.destroy');
+Route::get('laporan-nodins/{laporan_nodin}/print', [LaporanNodinController::class, 'print'])->name('laporan-nodins.print');
 Route::resource('surat-dispensasis', SuratDispensasiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-dispensasis/{surat_dispensasi}', [SuratDispensasiController::class, 'destroy'])->name('surat-dispensasis.destroy');
