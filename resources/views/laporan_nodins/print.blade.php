@@ -47,7 +47,7 @@
             border-collapse: collapse;
         }
         .meta-table td {
-            padding: 4px 0;
+            padding: 0px 0;
             vertical-align: top;
         }
         .meta-table td.label {
