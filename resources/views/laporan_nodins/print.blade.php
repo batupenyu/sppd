@@ -143,7 +143,7 @@
         <tr>
             <td class="label">Tanggal</td>
             <td class="colon">:</td>
-            <td><strong>{{ $laporanNodin->tanggal ? \App\Http\Controllers\LaporanNodinController::formatTanggal($laporanNodin->tanggal, '%A, %d %B %Y') : '-' }}</strong></td>
+            <td><strong>{{ $laporanNodin->tanggal ? \App\Http\Controllers\LaporanNodinController::formatTanggal($laporanNodin->tanggal, '%d %B %Y') : '-' }}</strong></td>
         </tr>
         <tr>
             <td class="label">Perihal</td>
