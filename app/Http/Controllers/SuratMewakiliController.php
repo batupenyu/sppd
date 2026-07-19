@@ -13,6 +13,8 @@ use Illuminate\View\View;
 
 class SuratMewakiliController extends Controller
 {
+    private const KETENTUAN_DEFAULT = "Dalam melaksanakan tugas harus sesuai dengan ketentuan yang berlaku, jika ada hal - hal prinsip harus dikonsultasikan dengan Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung atau menunggu Kepala Sekolah kembali bertugas.\nSurat Penunjukan mewakili ini berlaku selama 3 (tiga) hari tanggal 23 s.d 25 April 2026\natau sampai dengan kembalinya Kepala Sekolah dalam melaksanakan tugas.";
+
     public function index(): View
     {
         $suratMewakili = SuratMewakili::with(['penunjuk', 'ditunjuk'])
@@ -25,8 +27,9 @@ class SuratMewakiliController extends Controller
     public function create(): View
     {
         $asns = Asn::orderBy('nama')->get();
+        $ketentuanDefault = self::KETENTUAN_DEFAULT;
 
-        return view('surat_mewakili.create', compact('asns'));
+        return view('surat_mewakili.create', compact('asns', 'ketentuanDefault'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -44,8 +47,9 @@ class SuratMewakiliController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
         $suratMewakili->load('penunjuk', 'ditunjuk');
+        $ketentuanDefault = self::KETENTUAN_DEFAULT;
 
-        return view('surat_mewakili.edit', compact('asns', 'suratMewakili'));
+        return view('surat_mewakili.edit', compact('asns', 'suratMewakili', 'ketentuanDefault'));
     }
 
     public function update(Request $request, SuratMewakili $suratMewakili): RedirectResponse
@@ -143,5 +147,10 @@ class SuratMewakiliController extends Controller
         }
 
         return $out;
+    }
+
+    public static function ketentuanDefaultText(): string
+    {
+        return self::KETENTUAN_DEFAULT;
     }
 }

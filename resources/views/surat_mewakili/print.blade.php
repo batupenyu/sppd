@@ -25,25 +25,19 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             box-sizing: border-box;
         }
-        .header-table {
-            width: 100%;
-            border-collapse: collapse;
-            border-bottom: 3px double #000;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-        }
-        .header-table td {
-            vertical-align: middle;
+        .kop-surat-container {
             text-align: center;
+            margin-bottom: 20px;
+            margin-left: -2cm;
+            margin-right: -2cm;
         }
-        .logo-left { width: 12%; text-align: left; }
-        .logo-right { width: 12%; text-align: right; }
-        .header-text { width: 76%; }
-        .header-text h3 { margin: 0; font-size: 16px; text-transform: uppercase; font-weight: bold; }
-        .header-text h2 { margin: 0; font-size: 18px; text-transform: uppercase; font-weight: bold; }
-        .header-text h1 { margin: 0; font-size: 22px; text-transform: uppercase; font-weight: bold; letter-spacing: 1px; }
-        .header-text p { margin: 2px 0 0 0; font-size: 11px; }
-        .kop-surat-image { width: 100%; max-height: 150px; object-fit: contain; }
+        .kop-surat-image {
+            width: 80%;
+            max-width: 21cm;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain;
+        }
         .document-title { text-align: center; margin-top: 25px; margin-bottom: 25px; }
         .document-title h4 { margin: 0; font-size: 16px; text-transform: uppercase; text-decoration: underline; font-weight: bold; letter-spacing: 0.5px; }
         .document-title p { margin: 5px 0 0 0; font-size: 14px; }
@@ -72,37 +66,15 @@
 <body>
 
 <div class="sheet">
-    <table class="header-table">
-        <tr>
-            <td class="logo-left">
-                @if($kopSuratBase64)
-                    <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image" />
-                @else
-                    <svg width="70" height="85" viewBox="0 0 100 120" style="border: 1px dashed #ccc;">
-                        <text x="50%" y="50%" font-size="10" text-anchor="middle" alignment-baseline="middle">Logo Prov</text>
-                    </svg>
-                @endif
-            </td>
-            <td class="header-text">
-                <h3>Pemerintah Provinsi Kepulauan Bangka Belitung</h3>
-                <h2>Dinas Pendidikan</h2>
-                <h3>Unit Pelaksana Teknis Dinas Pendidikan</h3>
-                <h1>SMK Negeri 1 Koba</h1>
-                <p>Jalan Raya Koba Km. 42. Desa Penyak, Kecamatan Koba, Kabupaten Bangka Tengah,<br>
-                Provinsi Kepulauan Bangka Belitung, 33681<br>
-                Laman: https://smknegeri1koba.sch.id Pos-el: smk1koba@yahoo.com</p>
-            </td>
-            <td class="logo-right">
-                @if($kopSuratBase64)
-                    <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image" />
-                @else
-                    <svg width="70" height="85" viewBox="0 0 100 120" style="border: 1px dashed #ccc;">
-                        <text x="50%" y="50%" font-size="10" text-anchor="middle" alignment-baseline="middle">Logo SMK</text>
-                    </svg>
-                @endif
-            </td>
-        </tr>
-    </table>
+    <div class="kop-surat-container">
+        @if($kopSuratBase64)
+        <img
+            src="{{ $kopSuratBase64 }}"
+            alt="Kop Surat"
+            class="kop-surat-image"
+        />
+        @endif
+    </div>
 
     <div class="document-title">
         <h4>Surat Penunjukan Mewakili</h4>

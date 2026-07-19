@@ -90,14 +90,9 @@
         <textarea name="keterangan_mewakili" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('keterangan_mewakili', $suratMewakili->keterangan_mewakili ?? 'Untuk mewakili kepala sekolah Provinsi Kepulauan Bangka Belitung, selama tidak melaksanakan Dinas, dengan ketentuan :') }}</textarea>
     </div>
 
-    @php
-        $ketentuanDefault = "1.\tDalam melaksanakan tugas harus sesuai dengan ketentuan yang berlaku, jika ada hal - hal prinsip harus dikonsultasikan dengan Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung atau menunggu Kepala Sekolah kembali bertugas.\n2.\tSurat Penunjukan mewakili ini berlaku selama 3 (tiga) hari tanggal 23 s.d 25 April 2026\n3.\tatau sampai dengan kembalinya Kepala Sekolah dalam melaksanakan tugas.";
-        $ketentuanStored = isset($suratMewakili) && ! empty($suratMewakili->ketentuan) ? implode("\n", $suratMewakili->ketentuan) : null;
-        $ketentuanValue = old('ketentuan', $ketentuanStored ?? $ketentuanDefault);
-    @endphp
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Ketentuan (satu item per baris)</label>
-        <textarea name="ketentuan" rows="5" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ $ketentuanValue }}</textarea>
+        <textarea name="ketentuan" rows="5" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('ketentuan', (isset($suratMewakili) && ! empty($suratMewakili->ketentuan)) ? implode("\n", $suratMewakili->ketentuan) : ($ketentuanDefault ?? '')) }}</textarea>
         <p class="text-xs text-gray-500 mt-1">Setiap baris akan dicetak sebagai item bernomor pada surat.</p>
     </div>
 
