@@ -181,18 +181,18 @@
                 <table style="width:100%; border-collapse:collapse; {{ $index > 0 ? 'margin-top:0;' : '' }}">
                     <tr>
                         <td style="width:80px; padding:0;">{{ $index + 1 }}. Nama</td>
-                        <td style="width:20px; text-align:center;">:</td>
-                        <td><strong>{{ $peserta->nama ?: '' }}</strong></td>
+                        <td style="width:20px; text-align:center;padding:0;">:</td>
+                        <td style="padding:0;"><strong>{{ $peserta->nama ?: '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;NIP</td>
-                        <td style="text-align:center;">:</td>
-                        <td><strong>{{ $peserta->nip ?: '' }}</strong></td>
+                        <td style="padding:0;padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;NIP</td>
+                        <td style="text-align:center;padding:0;">:</td>
+                        <td style="padding:0;"><strong>{{ $peserta->nip ?: '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;Jabatan</td>
-                        <td style="text-align:center;">:</td>
-                        <td><strong>{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}</strong></td>
+                        <td style="padding:0;padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;Jabatan</td>
+                        <td style="text-align:center;padding:0;">:</td>
+                        <td style="padding:0;"><strong>{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}</strong></td>
                     </tr>
                 </table>
                 @empty
@@ -224,19 +224,19 @@
             <td>
                 <table style="width:100%; border-collapse:collapse;">
                     <tr>
-                        <td style="width:80px; padding:2px 0;">Tanggal</td>
+                        <td style="width:80px; padding:2px ;">Tanggal</td>
                         <td style="width:20px; text-align:center;">:</td>
                         <td><strong>{{ $laporanNodin->pelaksanaan_tanggal ? \App\Http\Controllers\LaporanNodinController::formatTanggal($laporanNodin->pelaksanaan_tanggal, '%A, %d %B %Y') : '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td style="padding:2px 0;">Jam</td>
-                        <td style="text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->pelaksanaan_jam ?: '' }}</strong></td>
+                        <td style="padding:0px ;">Jam</td>
+                        <td style="text-align:center;padding:0;">:</td>
+                        <td style="padding:0;"><strong>{{ $laporanNodin->pelaksanaan_jam ?: '' }}</strong></td>
                     </tr>
                     <tr>
-                        <td style="padding:2px 0;">Tempat</td>
-                        <td style="text-align:center;">:</td>
-                        <td><strong>{{ $laporanNodin->pelaksanaan_tempat ?: '' }}</strong></td>
+                        <td style="padding:0px ;">Tempat</td>
+                        <td style="text-align:center;padding:0;">:</td>
+                        <td style ="padding:0;"><strong>{{ $laporanNodin->pelaksanaan_tempat ?: '' }}</strong></td>
                     </tr>
                 </table>
             </td>
