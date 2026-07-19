@@ -6,7 +6,7 @@
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-bold">Surat Umum</h1>
+                    <h1 class="text-2xl font-bold">Surat Pernyataan</h1>
                 </div>
 
                 @if(session('success'))
@@ -25,23 +25,23 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-                            @forelse($suratUmums as $suratUmum)
+                            @forelse($suratPernyataans as $suratPernyataan)
                             <tr>
-                                <td class="px-4 py-2">{{ $suratUmum->pegawai->nama ?? '-' }}</td>
-                                <td class="px-4 py-2">{{ $suratUmum->tanggal_ditetapkan ? \Carbon\Carbon::parse($suratUmum->tanggal_ditetapkan)->format('d-m-Y') : '-' }}</td>
+                                <td class="px-4 py-2">{{ $suratPernyataan->pegawai->nama ?? '-' }}</td>
+                                <td class="px-4 py-2">{{ $suratPernyataan->tanggal_ditetapkan ? \Carbon\Carbon::parse($suratPernyataan->tanggal_ditetapkan)->format('d-m-Y') : '-' }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex items-center gap-3">
-                                        <a href="{{ route('surat-umums.print', $suratUmum) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">
+                                        <a href="{{ route('surat-pernyataans.print', $suratPernyataan) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z"/>
                                             </svg>
                                         </a>
-                                        <a href="{{ route('surat-umums.edit', $suratUmum) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit" aria-label="Edit">
+                                        <a href="{{ route('surat-pernyataans.edit', $suratPernyataan) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit" aria-label="Edit">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                             </svg>
                                         </a>
-                                        <form action="{{ route('surat-umums.destroy', $suratUmum) }}" method="POST" class="inline" onsubmit="return confirm('Hapus Surat Umum ini?')">
+                                        <form action="{{ route('surat-pernyataans.destroy', $suratPernyataan) }}" method="POST" class="inline" onsubmit="return confirm('Hapus Surat Pernyataan ini?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="text-red-600 hover:text-red-800" title="Hapus" aria-label="Hapus">
@@ -55,7 +55,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="3" class="px-4 py-2 text-center">Belum ada data Surat Umum.</td>
+                                <td colspan="3" class="px-4 py-2 text-center">Belum ada data Surat Pernyataan.</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -63,13 +63,13 @@
                 </div>
 
                 <div class="mt-4">
-                    <a href="{{ route('surat-umums.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Buat Surat Umum Baru
+                    <a href="{{ route('surat-pernyataans.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Buat Surat Pernyataan Baru
                     </a>
                 </div>
 
                 <div class="mt-4">
-                    {{ $suratUmums->links() }}
+                    {{ $suratPernyataans->links() }}
                 </div>
             </div>
         </div>

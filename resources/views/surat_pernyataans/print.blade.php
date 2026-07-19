@@ -2,7 +2,7 @@
 <html lang="id">
   <head>
     <meta charset="utf-8" />
-    <title>Surat Umum - {{ $suratUmum->id }}</title>
+    <title>Surat Pernyataan - {{ $suratPernyataan->id }}</title>
     <style>
       @page {
         size: A4;
@@ -95,7 +95,7 @@
     </div>
 
     <div class="justify">
-        <p>{!! nl2br(e($suratUmum->pembuka_surat)) !!}</p>
+        <p>{!! nl2br(e($suratPernyataan->pembuka_surat)) !!}</p>
     </div>
 
     <div class="pegawai-details">
@@ -103,68 +103,68 @@
             <tr>
                 <td>Nama</td>
                 <td>:</td>
-                <td>{{ $suratUmum->pegawai->nama ?? '' }}</td>
+                <td>{{ $suratPernyataan->pegawai->nama ?? '' }}</td>
             </tr>
             <tr>
                 <td>NIP</td>
                 <td>:</td>
-                <td>{{ $suratUmum->pegawai->nip ?? '-' }}</td>
+                <td>{{ $suratPernyataan->pegawai->nip ?? '-' }}</td>
             </tr>
             <tr>
                 <td>Pangkat/Golongan</td>
                 <td>:</td>
-                <td>{{ $suratUmum->pegawai->pangkat ?? '-' }} / {{ $suratUmum->pegawai->golongan ?? '-' }}</td>
+                <td>{{ $suratPernyataan->pegawai->pangkat ?? '-' }} / {{ $suratPernyataan->pegawai->golongan ?? '-' }}</td>
             </tr>
             <tr>
                 <td>Jabatan</td>
                 <td>:</td>
-                <td>{{ $suratUmum->pegawai->tugas_tambahan ?: ($suratUmum->pegawai->jenis_ptk ?: '') }}</td>
+                <td>{{ $suratPernyataan->pegawai->tugas_tambahan ?: ($suratPernyataan->pegawai->jenis_ptk ?: '') }}</td>
             </tr>
             <tr>
                 <td>Unit Kerja</td>
                 <td>:</td>
-                <td>{{ $suratUmum->pegawai->lembaga_pengangkatan ?? '' }}</td>
+                <td>{{ $suratPernyataan->pegawai->lembaga_pengangkatan ?? '' }}</td>
             </tr>
         </table>
     </div>
 
     <div class="justify">
-        <p>{!! nl2br(e($suratUmum->isi_surat)) !!}</p>
+        <p>{!! nl2br(e($suratPernyataan->isi_surat)) !!}</p>
     </div>
 
     <div class="justify">
-        <p>{!! nl2br(e($suratUmum->penutup_surat)) !!}</p>
+        <p>{!! nl2br(e($suratPernyataan->penutup_surat)) !!}</p>
     </div>
 
     <div class="signature-container">
         <div class="signature-left">
             <p>Mengetahui, <br>
-                {{ $suratUmum->penandatangan->jabatan ?? '' }}</p>
+                {{ $suratPernyataan->penandatangan->jabatan ?? '' }}</p>
             <br>
             <br>
             <br>
-            <p><u>{{ $suratUmum->penandatangan->nama ?? '' }}</u><br>
-                {{ $suratUmum->penandatangan->pangkat ?? '' }},
-                {{ $suratUmum->penandatangan->golongan ?? '' }} <br>
-                NIP. {{ $suratUmum->penandatangan->nip ?? '' }}</p>
+            <p><u>{{ $suratPernyataan->penandatangan->nama ?? '' }}</u><br>
+                {{ $suratPernyataan->penandatangan->pangkat ?? '' }},
+                {{ $suratPernyataan->penandatangan->golongan ?? '' }} <br>
+                NIP. {{ $suratPernyataan->penandatangan->nip ?? '' }}</p>
         </div>
         <div class="signature-right">
-            <p>{{ $suratUmum->tempat_ditetapkan ?? '' }}, {{ \App\Http\Controllers\SuratUmumController::formatTanggal($suratUmum->tanggal_ditetapkan, '%d %B %Y') }} <br>
+            <p>{{ $suratPernyataan->tempat_ditetapkan ?? '' }}, {{ \App\Http\Controllers\SuratPernyataanController::formatTanggal($suratPernyataan->tanggal_ditetapkan, '%d %B %Y') }} <br>
                 Yang membuat pernyataan,</p>
             <br>
             <br>
             <br>
-            <p><u>{{ $suratUmum->pegawai->nama ?? '' }}</u> <br>
-                {{ $suratUmum->pegawai->pangkat ?? '' }}
-                {{ $suratUmum->pegawai->golongan ?? '' }}<br>
-                NIP. {{ $suratUmum->pegawai->nip ?? '' }}</p>
+            <p><u>{{ $suratPernyataan->pegawai->nama ?? '' }}</u> <br>
+                {{ $suratPernyataan->pegawai->pangkat ?? '' }}
+                {{ $suratPernyataan->pegawai->golongan ?? '' }}<br>
+                NIP. {{ $suratPernyataan->pegawai->nip ?? '' }}</p>
         </div>
     </div>
     </div>
 
     <div class="no-print">
       <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
-      <a href="{{ route('surat-umums.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+      <a href="{{ route('surat-pernyataans.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
     </div>
   </body>
 </html>

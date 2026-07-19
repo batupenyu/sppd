@@ -4,70 +4,70 @@ namespace App\Http\Controllers;
 
 use App\Models\Asn;
 use App\Models\LogoSetting;
-use App\Models\SuratUmum;
+use App\Models\SuratPernyataan;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class SuratUmumController extends Controller
+class SuratPernyataanController extends Controller
 {
     public function index(): View
     {
-        $suratUmums = SuratUmum::with(['penandatangan', 'pegawai'])
+        $suratPernyataans = SuratPernyataan::with(['penandatangan', 'pegawai'])
             ->latest()
             ->paginate(10);
 
-        return view('surat_umums.index', compact('suratUmums'));
+        return view('surat_pernyataans.index', compact('suratPernyataans'));
     }
 
     public function create(): View
     {
         $asns = Asn::orderBy('nama')->get();
 
-        return view('surat_umums.create', compact('asns'));
+        return view('surat_pernyataans.create', compact('asns'));
     }
 
     public function store(Request $request): RedirectResponse
     {
         $validated = $this->validateData($request);
 
-        $suratUmum = SuratUmum::create($validated);
+        $suratPernyataan = SuratPernyataan::create($validated);
 
-        return redirect()->route('surat-umums.print', $suratUmum)
-            ->with('success', 'Surat Umum berhasil disimpan.');
+        return redirect()->route('surat-pernyataans.print', $suratPernyataan)
+            ->with('success', 'Surat Pernyataan berhasil disimpan.');
     }
 
-    public function edit(SuratUmum $suratUmum): View
+    public function edit(SuratPernyataan $suratPernyataan): View
     {
         $asns = Asn::orderBy('nama')->get();
-        $suratUmum->load('penandatangan', 'pegawai');
+        $suratPernyataan->load('penandatangan', 'pegawai');
 
-        return view('surat_umums.edit', compact('asns', 'suratUmum'));
+        return view('surat_pernyataans.edit', compact('asns', 'suratPernyataan'));
     }
 
-    public function update(Request $request, SuratUmum $suratUmum): RedirectResponse
+    public function update(Request $request, SuratPernyataan $suratPernyataan): RedirectResponse
     {
         $validated = $this->validateData($request);
 
-        $suratUmum->update($validated);
+        $suratPernyataan->update($validated);
 
-        return redirect()->route('surat-umums.print', $suratUmum)
-            ->with('success', 'Surat Umum berhasil diperbarui.');
+        return redirect()->route('surat-pernyataans.print', $suratPernyataan)
+            ->with('success', 'Surat Pernyataan berhasil diperbarui.');
     }
 
-    public function destroy(SuratUmum $suratUmum): RedirectResponse
+    public function destroy(SuratPernyataan $suratPernyataan): RedirectResponse
     {
-        $suratUmum->delete();
+        $suratPernyataan->delete();
 
-        return redirect()->route('surat-umums.index')
-            ->with('success', 'Surat Umum berhasil dihapus.');
+        return redirect()->route('surat-pernyataans.index')
+            ->with('success', 'Surat Pernyataan berhasil dihapus.');
     }
 
-    public function print(SuratUmum $suratUmum): View
+    public function print(SuratPernyataan $suratPernyataan): View
     {
-        $suratUmum->load('penandatangan', 'pegawai');
+        $suratPernyataan->load('penandatangan', 'pegawai');
 
         $kopSuratBase64 = null;
         $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
@@ -75,7 +75,7 @@ class SuratUmumController extends Controller
             $kopSuratBase64 = 'data:'.($logo->mime ?: 'image/png').';base64,'.base64_encode($logo->image);
         }
 
-        return view('surat_umums.print', compact('suratUmum', 'kopSuratBase64'));
+        return view('surat_pernyataans.print', compact('suratPernyataan', 'kopSuratBase64'));
     }
 
     private function validateData(Request $request): array

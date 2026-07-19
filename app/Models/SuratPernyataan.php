@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SuratUmum extends Model
+class SuratPernyataan extends Model
 {
-    protected $table = 'surat_umums';
+    protected $table = 'surat_pernyataans';
 
     protected $fillable = [
         'pembuka_surat',
