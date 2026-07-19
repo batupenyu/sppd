@@ -169,7 +169,7 @@
             <td class="num">II.</td>
             <td class="sub-label">Tujuan</td>
             <td class="colon">:</td>
-            <td style="text-align: justify;"><strong>{{ $laporanNodin->tujuan ?: '-' }}</strong></td>
+            <td style="text-align: justify;">{{ $laporanNodin->tujuan ?: '-' }}</td>
         </tr>
         @php($pesertaList = $laporanNodin->getPeserta())
         <tr>
