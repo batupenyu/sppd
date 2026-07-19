@@ -47,7 +47,7 @@
 
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Pilih Peserta (Siswa / ASN)</label>
-                            <select name="peserta_select[]" multiple size="10" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <select name="peserta_select[]" multiple id="peserta_select" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                                 <optgroup label="Siswa">
                                     @foreach($siswas as $siswa)
                                         <option value="siswa_{{ $siswa->id }}" {{ in_array('siswa_' . $siswa->id, old('peserta_select', [])) ? 'selected' : '' }}>
@@ -63,7 +63,6 @@
                                     @endforeach
                                 </optgroup>
                             </select>
-                            <p class="text-sm text-gray-500 mt-1">Gunakan Ctrl + Click untuk memilih lebih dari satu.</p>
                         </div>
 
                         <div class="md:col-span-2">
@@ -111,4 +110,17 @@
         </div>
     </div>
 </div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    $('#peserta_select').select2({
+        placeholder: 'Pilih peserta...',
+        allowClear: true,
+        closeOnSelect: false,
+    });
+});
+</script>
 @endsection
