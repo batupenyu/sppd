@@ -10,7 +10,7 @@
         font-size: 14px;
         line-height: 1.5;
         color: #000;
-        background-color: #fff;
+        background-color: #525659;
         margin: 0;
       }
       .container { max-width: 800px; margin: 0 auto; }
