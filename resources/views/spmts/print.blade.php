@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <title>Surat Perintah Melaksanakan Tugas</title>
     <style>
-        body { font-family: 'Times New Roman', serif; font-size: 12pt; }
-                    background-color: #525659;
+        body { font-family: 'Times New Roman', serif; font-size: 16pt; background-color: #525659; }
         .center { text-align: center; }
         .left { text-align: left; }
         .justify { text-align: justify; }
-        .signature { padding-left: 250pt; }
+        .signature { padding-left: 350pt; }
         table { border-collapse: collapse; width: 100%; }
         td { vertical-align: top; }
         .label { width: 150px; }
@@ -28,7 +27,7 @@
             object-fit: contain;
         }
         .page {
-            width: 210mm;
+            width: 230mm;
             min-height: 297mm;
             padding: 15mm 18mm;
             margin: 20px auto;
@@ -47,7 +46,7 @@
         }
         @page {
             size: A4;
-            margin: 1cm 2cm 0.5cm 2cm;
+            margin: 1cm 1.5cm 0.5cm 1.5cm;
         }
     </style>
 </head>
@@ -61,7 +60,7 @@
             <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
         @endif
     </div>
-    <div class="center">
+    <div style="text-align: center">
         <p><b><u>SURAT PERINTAH MELAKSANAKAN TUGAS</u></b><br>
            Nomor : {{ $spmt->nomor_surat ?: '' }}</p>
     </div>
@@ -86,7 +85,7 @@
         <tr>
             <td class="label">Jabatan</td>
             <td class="colon">:</td>
-            <td>{{ $spmt->penandatangan->tugas_tambahan ?? ($spmt->penandatangan->jenis_ptk ?? ($spmt->penandatangan->pangkat_golongan ?? '-')) }}</td>
+            <td>{{ $spmt->penandatangan->tugas_tambahan ?? ($spmt->penandatangan->jabatan ?? ($spmt->penandatangan->pangkat_golongan ?? '-')) }}</td>
         </tr>
     </table>
     <p class="left">dengan ini menyatakan dengan sesungguhnya bahwa:</p>
@@ -109,7 +108,7 @@
         <tr>
             <td class="label">Jabatan</td>
             <td class="colon">:</td>
-            <td>{{ $spmt->pegawai->tugas_tambahan ?? ($spmt->pegawai->jenis_ptk ?? ($spmt->pegawai->pangkat_golongan ?? '-')) }}</td>
+            <td>{{ $spmt->pegawai->tugas_tambahan ?? ($spmt->pegawai->jabatan ?? ($spmt->pegawai->jabatan ?? '-')) }}</td>
         </tr>
     </table>
     <p class="justify">
@@ -120,7 +119,7 @@
     </p>
     <br>
     <div class="signature">
-        <p>{{ $spmt->tempat_ditetapkan ?: '.................' }}, {{ $spmt->tanggal_surat ? $fmt($spmt->tanggal_surat, '%d %B %Y') : '....................' }} <br>{{ $spmt->penandatangan->tugas_tambahan ?? ($spmt->penandatangan->jenis_ptk ?? ($spmt->penandatangan->pangkat_golongan ?? 'Jabatan')) }}</p>
+        <p>{{ $spmt->tempat_ditetapkan ?: '.................' }}, {{ $spmt->tanggal_surat ? $fmt($spmt->tanggal_surat, '%d %B %Y') : '....................' }} <br>{{ $spmt->penandatangan->tugas_tambahan ?? ($spmt->penandatangan->jabatan ?? ($spmt->penandatangan->pangkat_golongan ?? 'Jabatan')) }}</p>
         <br><br><br>
         <p><strong>{{ $spmt->penandatangan->nama ?? 'Nama' }}</strong><br>
             {{ $spmt->penandatangan->pangkat_golongan ?? 'Pangkat/Golongan' }}<br>
