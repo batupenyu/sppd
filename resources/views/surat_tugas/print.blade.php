@@ -4,21 +4,21 @@
 <meta charset="UTF-8">
 <title>Surat Tugas</title>
 <style>
-  @page { size: A4; margin: 1cm 20mm; }
+  @page { size: A4; margin: 0.5cm 1cm; }
   body {
               background-color: #525659;
     font-family: "Times New Roman", Times, serif;
-    font-size: 12pt;
+    font-size: 18pt;
     color: #000;
     max-width: 750px;
     margin: 1cm auto;
-    padding: 20px 40px;
+    padding: 20px 20px;
     line-height: 1;
     text-align: justify;
   }
   .title { text-align: center; margin-bottom: 4px; }
-  .title h1 { font-size: 16px; letter-spacing: 1px; margin: 0; }
-  .title .nomor { font-size: 14px; margin-top: 4px; }
+  .title h1 { font-size: 18pt; letter-spacing: 1px; margin: 0; }
+  .title .nomor { font-size: 18pt; margin-top: 4px; }
   /* .dots {
     border-bottom: 1px dotted #000;
     display: inline-block;
@@ -41,12 +41,12 @@
   .signature .spacer { height: 60px; }
   .no-print { margin-top: 20px; text-align: center; }
   .kop-surat-container { text-align: center; margin-bottom: 8px; }
-  .kop-surat-image { max-width: 100%; max-height: 110px; height: auto; display: inline-block; }
+  .kop-surat-image { max-width: 100%; max-height: 300px; height: auto; display: inline-block; }
   .doc-meta { margin: 10px 0; }
   .doc-meta table td { padding: 2px 0; }
   .doc-meta .label { width: 75px; white-space: nowrap; }
   .page {
-    width: 210mm;
+    width: 230mm;
     min-height: 297mm;
     padding: 15mm 18mm;
     margin: 20px auto;
