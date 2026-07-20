@@ -6,12 +6,12 @@
     <style>
         @page {
             size: A4;
-            margin: 0.5cm 2cm 2cm 2cm;
+            margin: 0.5cm 1cm;
         }
         body {
                     background-color: #525659;
             font-family: "Helvetica", sans-serif;
-            font-size: 10pt;
+            font-size: 16pt;
             line-height: 1.5;
             color: #000;
         }
@@ -185,9 +185,9 @@
             <div class="signature-col">
                 <p>
                     Mengetahui,<br />
-                    {{ $penandatangan->tugas_tambahan ?? ($penandatangan->jenis_ptk ?? '') }}
+                    {{ $penandatangan->tugas_tambahan ?? ($penandatangan->jabatan ?? '') }}
                 </p>
-                <br /><br /><br />
+                <br /><br />
                 <p>
                     <u>{{ $penandatangan->nama }}</u><br />
                     {{ $penandatangan->pangkat_golongan ?? '' }}<br />
