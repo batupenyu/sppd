@@ -51,7 +51,7 @@
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
                                 <th class="px-4 py-2 text-left">Nama</th>
-                                <th class="px-4 py-2 text-left">NUPTK</th>
+                                <!-- <th class="px-4 py-2 text-left">NUPTK</th> -->
                                 <th class="px-4 py-2 text-left">JK</th>
                                 <th class="px-4 py-2 text-left">NIP</th>
                                 <!-- <th class="px-4 py-2 text-left">Agama</th> -->
@@ -63,7 +63,7 @@
                             @forelse($asns as $asn)
                             <tr>
                                 <td class="px-4 py-2">{{ $asn->nama }}</td>
-                                <td class="px-4 py-2">{{ $asn->nuptk }}</td>
+                                <!-- <td class="px-4 py-2">{{ $asn->nuptk }}</td> -->
                                 <td class="px-4 py-2">{{ $asn->jk == 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
                                 <td class="px-4 py-2">{{ $asn->nip }}</td>
                                 <!-- <td class="px-4 py-2">{{ $asn->agama }}</td> -->

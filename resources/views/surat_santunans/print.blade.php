@@ -11,7 +11,7 @@
       body {
                   background-color: #525659;
         font-family: Arial, sans-serif;
-        font-size: 10pt;
+        font-size: 14pt;
         line-height: 1.3;
         color: #333;
       }
