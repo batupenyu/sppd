@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asn;
+use App\Models\LogoSetting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\View\View;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
@@ -568,5 +570,20 @@ class AsnController extends Controller
         }
 
         return redirect()->route('asns.index')->with('success', $message);
+    }
+
+    public function print(): View
+    {
+        $kopSuratBase64 = null;
+        $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
+        if ($logo && $logo->image) {
+            $kopSuratBase64 = 'data:'.($logo->mime ?: 'image/png').';base64,'.base64_encode($logo->image);
+        }
+
+        $asns = Asn::orderBy('nama')->get();
+        $perPage = 50;
+        $pages = $asns->chunk($perPage);
+
+        return view('asns.print', compact('asns', 'kopSuratBase64', 'pages'));
     }
 }

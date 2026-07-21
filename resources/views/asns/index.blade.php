@@ -8,6 +8,9 @@
                 <div class="flex justify-between items-center mb-6">
                     <h1 class="text-2xl font-bold">Data ASN</h1>
                     <div class="flex gap-2">
+                        <a href="{{ route('asns.print') }}" class="bg-purple-500 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded" target="_blank">
+                            Print
+                        </a>
                         <a href="{{ route('asns.export') }}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                             Export CSV
                         </a>
