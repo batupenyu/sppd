@@ -138,6 +138,16 @@
                             <label class="block font-medium mb-1">NIP Atasan Langsung</label>
                             <input type="text" name="atasan_nip" id="atasan_nip" value="{{ old('atasan_nip', $drh->atasan_nip) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Dasar</label>
+                            <input type="text" name="dasar" value="{{ old('dasar', $drh->dasar ?? 'Surat Sekretariat Daerah Provinsi Kepulauan Bangka Belitung Nomor: 800/143/BKPSDM/2026 tanggal 20 Juli 2026 tentang Persyaratan Pengajuan Satyalancana Karya Satya, Kepala Dinas Pendidikan Provinsi Bangka Belitung.') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Untuk</label>
+                            <textarea name="untuk" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('untuk', $drh->untuk ?? "Pengajuan Tanda Kehormatan Satyalancana Karya Satya 20 Tahun\nDilaksanakan dengan sebaik-baik dan penuh tanggung jawab.") }}</textarea>
+                        </div>
                     </div>
 
                     <div class="mt-6 flex gap-4">

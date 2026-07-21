@@ -27,6 +27,8 @@ class DrhSatyalancana extends Model
         'cltn',
         'atasan_nama',
         'atasan_nip',
+        'dasar',
+        'untuk',
     ];
 
     protected $casts = [

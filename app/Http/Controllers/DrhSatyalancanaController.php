@@ -53,6 +53,8 @@ class DrhSatyalancanaController extends Controller
             'cltn' => 'nullable|string',
             'atasan_nama' => 'nullable|string|max:255',
             'atasan_nip' => 'nullable|string|max:50',
+            'dasar' => 'nullable|string',
+            'untuk' => 'nullable|string',
         ]);
 
         $drh = DrhSatyalancana::create($validated);
@@ -90,6 +92,8 @@ class DrhSatyalancanaController extends Controller
             'cltn' => 'nullable|string',
             'atasan_nama' => 'nullable|string|max:255',
             'atasan_nip' => 'nullable|string|max:50',
+            'dasar' => 'nullable|string',
+            'untuk' => 'nullable|string',
         ]);
 
         $drh->update($validated);

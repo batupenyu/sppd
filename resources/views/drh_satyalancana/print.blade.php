@@ -54,9 +54,6 @@
         .space-tg {
             height: 15px;
         }
-        .space-ttd {
-            height: 65px;
-        }
         .page {
             width: 210mm;
             min-height: 297mm;
@@ -66,23 +63,177 @@
             position: relative;
             box-shadow: 0 0 6px rgba(0,0,0,0.3);
         }
-        .kop-surat-container {
+        .st-page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm 18mm;
+            margin: 20px auto;
+            background: white;
+            position: relative;
+            box-shadow: 0 0 6px rgba(0,0,0,0.3);
+        }
+        .st-page .header-table,
+        .st-page table,
+        .st-page th,
+        .st-page td {
+            border: none !important;
+        }
+        .st-page .header-table {
+            border-bottom: 4px double #000;
+        }
+        body, .page, .st-page {
+            font-size: 14pt;
+        }
+        body *, .page *, .st-page * {
+            font-size: 14pt !important;
+        }
+        .st-page .kop-surat-container {
             text-align: center;
             margin-bottom: 20px;
-            margin-left: -2cm;
-            margin-right: -2cm;
+            margin-left: 0;
+            margin-right: 0;
         }
-        .kop-surat-image {
-            width: 80%;
-            max-width: 21cm;
+        .st-page .kop-surat-image {
+            width: 100%;
+            max-width: 100%;
             height: auto;
             max-height: 200px;
             object-fit: contain;
         }
-        .no-print { margin-top: 20px; text-align: center; }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-bottom: 4px double #000;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+        .logo-cell {
+            width: 12%;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .logo-img {
+            width: 70px;
+            height: auto;
+        }
+        .text-cell {
+            width: 88%;
+            text-align: center;
+        }
+        .instansi-prov {
+            font-size: 16px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+        .nama-dinas {
+            font-size: 22px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 0;
+        }
+        .alamat-dinas {
+            font-size: 11px;
+            margin: 3px 0 0 0;
+        }
+        .judul-surat {
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 16px;
+            margin-top: 25px;
+            margin-bottom: 0;
+            text-decoration: underline;
+        }
+        .nomor-surat {
+            text-align: center;
+            font-size: 14px;
+            margin-top: 2px;
+            margin-bottom: 30px;
+        }
+        .content-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        .content-table td {
+            vertical-align: top;
+            padding: 4px 0;
+        }
+        .label-col {
+            width: 15%;
+            font-weight: bold;
+        }
+        .titik-dua-col {
+            width: 3%;
+            text-align: center;
+        }
+        .isi-col {
+            width: 82%;
+        }
+        .sub-content-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .sub-label-col {
+            width: 20%;
+        }
+        .sub-titik-dua-col {
+            width: 4%;
+            text-align: center;
+        }
+        .sub-isi-col {
+            width: 76%;
+        }
+        .menugaskan {
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin: 25px 0;
+            letter-spacing: 1px;
+        }
+        .ordered-list {
+            margin: 0;
+            padding-left: 20px;
+        }
+        .ordered-list li {
+            padding-bottom: 5px;
+        }
+        .ttd-container {
+            float: right;
+            width: 45%;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+        .ttd-tempat-tanggal {
+            margin-bottom: 20px;
+        }
+        .ttd-jabatan {
+            font-weight: bold;
+            text-transform: uppercase;
+            line-height: 1.3;
+        }
+        .ttd-spasi {
+            height: 80px;
+        }
+        .ttd-nama {
+            font-weight: bold;
+            text-decoration: underline;
+            margin: 0;
+        }
+        .ttd-nip {
+            margin: 0;
+        }
         @media print {
             body { background: white; }
-            .page {
+            .page, .st-page {
                 box-shadow: none;
                 margin: 0;
                 page-break-after: always;
@@ -196,9 +347,16 @@
             </tr>
             <tr>
                 <td style="font-weight: bold; text-decoration: underline;">
+                    <br>
+                    <br>
+                    <br>
                     {{ $drh->atasan_nama ?: 'SAIPUL BAKHRI, S.Pd., M.M.' }}
                 </td>
-                <td style="font-weight: bold; text-decoration: underline;">{{ $asn->nama ?? '' }}</td>
+                <td style="font-weight: bold; text-decoration: underline;">
+                    <br>
+                    <br>
+                    <br>
+                    {{ $asn->nama ?? '' }}</td>
             </tr>
             <tr>
                 <td>
@@ -209,11 +367,102 @@
         </table>
     </div>
 
-    <div class="no-print" style="text-align:center; margin-top:20px;padding-left:15px">
-    <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
-    <a href="{{ route('drh-satyalancana.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
-</div>
+
     </div>
 
+    <div class="page st-page">
+        <div class="container">
+            <div class="kop-surat-container">
+                @if($kopSuratBase64)
+                    <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
+                @endif
+            </div>
+
+            <h1 class="judul-surat">Surat Tugas</h1>
+            <div class="nomor-surat">NOMOR : 800 / 498 / DISDIK / 2026</div>
+
+            <table class="content-table">
+                <tr>
+                    <td class="label-col">DASAR</td>
+                    <td class="titik-dua-col">:</td>
+                    <td class="isi-col" style="text-align: justify;">
+                        {{ $drh->dasar ?: 'Surat Sekretariat Daerah Provinsi Kepulauan Bangka Belitung Nomor: 800/143/BKPSDM/2026 tanggal 20 Juli 2026 tentang Persyaratan Pengajuan Satyalancana Karya Satya, Kepala Dinas Pendidikan Provinsi Bangka Belitung.' }}
+                    </td>
+                </tr>
+            </table>
+
+            <div class="menugaskan">Menugaskan:</div>
+
+            <table class="content-table">
+                <tr>
+                    <td class="label-col">KEPADA</td>
+                    <td class="titik-dua-col">:</td>
+                    <td class="isi-col">
+                        <table class="sub-content-table">
+                            <tr>
+                                <td class="sub-label-col">Nama</td>
+                                <td class="sub-titik-dua-col">:</td>
+                                <td class="sub-isi-col"><strong>{{ strtoupper($asn->nama ?? '-') }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="sub-label-col">NIP</td>
+                                <td class="sub-titik-dua-col">:</td>
+                                <td class="sub-isi-col">{{ $asn->nip ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="sub-label-col">Pangkat / Gol</td>
+                                <td class="sub-titik-dua-col">:</td>
+                                <td class="sub-isi-col">{{ $asn->pangkat ?? '-' }} / {{ $asn->golongan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="sub-label-col">Jabatan</td>
+                                <td class="sub-titik-dua-col">:</td>
+                                <td class="sub-isi-col">{{ $asn->jabatan ?? '-' }}</td>
+                            </tr>
+                            <tr>
+                                <td class="sub-label-col">Unit Kerja</td>
+                                <td class="sub-titik-dua-col">:</td>
+                                <td class="sub-isi-col">{{ $asn->unit_kerja ?? '-' }}</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="content-table" style="margin-top: 15px;">
+                <tr>
+                    <td class="label-col">UNTUK</td>
+                    <td class="titik-dua-col">:</td>
+                    <td class="isi-col">
+                        <ol class="ordered-list">
+                            @foreach(explode("\n", $drh->untuk ?: "Pengajuan Tanda Kehormatan Satyalancana Karya Satya 20 Tahun\nDilaksanakan dengan sebaik-baik dan penuh tanggung jawab.") as $item)
+                                @if(trim($item))
+                                    <li>{{ trim($item) }}</li>
+                                @endif
+                            @endforeach
+                        </ol>
+                    </td>
+                </tr>
+            </table>
+
+            <div class="ttd-container">
+                <div class="ttd-tempat-tanggal">
+                    Dikeluarkan di : Pangkalpinang<br>
+                    Pada Tanggal : {{ $fmt($drh->created_at, '%d %B %Y') }}
+                </div>
+                <div class="ttd-jabatan">
+                    Plt. KEPALA DINAS PENDIDIKAN<br>
+                    PROVINSI KEP. BANGKA BELITUNG
+                </div>
+                <div class="ttd-spasi"></div>
+                <div class="ttd-nama">SAIPUL BAKHRI, S.Pd, M.M.</div>
+                <div class="ttd-nip">NIP. 19740430 200501 1 013</div>
+            </div>
+        </div>
+    </div>
+    <div class="no-print" style="text-align:center; margin-top:20px;padding-left:15px">
+        <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
+        <a href="{{ route('drh-satyalancana.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+    </div>
 </body>
 </html>
