@@ -91,6 +91,7 @@ class SuratTugasController extends Controller
 
     public function print(SuratTugas $suratTugas): View
     {
+        $suratTugas->load('penandatangan');
         $peserta = $suratTugas->getPeserta();
 
         $kopSuratBase64 = null;

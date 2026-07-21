@@ -7,7 +7,7 @@
   @page { size: A4; margin: 0.5cm 1cm; }
   body {
               background-color: #525659;
-    font-family: "Times New Roman", Times, serif;
+    font-family: "arial", sans-serif;
     font-size: 18pt;
     color: #000;
     max-width: 750px;
@@ -78,7 +78,8 @@
     <h1>SURAT TUGAS</h1>
     <div class="nomor">NOMOR : {{ $suratTugas->nomor ?: ' ' }}</div>
   </div>
-
+  <br>
+  <br>
   <table>
     <tr>
       <td class="label" style="vertical-align: top; padding-top: 3px;">Dasar</td>
@@ -88,11 +89,15 @@
           $dasarItems = array_filter(array_map('trim', explode("\n", $suratTugas->dasar ?: '')), fn ($l) => $l !== '');
         @endphp
         @if (count($dasarItems))
-          <ol class="dasar-list">
-            @foreach ($dasarItems as $item)
-              <li>{{ $item }}</li>
-            @endforeach
-          </ol>
+          @if (count($dasarItems) === 1)
+            {{ $dasarItems[0] }}
+          @else
+            <ol class="dasar-list">
+              @foreach ($dasarItems as $item)
+                <li>{{ $item }}</li>
+              @endforeach
+            </ol>
+          @endif
         @else
           <span class="fill">&nbsp;</span>
         @endif
@@ -110,30 +115,38 @@
         <table class="sub-table">
           @forelse ($peserta as $i => $p)
             <tr>
-              <td class="no-col">{{ $i + 1 }}.</td>
-              <td class="field-label">Nama</td>
+              @if (count($peserta) > 1)
+                <td class="no-col">{{ $i + 1 }}.</td>
+              @endif
+              <td class="field-label" @if (count($peserta) === 1) style="padding-left: 20px;" @endif>Nama</td>
               <td class="colon">:</td>
               <td><span class="fill">{{ $p->nama ?: ' ' }}</span></td>
             </tr>
             <tr>
-              <td></td>
-              <td class="field-label">Pangkat/gol</td>
+              @if (count($peserta) > 1)
+                <td></td>
+              @endif
+              <td class="field-label" @if (count($peserta) === 1) style="padding-left: 20px;" @endif>Pangkat/gol</td>
               <td class="colon">:</td>
               <td><span class="fill">{{ $p->pangkat_golongan ?: ' ' }}</span></td>
             </tr>
             <tr>
-              <td></td>
-              <td class="field-label">NIP</td>
+              @if (count($peserta) > 1)
+                <td></td>
+              @endif
+              <td class="field-label" @if (count($peserta) === 1) style="padding-left: 20px;" @endif>NIP</td>
               <td class="colon">:</td>
               <td><span class="fill">{{ $p->nip ?: ' ' }}</span></td>
             </tr>
             <tr>
-              <td></td>
-              <td class="field-label">Jabatan</td>
+              @if (count($peserta) > 1)
+                <td></td>
+              @endif
+              <td class="field-label" @if (count($peserta) === 1) style="padding-left: 20px;" @endif>Jabatan</td>
               <td class="colon">:</td>
               <td><span class="fill">{{ $p->tugas_tambahan ?: ' ' }}</span></td>
             </tr>
-            @if (!$loop->last)
+            @if (!$loop->last && count($peserta) > 1)
               <tr><td colspan="4" class="peserta-sep"></td></tr>
             @endif
           @empty
@@ -192,14 +205,14 @@
 
   <div class="signature">
     <div class="line">{{ $suratTugas->dikeluarkan_di ?: 'Nama Tempat' }}, {{ $suratTugas->tanggal_dikeluarkan ? $suratTugas->tanggal_dikeluarkan->format('d F Y') : 'Tanggal' }}<br>
-    {{ $suratTugas->jabatan_penandatangan ?: 'Gubernur' }}
+    {{ $suratTugas->penandatangan?->jabatan ?: 'Gubernur' }}
     </div>
     <div class="spacer"></div>
     <!-- <div class="line">{{ $suratTugas->jabatan_penandatangan ?: 'Gubernur' }}</div> -->
     <!-- <div class="line">Kepulauan Bangka Belitung,</div> -->
     <!-- <div class="spacer"></div> -->
-    <div class="line">{{ $suratTugas->nama_penandatangan ?: 'Nama' }}<br>
-    NIP.{{ $suratTugas->nip_penandatangan ?: 'NIP' }}
+    <div class="line">{{ $suratTugas->penandatangan?->nama ?: 'Nama' }}<br>
+    NIP.{{ $suratTugas->penandatangan?->nip ?: 'NIP' }}
     </div>
   </div>
 
