@@ -110,7 +110,7 @@
           <td class="num">7.</td>
           <td class="label">Jabatan Struktural/Fungsional</td>
           <td class="colon">:</td>
-          <td class="value">{{ $pegawai->tugas_tambahan ?? ($pegawai->jenis_ptk ?? '') }}</td>
+          <td class="value">{{ $pegawai->jabatan ?? ($pegawai->jabatan ?? '') }}</td>
         </tr>
         <tr>
           <td class="num">8.</td>
@@ -122,13 +122,14 @@
           <td class="num">9.</td>
           <td class="label">Pada Unit Kerja</td>
           <td class="colon">:</td>
-          <td class="value">{{ $pegawai->lembaga_pengangkatan ?? '' }}</td>
+          <td class="value">{{ $pegawai->unit_kerja ?? '' }}</td>
         </tr>
         <tr>
           <td class="num">10.</td>
           <td class="label">Masa Kerja Golongan</td>
           <td class="colon">:</td>
-          <td class="value">{{ $suratKp4->masa_kerja_golongan ?? '' }}</td>
+          <td class="value"></td>
+          <!-- <td class="value">{{ $suratKp4->masa_kerja_golongan ?? '' }}</td> -->
         </tr>
         <tr>
           <td class="num">11.</td>
@@ -193,7 +194,7 @@
         <tr>
           <td>
             Mengetahui,<br>
-            {{ $penandatangan ? ($penandatangan->tugas_tambahan ?: ($penandatangan->jenis_ptk ?: 'Kepala')) : 'Kepala' }}
+            {{ $penandatangan ? ($penandatangan->tugas_tambahan ?: ($penandatangan->jabatan ?: 'Kepala')) : 'Kepala' }}
             <div class="signature-space"></div>
             <div class="signature-name">{{ $penandatangan->nama ?? '' }}</div>
             @if($penandatangan)NIP. {{ $penandatangan->nip }}@endif
