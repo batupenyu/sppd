@@ -9,9 +9,9 @@
         margin: 0.5cm 2.5cm 1cm 2.5cm;
       }
       body {
-                  background-color: #525659;
+        background-color: #525659;
         font-family: "Times New Roman", Times, serif;
-        font-size: 12pt;
+        font-size: 16pt;
       }
       .kop-surat-container {
         text-align: center;

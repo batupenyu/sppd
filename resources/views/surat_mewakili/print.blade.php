@@ -21,7 +21,7 @@
             background-color: white;
             width: 210mm;
             min-height: 297mm;
-            padding: 0.5cm 15mm 12mm 15mm;
+            padding: 1cm 2cm;
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
             box-sizing: border-box;
         }

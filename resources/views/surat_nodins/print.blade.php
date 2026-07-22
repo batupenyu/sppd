@@ -11,7 +11,7 @@
       body {
                   background-color: #525659;
         font-family: Arial, sans-serif;
-        font-size: 11pt;
+        font-size: 16pt;
         line-height: 1.5;
         color: #000;
         margin: 0;
@@ -35,7 +35,7 @@
       }
       .nota-title {
         text-align: center;
-        font-size: 11pt;
+        font-size: 16pt;
         font-weight: bold;
         text-decoration: underline;
         margin-bottom: 20px;
@@ -45,12 +45,12 @@
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
-        font-size: 11pt;
+        font-size: 16pt;
         page-break-inside: avoid;
       }
       .meta-table td {
         vertical-align: top;
-        font-size: 11pt;
+        font-size: 16pt;
       }
       .meta-table td:nth-child(1) { width: 12%; }
       .meta-table td:nth-child(2) { width: 3%; text-align: center; }
@@ -78,30 +78,30 @@
         text-align: justify;
         text-indent: 40px;
         margin-bottom: 15px;
-        font-size: 11pt;
+        font-size: 16pt;
         page-break-inside: avoid;
       }
       .content p {
         margin: 0 0 15px 0;
-        font-size: 11pt;
+        font-size: 16pt;
       }
       .signature-container {
         margin-top: 40px;
         float: right;
         width: 50%;
         text-align: left;
-        font-size: 11pt;
+        font-size: 16pt;
         page-break-inside: avoid;
         page-break-after: avoid;
       }
       .signature-title {
         font-weight: bold;
         margin-bottom: 60px;
-        font-size: 11pt;
+        font-size: 16pt;
       }
       .signature-name {
         font-weight: bold;
-        font-size: 11pt;
+        font-size: 16pt;
       }
       .clearfix::after {
         content: "";
@@ -111,15 +111,15 @@
       .signature-unit {
         padding-left: 29px;
         display: block;
-        font-size: 11pt;
+        font-size: 16pt;
       }
       .signature-body {
         padding-left: 29px;
-        font-size: 11pt;
+        font-size: 16pt;
       }
       .signature-nip {
         margin-top: 5px;
-        font-size: 11pt;
+        font-size: 16pt;
       }
       .page {
         width: 210mm;
