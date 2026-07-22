@@ -9,7 +9,7 @@
             margin: 0.5cm 2cm 1cm 2cm;
         }
         body {
-                    background-color: #525659;
+            background-color: #525659;
             font-family: "Helvetica", sans-serif;
             font-size: 10pt;
             line-height: 1.5;
@@ -18,11 +18,12 @@
         .page {
             width: 297mm;
             min-height: 210mm;
-            padding: 15mm 18mm;
+            padding: 10mm 18mm;
             margin: 20px auto;
             background: white;
             position: relative;
             box-shadow: 0 0 6px rgba(0,0,0,0.3);
+            box-sizing: border-box;
         }
         .no-print { margin-top: 20px; text-align: center; }
         @media print {
@@ -31,7 +32,6 @@
                 box-shadow: none;
                 margin: 0;
                 page-break-after: always;
-                border: 1px solid #000;
             }
             .no-print { display: none !important; }
         }
@@ -263,7 +263,7 @@
                 <div class="signature-block" style="width: 250pt; margin-left: auto; text-align: center">
                     <p>Mengetahui,</p>
                     <p class="penandatangan">
-                        {{ $laporanCuti->penandatangan->tugas_tambahan ?? ($laporanCuti->penandatangan->jenis_ptk ?? ($laporanCuti->penandatangan->pangkat_golongan ?? '')) }}<br /><br /><br />
+                        {{ $laporanCuti->penandatangan->tugas_tambahan ?? ($laporanCuti->penandatangan->jabatan ?? ($laporanCuti->penandatangan->pangkat_golongan ?? '')) }}<br /><br /><br />
                         {{ $laporanCuti->penandatangan->nama ?? '' }}<br />
                         {{ $laporanCuti->penandatangan->pangkat_golongan ?? '' }}<br />
                         NIP. {{ $laporanCuti->penandatangan->nip ?? '' }}

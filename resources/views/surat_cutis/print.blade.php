@@ -157,13 +157,13 @@
             <tr>
                 <td class="label-col valign-top">Jabatan</td>
                 <td class="colon-col valign-top">:</td>
-                <td class="value-col valign-top">{{ $p->tugas_tambahan ?? ($p->jenis_ptk ?? '-') }}</td>
+                <td class="value-col valign-top">{{ $p->tugas_tambahan ?? ($p->jabatan ?? '-') }}</td>
             </tr>
             <tr>
                 <td class="label-col valign-top">Unit Kerja</td>
                 <td class="colon-col valign-top">:</td>
                 <td class="value-col valign-top">
-                    {{ $p->tempat_lahir ?: '-' }}
+                    {{ $p->unit_kerja ?? '-' }}
                 </td>
             </tr>
         </table>
@@ -199,7 +199,7 @@
             <div class="signature-col">
                 <p>
                     Hormat saya,<br />
-                    {{ $p->tugas_tambahan ?? ($p->jenis_ptk ?? '') }}
+                    {{ $p->tugas_tambahan ?? ($p->jabatan ?? '') }}
                 </p>
                 <br /><br />
                 <p>

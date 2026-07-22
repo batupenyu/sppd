@@ -54,9 +54,11 @@
             font-size: 11pt;
         }
         .tabel-konten {
-            width: 100%;
+            width: 75%;
             border-collapse: collapse;
             margin-bottom: 20px;
+            margin-left: auto;
+            margin-right: auto;
             page-break-inside: auto;
         }
         .tabel-konten thead {
@@ -156,17 +158,17 @@
         <thead>
             <tr>
                 <th style="width: 8%;">No.</th>
-                <th class="text-justify" style="width: 52%;">Naskah Dinas/Barang<br>yang Dikirimkan</th>
+                <th class="text-left" style="width: 52%;">Naskah Dinas/Barang<br>yang Dikirimkan</th>
                 <th style="width: 15%;">Banyaknya</th>
-                <th class="text-justify" style="width: 25%;">Keterangan</th>
+                <th class="text-left" style="width: 25%;">Keterangan</th>
             </tr>
         </thead>
         <tbody>
                 <tr>
-                    <td style="text-align: center;">1.</td>
+                    <td style="text-align: center;height: 200px">1.</td>
                     <td class="text-justify">{{ $suratPengantar->isi_surat ?: '&nbsp;' }}</td>
                     <td>{{ $suratPengantar->banyaknya ?: '1 (satu) berkas' }}</td>
-                    <td class="text-justify">{{ $suratPengantar->keterangan ?: 'Demikian disampaikan untuk dapat ditindaklanjuti' }}</td>
+                    <td class="text-left">{{ $suratPengantar->keterangan ?: 'Demikian disampaikan untuk dapat ditindaklanjuti' }}</td>
                 </tr>
         </tbody>
     </table>
@@ -174,7 +176,7 @@
     <!-- TANDA TANGAN (PENERIMA & PENGIRIM) -->
     <table class="tanda-tangan-container">
         <tr>
-            <td>
+            <td style="padding-left: 40px;">
                 <div class="ttd-box">
                     Diterima tanggal <span class="titik-titik" style="min-width: 120px;"></span><br>
                     <!-- <span class="titik-titik" style="min-width: 120px;"></span><br> -->
@@ -203,7 +205,7 @@
 
     <!-- FOOTER NOMOR TELEPON -->
     @if($suratPengantar->nomor_telepon)
-    <div class="footer-telepon">
+    <div class="footer-telepon" style="padding-left:40px;">
         Nomor telepon <span class="titik-titik" style="min-width: 150px;"></span> {{ $suratPengantar->nomor_telepon }}
     </div>
     @endif
