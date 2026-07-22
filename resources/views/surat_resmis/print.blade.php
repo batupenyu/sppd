@@ -11,7 +11,7 @@
       body {
                   background-color: #525659;
         font-family: "Helvetica", sans-serif;
-        font-size: 11pt;
+        font-size: 14pt;
         line-height: 1.5;
         color: #000;
       }
@@ -95,13 +95,13 @@
       {{ $suratResmi->tempat_ditetapkan }}, {{ $fmt($suratResmi->tanggal_ditetapkan) }}
     </div>
 
-    <div class="header">
+    <!-- <div class="header">
       <p>
         <strong>SURAT RESMI</strong><br />
         <strong>Nomor : {{ $suratResmi->nomor }}</strong>
       </p>
     </div>
-    <br />
+    <br /> -->
 
     <div class="content">
       <table>
@@ -211,7 +211,7 @@
     </div>
 
     @if($penandatangan)
-    <div class="signature" style="padding-left: 250pt">
+    <div class="signature" style="padding-left: 350px">
       <p>
         {{ $suratResmi->tempat_ditetapkan }}, {{ $fmt($suratResmi->tanggal_ditetapkan) }} <br />
         {{ $penandatangan->jabatan ?? '' }},

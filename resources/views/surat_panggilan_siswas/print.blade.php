@@ -25,7 +25,7 @@
         body {
                     background-color: #525659;
             font-family: 'Times New Roman', Times, serif;
-            font-size: 12pt;
+            font-size: 14pt;
             line-height: 1.4;
             color: #000;
             background: white;

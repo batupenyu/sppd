@@ -7,7 +7,7 @@
       @page { size: A4; margin: 1.5cm; }
       body {
         font-family: Arial, Helvetica, sans-serif;
-        font-size: 14px;
+        font-size: 14pt;
         line-height: 1.5;
         color: #000;
         background-color: #525659;
@@ -186,7 +186,7 @@
         </tbody>
       </table>
 
-      <div class="statement" style="font-size: 13px;">
+      <div class="statement" style="font-size: 14pt;">
         Keterangan ini saya buat dengan sesungguhnya dan apabila keterangan ini ternyata tidak benar (palsu), saya bersedia dituntut dimuka Pengadilan berdasarkan undang-undang yang berlaku, dan bersedia mengembalikan semua uang tunjangan anak yang telah saya terima yang seharusnya bukan menjadi hak saya.
       </div>
 
