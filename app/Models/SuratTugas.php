@@ -24,10 +24,16 @@ class SuratTugas extends Model
         'untuk_1',
         'untuk_2',
         'untuk_3',
+        'kegiatan',
+        'tanggal_mulai',
+        'tanggal_selesai',
+        'pukul',
+        'tempat',
+        'sumber_dana',
+        'tahun_anggaran',
         'dikeluarkan_di',
         'tanggal_dikeluarkan',
         'penandatangan_id',
-        'jabatan_penandatangan',
         'nama_penandatangan',
         'nip_penandatangan',
     ];
@@ -35,6 +41,8 @@ class SuratTugas extends Model
     protected $casts = [
         'peserta' => 'array',
         'tanggal_dikeluarkan' => 'date',
+        'tanggal_mulai' => 'date',
+        'tanggal_selesai' => 'date',
     ];
 
     public function penandatangan(): BelongsTo

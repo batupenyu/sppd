@@ -8,17 +8,17 @@
   body {
               background-color: #525659;
     font-family: "arial", sans-serif;
-    font-size: 18pt;
+    font-size: 15pt;
     color: #000;
     max-width: 750px;
     margin: 1cm auto;
     padding: 20px 20px;
-    line-height: 1;
+    line-height: 20pt;
     text-align: justify;
   }
   .title { text-align: center; margin-bottom: 4px; }
   .title h1 { font-size: 18pt; letter-spacing: 1px; margin: 0; }
-  .title .nomor { font-size: 18pt; margin-top: 4px; }
+  .title .nomor { font-size: 16pt; margin-top: 4px; }
   /* .dots {
     border-bottom: 1px dotted #000;
     display: inline-block;
@@ -36,9 +36,10 @@
   .peserta-sep { height: 12px; }
   .dasar-list { margin: 2px 0; padding-left: 22px; }
   .dasar-list li { margin: 2px 0; }
-  .signature { margin-top: 60px; margin-left: 340px; }
+  .signature { margin-top: 60px; margin-left: 400px; }
   .signature .line { margin-bottom: 4px; }
   .signature .spacer { height: 60px; }
+  .spacer-1pt { height: 1pt; }
   .no-print { margin-top: 20px; text-align: center; }
   .kop-surat-container { text-align: center; margin-bottom: 8px; }
   .kop-surat-image { max-width: 100%; max-height: 300px; height: auto; display: inline-block; }
@@ -73,13 +74,14 @@
       <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
     @endif
   </div>
-
+  <br>
   <div class="title">
-    <h1>SURAT TUGAS</h1>
+    <h1><u>SURAT TUGAS</u></h1>
     <div class="nomor">NOMOR : {{ $suratTugas->nomor ?: ' ' }}</div>
   </div>
   <br>
   <br>
+  <div class="spacer-1pt"></div>
   <table>
     <tr>
       <td class="label" style="vertical-align: top; padding-top: 3px;">Dasar</td>
@@ -104,7 +106,7 @@
       </td>
     </tr>
   </table>
-
+  <br>
   <div class="memerintahkan">MEMERINTAHKAN:</div>
 
   <table>
@@ -144,7 +146,7 @@
               @endif
               <td class="field-label" @if (count($peserta) === 1) style="padding-left: 20px;" @endif>Jabatan</td>
               <td class="colon">:</td>
-              <td><span class="fill">{{ $p->tugas_tambahan ?: ' ' }}</span></td>
+              <td><span class="fill">{{ $p->jabatan ?: ' ' }}</span></td>
             </tr>
             @if (!$loop->last && count($peserta) > 1)
               <tr><td colspan="4" class="peserta-sep"></td></tr>
@@ -188,15 +190,27 @@
         <table class="sub-table">
           <tr>
             <td class="no-col">1.</td>
-            <td><span class="fill">{{ $suratTugas->untuk_1 ?: ' ' }}</span></td>
+            <td>
+              Dalam rangka {{ $suratTugas->kegiatan ?: ' ' }} <br>
+            </td>
           </tr>
           <tr>
             <td class="no-col">2.</td>
-            <td><span class="fill">{{ $suratTugas->untuk_2 ?: ' ' }}</span></td>
+            <td>
+              Perjalanan dinas dilaksanakan selama {{ $selamaHuruf ?: ' ' }} pada hari/tanggal {{ $tanggalText ?: 'Tanggal' }} pukul : {{ $suratTugas->pukul ?: 'Pukul' }} bertempat di {{ $suratTugas->tempat ?: 'Tempat' }}<br>
+            </td>
           </tr>
           <tr>
             <td class="no-col">3.</td>
-            <td><span class="fill">{{ $suratTugas->untuk_3 ?: ' ' }}</span></td>
+            <td><span class="fill">Membuat laporan hasil pelaksanaan perintah tugas kepada {{$suratTugas->penandatangan?->jabatan ?: 'Jabatan' }}</span></td>
+          </tr>
+          <tr>
+            <td class="no-col">4.</td>
+            <td><span class="fill">Perjalanan dinas ini dibiayai dari {{ $suratTugas->sumber_dana ?: 'dana APBD' }} Tahun Anggaran {{ $suratTugas->tahun_anggaran ?: date('Y') }}</span></td>
+          </tr>
+          <tr>
+            <td class="no-col">5.</td>
+            <td><span class="fill">Dilaksanakan sebaik-baiknya dengan penuh tanggungjawab</span></td>
           </tr>
         </table>
       </td>
@@ -204,7 +218,7 @@
   </table>
 
   <div class="signature">
-    <div class="line">{{ $suratTugas->dikeluarkan_di ?: 'Nama Tempat' }}, {{ $suratTugas->tanggal_dikeluarkan ? $suratTugas->tanggal_dikeluarkan->format('d F Y') : 'Tanggal' }}<br>
+    <div class="line">{{ $suratTugas->dikeluarkan_di ?: 'Nama Tempat' }}, {{ $tanggalDikeluarkan ?: 'Tanggal' }}<br>
     {{ $suratTugas->penandatangan?->jabatan ?: 'Gubernur' }}
     </div>
     <div class="spacer"></div>

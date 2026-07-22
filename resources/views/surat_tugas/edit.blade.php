@@ -46,16 +46,36 @@
                             <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Untuk</h2>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block font-medium mb-1">Untuk 1</label>
-                            <textarea name="untuk_1" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('untuk_1', $suratTugas->untuk_1) }}</textarea>
+                            <label class="block font-medium mb-1">Kegiatan</label>
+                            <textarea name="kegiatan" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('kegiatan', $suratTugas->kegiatan) }}</textarea>
                         </div>
-                        <div class="md:col-span-2">
-                            <label class="block font-medium mb-1">Untuk 2</label>
-                            <textarea name="untuk_2" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('untuk_2', $suratTugas->untuk_2) }}</textarea>
+                        <div>
+                            <label class="block font-medium mb-1">Tanggal Mulai</label>
+                            <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai', $suratTugas->tanggal_mulai) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
-                        <div class="md:col-span-2">
-                            <label class="block font-medium mb-1">Untuk 3</label>
-                            <textarea name="untuk_3" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('untuk_3', $suratTugas->untuk_3) }}</textarea>
+                        <div>
+                            <label class="block font-medium mb-1">Tanggal Selesai</label>
+                            <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai', $suratTugas->tanggal_selesai) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label class="block font-medium mb-1">Pukul</label>
+                            <input type="text" name="pukul" value="{{ old('pukul', $suratTugas->pukul ?? ' 09:00 WIB s.d Selesai') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" placeholder="contrg: 08.00 WIB">
+                        </div>
+                        <div>
+                            <label class="block font-medium mb-1">Tempat</label>
+                            <input type="text" name="tempat" value="{{ old('tempat', $suratTugas->tempat) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                        </div>
+                        <div>
+                            <label class="block font-medium mb-1">Sumber Dana</label>
+                            <select name="sumber_dana" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                <option value="">-- Pilih Sumber Dana --</option>
+                                <option value="dana APBD" {{ old('sumber_dana', $suratTugas->sumber_dana) == 'dana APBD' ? 'selected' : '' }}>dana APBD</option>
+                                <option value="dana APBN" {{ old('sumber_dana', $suratTugas->sumber_dana) == 'dana APBN' ? 'selected' : '' }}>dana APBN</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-medium mb-1">Tahun Anggaran</label>
+                            <input type="text" name="tahun_anggaran" value="{{ old('tahun_anggaran', $suratTugas->tahun_anggaran ?? date('Y')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
 
                         <div class="md:col-span-2">
@@ -86,10 +106,6 @@
                             <p class="text-sm text-gray-500 mt-1">Pilih pegawai, lalu nama & jabatan akan terisi otomatis (masih bisa diedit).</p>
                         </div>
                         <div>
-                            <label class="block font-medium mb-1">Jabatan Penandatangan</label>
-                            <input type="text" name="jabatan_penandatangan" id="jabatan_penandatangan" value="{{ old('jabatan_penandatangan', $suratTugas->jabatan_penandatangan) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-                        </div>
-                        <div>
                             <label class="block font-medium mb-1">Nama Penandatangan</label>
                             <input type="text" name="nama_penandatangan" id="nama_penandatangan" value="{{ old('nama_penandatangan', $suratTugas->nama_penandatangan) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
@@ -102,7 +118,6 @@
                             const select = document.getElementById('penandatangan_select');
                             const opt = select.options[select.selectedIndex];
                             document.getElementById('nama_penandatangan').value = opt.dataset.nama || '';
-                            document.getElementById('jabatan_penandatangan').value = opt.dataset.jabatan || '';
                             document.getElementById('nip_penandatangan').value = opt.dataset.nip || '';
                         }
                         document.getElementById('penandatangan_select').addEventListener('change', isiPenandatangan);
