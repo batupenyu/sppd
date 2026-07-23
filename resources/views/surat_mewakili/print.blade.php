@@ -178,9 +178,7 @@
             $jumlahHari = 1;
             if ($suratMewakili->tanggal_awal && $suratMewakili->tanggal_akhir) {
                 $diff = \Carbon\Carbon::parse($suratMewakili->tanggal_akhir)->diffInDays(\Carbon\Carbon::parse($suratMewakili->tanggal_awal));
-                $jumlahHari = max(1, $diff);
-            } elseif ($suratMewakili->tanggal_awal || $suratMewakili->tanggal_akhir) {
-                $jumlahHari = 1;
+                $jumlahHari = $diff + 1;
             }
 
             $terbilang = match($jumlahHari) {
