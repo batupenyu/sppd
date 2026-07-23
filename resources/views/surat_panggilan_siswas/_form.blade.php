@@ -7,7 +7,7 @@
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Nomor Surat</label>
-        <input type="text" name="nomor_surat" value="{{ old('nomor_surat', $s->nomor_surat ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="nomor_surat" value="{{ old('nomor_surat', $s->nomor_surat ?? '400.3.5.02/ ........ / SMKN 1 Kb/2026') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div class="md:col-span-2">
@@ -42,12 +42,12 @@
 
     <div>
         <label class="block font-medium mb-1">Waktu Panggilan</label>
-        <input type="text" name="waktu_panggilan" value="{{ old('waktu_panggilan', $s->waktu_panggilan ?? '') }}" placeholder="Contoh: 08:00 WITA" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="waktu_panggilan" value="{{ old('waktu_panggilan', $s->waktu_panggilan ?? '09:00 WIB') }}" placeholder="Contoh: 08:00 WIB" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div>
         <label class="block font-medium mb-1">Tempat Panggilan</label>
-        <input type="text" name="tempat_panggilan" value="{{ old('tempat_panggilan', $s->tempat_panggilan ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="tempat_panggilan" value="{{ old('tempat_panggilan', $s->tempat_panggilan ?? 'Tempat') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div class="md:col-span-2">
@@ -102,7 +102,7 @@
 
     <div>
         <label class="block font-medium mb-1">Tempat Ditetapkan</label>
-        <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $s->tempat_ditetapkan ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $s->tempat_ditetapkan ?? 'Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
     <div>
         <label class="block font-medium mb-1">Tanggal Ditetapkan</label>
