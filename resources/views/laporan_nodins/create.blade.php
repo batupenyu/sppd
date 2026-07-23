@@ -17,7 +17,7 @@
 
                         <div>
                             <label class="block font-medium mb-1">Kepada</label>
-                            <input type="text" name="kepada" value="{{ old('kepada') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="kepada" value="{{ old('kepada','Kepala SMK Negeri 1 Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Dari</label>
@@ -25,7 +25,7 @@
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Nomor</label>
-                            <input type="text" name="nomor" value="{{ old('nomor') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="nomor" value="{{ old('nomor','400.3.5.03/............/SMKN 1 Kb/2026') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Lampiran</label>
@@ -37,7 +37,7 @@
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Perihal</label>
-                            <input type="text" name="perihal" value="{{ old('perihal') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="perihal" value="{{ old('perihal','Laporan perjalanan dinas') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
 
                         <div class="md:col-span-2">
@@ -77,7 +77,7 @@
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Jam</label>
-                            <input type="text" name="pelaksanaan_jam" value="{{ old('pelaksanaan_jam') }}" placeholder="07:30" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="pelaksanaan_jam" value="{{ old('pelaksanaan_jam', '09: 00 WIB s.d Selesai') }}" placeholder="07:30" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Tempat</label>

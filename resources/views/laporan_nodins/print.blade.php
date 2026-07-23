@@ -108,6 +108,56 @@
             font-weight: bold;
             text-decoration: underline;
         }
+
+         .peserta-container {
+            width: 100%;
+        }
+        
+        .peserta-item {
+            width: 100%;
+            margin-bottom: 5px;
+        }
+        
+        .peserta-item table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .peserta-item table td {
+            padding: 2px 0;
+            vertical-align: top;
+        }
+        
+        .peserta-label-cell {
+            width: 82px;
+            white-space: nowrap;
+        }
+        
+        .peserta-colon-cell {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .peserta-number {
+            display: inline-block;
+            width: 30px;
+        }
+        
+        .peserta-label {
+            display: inline-block;
+        }
+        
+        .peserta-label-with-number {
+            width: 80px;
+        }
+        
+        .peserta-label-no-number {
+            width: 80px;
+        }
+        
+        .peserta-value {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -178,42 +228,90 @@
             <td class="sub-label">Peserta</td>
             <td class="colon">:</td>
             <td>
+                @php($showPesertaIndex = count($pesertaList) > 1)
+                
                 @forelse($pesertaList as $index => $peserta)
-                <table style="width:100%; border-collapse:collapse; {{ $index > 0 ? 'margin-top:0;' : '' }}">
-                    <tr>
-                        <td style="width:80px; padding:0;">{{ $index + 1 }}. Nama</td>
-                        <td style="width:20px; text-align:center;padding:0;">:</td>
-                        <td style="padding:0;"><strong>{{ $peserta->nama ?: '' }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0;padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;NIP</td>
-                        <td style="text-align:center;padding:0;">:</td>
-                        <td style="padding:0;"><strong>{{ $peserta->nip ?: '' }}</strong></td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0;padding:0;">&nbsp;&nbsp;&nbsp;&nbsp;Jabatan</td>
-                        <td style="text-align:center;padding:0;">:</td>
-                        <td style="padding:0;"><strong>{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}</strong></td>
-                    </tr>
-                </table>
+                <div class="peserta-item">
+                    <table>
+                        <tr>
+                            <td class="peserta-label-cell">
+                                @if($showPesertaIndex)
+                                    <span class="peserta-number">{{ $index + 1 }}.</span>
+                                    <span class="peserta-label peserta-label-with-number">Nama</span>
+                                @else
+                                    <span class="peserta-label peserta-label-no-number">Nama</span>
+                                @endif
+                            </td>
+                            <td class="peserta-colon-cell">:</td>
+                            <td class="peserta-value">{{ $peserta->nama ?: '' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="peserta-label-cell">
+                                @if($showPesertaIndex)
+                                    <span class="peserta-number"></span>
+                                    <span class="peserta-label peserta-label-with-number">NIP</span>
+                                @else
+                                    <span class="peserta-label peserta-label-no-number">NIP</span>
+                                @endif
+                            </td>
+                            <td class="peserta-colon-cell">:</td>
+                            <td class="peserta-value">{{ $peserta->nip ?: '' }}</td>
+                        </tr>
+                        <tr>
+                            <td class="peserta-label-cell">
+                                @if($showPesertaIndex)
+                                    <span class="peserta-number"></span>
+                                    <span class="peserta-label peserta-label-with-number">Jabatan</span>
+                                @else
+                                    <span class="peserta-label peserta-label-no-number">Jabatan</span>
+                                @endif
+                            </td>
+                            <td class="peserta-colon-cell">:</td>
+                            <td class="peserta-value">{{ $peserta->tugas_tambahan ?: ($peserta->jenis_ptk ?: ($peserta->jabatan ?: '')) }}</td>
+                        </tr>
+                    </table>
+                </div>
                 @empty
-                <table style="width:100%; border-collapse:collapse;">
-                    <tr>
-                        <td style="width:80px; padding:0;">1. Nama</td>
-                        <td style="width:20px; text-align:center;">:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;NIP</td>
-                        <td style="text-align:center;">:</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0;">&nbsp;&nbsp;&nbsp;Jabatan</td>
-                        <td style="text-align:center;">:</td>
-                        <td></td>
-                    </tr>
-                </table>
+                <div class="peserta-item">
+                    <table>
+                        <tr>
+                            <td class="peserta-label-cell">
+                                @if($showPesertaIndex)
+                                    <span class="peserta-number">1.</span>
+                                    <span class="peserta-label peserta-label-with-number">Nama</span>
+                                @else
+                                    <span class="peserta-label peserta-label-no-number">Nama</span>
+                                @endif
+                            </td>
+                            <td class="peserta-colon-cell">:</td>
+                            <td class="peserta-value"></td>
+                        </tr>
+                        <tr>
+                            <td class="peserta-label-cell">
+                                @if($showPesertaIndex)
+                                    <span class="peserta-number"></span>
+                                    <span class="peserta-label peserta-label-with-number">NIP</span>
+                                @else
+                                    <span class="peserta-label peserta-label-no-number">NIP</span>
+                                @endif
+                            </td>
+                            <td class="peserta-colon-cell">:</td>
+                            <td class="peserta-value"></td>
+                        </tr>
+                        <tr>
+                            <td class="peserta-label-cell">
+                                @if($showPesertaIndex)
+                                    <span class="peserta-number"></span>
+                                    <span class="peserta-label peserta-label-with-number">Jabatan</span>
+                                @else
+                                    <span class="peserta-label peserta-label-no-number">Jabatan</span>
+                                @endif
+                            </td>
+                            <td class="peserta-colon-cell">:</td>
+                            <td class="peserta-value"></td>
+                        </tr>
+                    </table>
+                </div>
                 @endforelse
             </td>
         </tr>
@@ -281,14 +379,23 @@
                 Yang Melaksanakan Tugas,<br>
                 <br>
                 @forelse($pesertaList as $index => $peserta)
-                    {{ $index + 1 }}. ......................................<br>
+                    @if(count($pesertaList) <= 1)
+                        ......................................<br>
+                    @else
+                        {{ $index + 1 }}. ......................................<br>
+                    @endif
                     <strong>{{ $peserta->nama ?: '' }}</strong><br>
                     <br>
                 @empty
-                    1. ......................................<br>
-                    <br>
-                    2. ......................................<br>
-                    <br>
+                    @if(count($pesertaList) <= 1)
+                        ......................................<br>
+                        <br>
+                    @else
+                        1. ......................................<br>
+                        <br>
+                        2. ......................................<br>
+                        <br>
+                    @endif
                 @endforelse
             </td>
         </tr>
