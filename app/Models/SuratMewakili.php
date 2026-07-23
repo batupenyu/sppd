@@ -21,17 +21,19 @@ class SuratMewakili extends Model
         'ditunjuk_nip',
         'ditunjuk_instansi',
         'ditunjuk_jabatan',
-        'keterangan_menunjuk',
         'keterangan_mewakili',
-        'ketentuan',
         'penutup',
         'dikeluarkan_di',
         'tanggal_dikeluarkan',
+        'tanggal_awal',
+        'tanggal_akhir',
+        'dikarenakan',
     ];
 
     protected $casts = [
         'tanggal_dikeluarkan' => 'date',
-        'ketentuan' => 'array',
+        'tanggal_awal' => 'date',
+        'tanggal_akhir' => 'date',
     ];
 
     public function penunjuk(): BelongsTo

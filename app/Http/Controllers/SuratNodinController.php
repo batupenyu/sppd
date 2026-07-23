@@ -28,7 +28,7 @@ class SuratNodinController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
         $siswas = DataSiswa::orderBy('nama')->get();
-        $logos = \App\Models\LogoSetting::orderBy('name')->get();
+        $logos = LogoSetting::orderBy('name')->get();
 
         $defaultPenandatanganId = Asn::defaultPenandatanganId();
 
@@ -50,7 +50,7 @@ class SuratNodinController extends Controller
     {
         $asns = Asn::orderBy('nama')->get();
         $siswas = DataSiswa::orderBy('nama')->get();
-        $logos = \App\Models\LogoSetting::orderBy('name')->get();
+        $logos = LogoSetting::orderBy('name')->get();
         $suratNodin->load('penandatangan', 'pesertaSuratUsulans');
 
         $defaultPenandatanganId = Asn::defaultPenandatanganId();
@@ -200,7 +200,7 @@ class SuratNodinController extends Controller
         $suratNodin->pesertaSuratUsulans()->delete();
 
         $peserta = $request->input('peserta', []);
-        if (!is_array($peserta)) {
+        if (! is_array($peserta)) {
             return;
         }
 

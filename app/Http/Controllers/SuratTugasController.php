@@ -118,8 +118,11 @@ class SuratTugasController extends Controller
             9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
         ];
         $fmt = function ($d) use ($months) {
-            if (!$d) return null;
-            return $d->format('d').' '.$months[(int)$d->format('n')].' '.$d->format('Y');
+            if (! $d) {
+                return null;
+            }
+
+            return $d->format('d').' '.$months[(int) $d->format('n')].' '.$d->format('Y');
         };
         $mulai = $suratTugas->tanggal_mulai;
         $selesai = $suratTugas->tanggal_selesai;
@@ -128,15 +131,15 @@ class SuratTugasController extends Controller
         $selamaHuruf = null;
         if ($mulai && $selesai) {
             $selama = $mulai->diffInDays($selesai) + 1;
-            $selamaHuruf = $selama. ' ('. $this->terbilangHari($selama) .') hari';
+            $selamaHuruf = $selama.' ('.$this->terbilangHari($selama).') hari';
         }
 
         $tanggalText = null;
         if ($mulai && $selesai) {
             if ($mulai->format('Y-m-d') === $selesai->format('Y-m-d')) {
-                $tanggalText = 'tanggal '. $fmt($mulai);
+                $tanggalText = 'tanggal '.$fmt($mulai);
             } else {
-                $tanggalText = 'tanggal '. $fmt($mulai) .' s.d tanggal '. $fmt($selesai);
+                $tanggalText = 'tanggal '.$fmt($mulai).' s.d tanggal '.$fmt($selesai);
             }
         }
 

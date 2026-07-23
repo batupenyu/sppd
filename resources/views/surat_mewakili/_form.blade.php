@@ -81,19 +81,13 @@
     </div>
 
     <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Keterangan Menunjuk</label>
-        <textarea name="keterangan_menunjuk" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('keterangan_menunjuk', $suratMewakili->keterangan_menunjuk ?? 'menunjuk untuk nama dibawah ini untuk mewakili kepala sekolah terhitung tanggal ... s.d ... pada SMK N 1 Koba , dikarenakan kami ...') }}</textarea>
+        <label class="block font-medium mb-1">Dikarenakan</label>
+        <textarea name="dikarenakan" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('dikarenakan', $suratMewakili->dikarenakan ?? 'melaksanakan dinas ke luar daerah') }}</textarea>
     </div>
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Keterangan Mewakili</label>
-        <textarea name="keterangan_mewakili" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('keterangan_mewakili', $suratMewakili->keterangan_mewakili ?? 'Untuk mewakili kepala sekolah Provinsi Kepulauan Bangka Belitung, selama tidak melaksanakan Dinas, dengan ketentuan :') }}</textarea>
-    </div>
-
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Ketentuan (satu item per baris)</label>
-        <textarea name="ketentuan" rows="5" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('ketentuan', (isset($suratMewakili) && ! empty($suratMewakili->ketentuan)) ? implode("\n", $suratMewakili->ketentuan) : ($ketentuanDefault ?? '')) }}</textarea>
-        <p class="text-xs text-gray-500 mt-1">Setiap baris akan dicetak sebagai item bernomor pada surat.</p>
+        <textarea name="keterangan_mewakili" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('keterangan_mewakili', $suratMewakili->keterangan_mewakili ?? 'Untuk mewakili kepala SMK Negeri 1 Koba, selama tidak melaksanakan Dinas, dengan ketentuan:') }}</textarea>
     </div>
 
     <div class="md:col-span-2">
@@ -107,11 +101,19 @@
 
     <div>
         <label class="block font-medium mb-1">Dikeluarkan Di</label>
-        <input type="text" name="dikeluarkan_di" value="{{ old('dikeluarkan_di', $suratMewakili->dikeluarkan_di ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="dikeluarkan_di" value="{{ old('dikeluarkan_di', $suratMewakili->dikeluarkan_di ?? 'Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
     <div>
         <label class="block font-medium mb-1">Tanggal Dikeluarkan</label>
         <input type="date" name="tanggal_dikeluarkan" value="{{ old('tanggal_dikeluarkan', optional($suratMewakili->tanggal_dikeluarkan ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+    </div>
+    <div>
+        <label class="block font-medium mb-1">Tanggal Awal</label>
+        <input type="date" name="tanggal_awal" value="{{ old('tanggal_awal', optional($suratMewakili->tanggal_awal ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+    </div>
+    <div>
+        <label class="block font-medium mb-1">Tanggal Akhir</label>
+        <input type="date" name="tanggal_akhir" value="{{ old('tanggal_akhir', optional($suratMewakili->tanggal_akhir ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 </div>
 

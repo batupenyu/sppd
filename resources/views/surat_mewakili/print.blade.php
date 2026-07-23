@@ -42,7 +42,10 @@
         .document-title { text-align: center; margin-top: 6px; margin-bottom: 14px; }
         .document-title h4 { margin: 0; font-size: 15px; text-transform: uppercase; text-decoration: underline; font-weight: bold; letter-spacing: 0.5px; }
         .document-title p { margin: 4px 0 0 0; font-size: 13px; }
-        .content-section { font-size: 13px; text-align: justify; margin-bottom: 8px; }
+        .content-section { font-size: 13px; text-align: justify; margin-bottom: 8px; padding-left: 0; }
+        .content-section ol { margin: 0; padding-left: 10pt; list-style-position: outside; }
+        .content-section li { margin-left: 0; padding-left: 5pt; }
+        .content-section li::marker { margin-left: 0; }
         .data-table { width: 100%; margin-top: 6px; margin-bottom: 8px; font-size: 13px; border-collapse: collapse; }
         .data-table td { padding: 1px 0; vertical-align: top; }
         .data-table td.label { width: 110px; }
@@ -108,11 +111,26 @@
             <td>{{ $suratMewakili->penunjuk_jabatan ?: ($suratMewakili->penunjuk->jabatan ?? '') }}</td>
         </tr>
     </table>
-
+   
     <div class="content-section">
-        {{ $suratMewakili->keterangan_menunjuk }}
-    </div>
+        @php
+            $awal = $suratMewakili->tanggal_awal ? \App\Http\Controllers\SuratMewakiliController::formatTanggal($suratMewakili->tanggal_awal, '%d %B %Y') : null;
+            $akhir = $suratMewakili->tanggal_akhir ? \App\Http\Controllers\SuratMewakiliController::formatTanggal($suratMewakili->tanggal_akhir, '%d %B %Y') : null;
 
+            if ($awal && $akhir && $awal === $akhir) {
+                $range = 'terhitung tanggal ' . $awal;
+            } elseif ($awal && $akhir) {
+                $range = 'terhitung tanggal ' . $awal . ' s.d ' . $akhir;
+            } elseif ($awal) {
+                $range = 'terhitung tanggal ' . $awal;
+            } elseif ($akhir) {
+                $range = 'terhitung tanggal ' . $akhir;
+            } else {
+                $range = 'terhitung tanggal ... s.d ...';
+            }
+        @endphp
+        menunjuk untuk nama dibawah ini untuk mewakili kepala sekolah {{ $range }} pada {{ $suratMewakili->penunjuk->unit_kerja ?? ($suratMewakili->dikeluarkan_di ?: 'SMK N 1 Koba') }}, dikarenakan kami {{ $suratMewakili->dikarenakan ?? '' }}
+    </div>
     <table class="data-table">
         <tr>
             <td class="label">Nama</td>
@@ -140,11 +158,57 @@
         {{ $suratMewakili->keterangan_mewakili }}
     </div>
 
-    <ul class="provisions-list">
-        @foreach(($suratMewakili->ketentuan ?? []) as $index => $item)
-        <li data-number="{{ $index + 1 }}">{{ $item }}</li>
-        @endforeach
-    </ul>
+    <div class="content-section">
+        @php
+            $awal = $suratMewakili->tanggal_awal ? \App\Http\Controllers\SuratMewakiliController::formatTanggal($suratMewakili->tanggal_awal, '%d %B %Y') : null;
+            $akhir = $suratMewakili->tanggal_akhir ? \App\Http\Controllers\SuratMewakiliController::formatTanggal($suratMewakili->tanggal_akhir, '%d %B %Y') : null;
+
+            if ($awal && $akhir && $awal === $akhir) {
+                $range = 'terhitung tanggal ' . $awal;
+            } elseif ($awal && $akhir) {
+                $range = 'terhitung tanggal ' . $awal . ' s.d ' . $akhir;
+            } elseif ($awal) {
+                $range = 'terhitung tanggal ' . $awal;
+            } elseif ($akhir) {
+                $range = 'terhitung tanggal ' . $akhir;
+            } else {
+                $range = 'terhitung tanggal ... s.d ...';
+            }
+
+            $jumlahHari = 1;
+            if ($suratMewakili->tanggal_awal && $suratMewakili->tanggal_akhir) {
+                $diff = \Carbon\Carbon::parse($suratMewakili->tanggal_akhir)->diffInDays(\Carbon\Carbon::parse($suratMewakili->tanggal_awal));
+                $jumlahHari = max(1, $diff);
+            } elseif ($suratMewakili->tanggal_awal || $suratMewakili->tanggal_akhir) {
+                $jumlahHari = 1;
+            }
+
+            $terbilang = match($jumlahHari) {
+                1 => 'satu',
+                2 => 'dua',
+                3 => 'tiga',
+                4 => 'empat',
+                5 => 'lima',
+                6 => 'enam',
+                7 => 'tujuh',
+                8 => 'delapan',
+                9 => 'sembilan',
+                10 => 'sepuluh',
+                default => $jumlahHari,
+            };
+        @endphp
+        <ol>
+            <li>
+                Dalam melaksanakan tugas harus sesuai dengan ketentuan yang berlaku, jika ada hal - hal prinsip harus dikonsultasikan dengan Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung atau menunggu Kepala Sekolah kembali bertugas.
+            </li>
+            <li>
+                Surat Penunjukan mewakili ini berlaku selama {{ $jumlahHari }} ({{ $terbilang }}) hari {{ $range }}
+            </li>
+            <li>
+                atau sampai dengan kembalinya Kepala Sekolah dalam melaksanakan tugas.
+            </li>
+        </ol>
+    </div>
 
     <div class="content-section">
         {{ $suratMewakili->penutup }}

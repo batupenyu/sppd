@@ -13,16 +13,16 @@ use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratDispensasiController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratKp4Controller;
+use App\Http\Controllers\SuratMewakiliController;
 use App\Http\Controllers\SuratNodinController;
 use App\Http\Controllers\SuratPanggilanSiswaController;
 use App\Http\Controllers\SuratPengantarController;
+use App\Http\Controllers\SuratPernyataanController;
 use App\Http\Controllers\SuratRekomendasiController;
 use App\Http\Controllers\SuratResmiController;
 use App\Http\Controllers\SuratSantunanController;
 use App\Http\Controllers\SuratTugasController;
-use App\Http\Controllers\SuratPernyataanController;
 use App\Http\Controllers\SuratUndanganController;
-use App\Http\Controllers\SuratMewakiliController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {

@@ -23,6 +23,8 @@
                                 <th class="px-4 py-2 text-left">Penunjuk</th>
                                 <th class="px-4 py-2 text-left">Ditunjuk</th>
                                 <th class="px-4 py-2 text-left">Tanggal</th>
+                                <th class="px-4 py-2 text-left">Tgl Awal</th>
+                                <th class="px-4 py-2 text-left">Tgl Akhir</th>
                                 <th class="px-4 py-2 text-left">Aksi</th>
                             </tr>
                         </thead>
@@ -33,6 +35,8 @@
                                 <td class="px-4 py-2">{{ $item->penunjuk_nama ?: ($item->penunjuk->nama ?? '-') }}</td>
                                 <td class="px-4 py-2">{{ $item->ditunjuk_nama ?: ($item->ditunjuk->nama ?? '-') }}</td>
                                 <td class="px-4 py-2">{{ $item->tanggal_dikeluarkan ? \Carbon\Carbon::parse($item->tanggal_dikeluarkan)->format('d-m-Y') : '-' }}</td>
+                                <td class="px-4 py-2">{{ $item->tanggal_awal ? \Carbon\Carbon::parse($item->tanggal_awal)->format('d-m-Y') : '-' }}</td>
+                                <td class="px-4 py-2">{{ $item->tanggal_akhir ? \Carbon\Carbon::parse($item->tanggal_akhir)->format('d-m-Y') : '-' }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex items-center gap-3">
                                         <a href="{{ route('surat-mewakili.print', $item) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">
@@ -59,7 +63,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5" class="px-4 py-2 text-center">Belum ada data Surat Penunjukan Mewakili.</td>
+                                <td colspan="7" class="px-4 py-2 text-center">Belum ada data Surat Penunjukan Mewakili.</td>
                             </tr>
                             @endforelse
                         </tbody>
