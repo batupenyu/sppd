@@ -311,7 +311,7 @@
         Demikian undangan ini kami sampaikan, atas perhatian dan kerja sama yang baik kami ucapkan terima kasih.
     </p>
 
-    <!-- <div class="signature-wrapper">
+    <div class="signature-wrapper">
         <div class="signature-left">
             <div class="signature-item">
                 <div class="jabatan">Wali Kelas,</div>
@@ -333,7 +333,7 @@
 
         <div class="signature-right">
             <div class="signature-item">
-                <div class="jabatan">Guru Bimbingan Konseling,</div>
+                <div class="jabatan">{{ $suratPanggilanSiswa->guru_bk_an ? 'an. Guru Bimbingan Konseling,' : 'Guru Bimbingan Konseling,' }}</div>
                 <div style="margin-bottom: 25px;"></div>
                 @if($guruBk)
                 <div class="nama">
@@ -349,12 +349,13 @@
                 @endif
             </div>
         </div>
-    </div> -->
+    </div>
 
-    <div class="mengetahui-wrapper" style="padding-left:300px;">
+    <div class="mengetahui-wrapper">
+    <!-- <div class="mengetahui-wrapper" style="padding-left:300px;"> -->
         <div class="mengetahui-block">
-            <!-- <div class="jabatan-mengetahui">Mengetahui :<br>Wakil Kepala Sekolah Bidang Kesiswaan,</div> -->
-            <div class="jabatan-mengetahui">Guru BK,</div>
+            <div class="jabatan-mengetahui">Mengetahui :<br>Wakil Kepala Sekolah Bidang Kesiswaan,</div>
+            <!-- <div class="jabatan-mengetahui">Guru BK,</div> -->
             <div style="margin-bottom: 30px;"></div>
             @if($wakasek)
             <div class="nama-mengetahui">

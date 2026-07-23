@@ -34,6 +34,7 @@ class SuratPanggilanSiswaController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $this->validateData($request);
+        $validated['guru_bk_an'] = $request->has('guru_bk_an');
 
         $suratPanggilanSiswa = SuratPanggilanSiswa::create($validated);
 
@@ -53,6 +54,7 @@ class SuratPanggilanSiswaController extends Controller
     public function update(Request $request, SuratPanggilanSiswa $suratPanggilanSiswa): RedirectResponse
     {
         $validated = $this->validateData($request);
+        $validated['guru_bk_an'] = $request->has('guru_bk_an');
 
         $suratPanggilanSiswa->update($validated);
 
@@ -92,6 +94,7 @@ class SuratPanggilanSiswaController extends Controller
             'tempat_panggilan' => 'nullable|string|max:255',
             'wali_kelas_id' => 'nullable|exists:asns,id',
             'guru_bk_id' => 'nullable|exists:asns,id',
+            'guru_bk_an' => 'nullable|boolean',
             'wakasek_kesiswaan_id' => 'nullable|exists:asns,id',
             'tempat_ditetapkan' => 'nullable|string|max:255',
             'tanggal_ditetapkan' => 'nullable|date',

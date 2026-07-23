@@ -18,6 +18,7 @@ class SuratPanggilanSiswa extends Model
         'tempat_panggilan',
         'wali_kelas_id',
         'guru_bk_id',
+        'guru_bk_an',
         'wakasek_kesiswaan_id',
         'tempat_ditetapkan',
         'tanggal_ditetapkan',
@@ -26,6 +27,7 @@ class SuratPanggilanSiswa extends Model
     protected $casts = [
         'tanggal_panggilan' => 'date',
         'tanggal_ditetapkan' => 'date',
+        'guru_bk_an' => 'boolean',
     ];
 
     public function siswa(): BelongsTo

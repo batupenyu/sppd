@@ -76,6 +76,12 @@
                 </option>
             @endforeach
         </select>
+        <div class="mt-2">
+            <label class="inline-flex items-center">
+                <input type="checkbox" name="guru_bk_an" value="1" {{ (bool) old('guru_bk_an', $s->guru_bk_an ?? false) ? 'checked' : '' }} class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500 dark:bg-gray-700 dark:border-gray-600">
+                <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">Gunakan prefix "an." untuk jabatan Guru BK</span>
+            </label>
+        </div>
     </div>
 
     <div class="md:col-span-2">
