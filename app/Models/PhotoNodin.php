@@ -9,6 +9,7 @@ class PhotoNodin extends Model
 {
     protected $fillable = [
         'surat_nodin_id',
+        'laporan_nodin_id',
         'caption',
         'mime',
         'image',
@@ -17,5 +18,10 @@ class PhotoNodin extends Model
     public function suratNodin(): BelongsTo
     {
         return $this->belongsTo(SuratNodin::class);
+    }
+
+    public function laporanNodin(): BelongsTo
+    {
+        return $this->belongsTo(LaporanNodin::class);
     }
 }

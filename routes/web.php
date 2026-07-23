@@ -82,6 +82,12 @@ Route::resource('laporan-nodins', LaporanNodinController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('laporan-nodins/{laporan_nodin}', [LaporanNodinController::class, 'destroy'])->name('laporan-nodins.destroy');
 Route::get('laporan-nodins/{laporan_nodin}/print', [LaporanNodinController::class, 'print'])->name('laporan-nodins.print');
+Route::get('laporan-nodins/{laporan_nodin}/photo-lampiran', [LaporanNodinController::class, 'photoLampiran'])->name('laporan-nodins.photo-lampiran');
+Route::get('laporan-nodins/{laporan_nodin}/photos', [LaporanNodinController::class, 'photos'])->name('laporan-nodins.photos');
+Route::post('laporan-nodins/{laporan_nodin}/photos', [LaporanNodinController::class, 'storePhoto'])->name('laporan-nodins.photos.store');
+Route::get('laporan-nodins/{laporan_nodin}/photos/{photo}/edit', [LaporanNodinController::class, 'editPhoto'])->name('laporan-nodins.photos.edit');
+Route::put('laporan-nodins/{laporan_nodin}/photos/{photo}', [LaporanNodinController::class, 'updatePhoto'])->name('laporan-nodins.photos.update');
+Route::delete('laporan-nodins/{laporan_nodin}/photos/{photo}', [LaporanNodinController::class, 'destroyPhoto'])->name('laporan-nodins.photos.destroy');
 Route::resource('surat-dispensasis', SuratDispensasiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-dispensasis/{surat_dispensasi}', [SuratDispensasiController::class, 'destroy'])->name('surat-dispensasis.destroy');

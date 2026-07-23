@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asn;
 use App\Models\LaporanNodin;
+use App\Models\PhotoNodin;
 use App\Models\LogoSetting;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
@@ -83,6 +84,78 @@ class LaporanNodinController extends Controller
         }
 
         return view('laporan_nodins.print', compact('laporanNodin', 'kopSuratBase64'));
+    }
+
+    public function photoLampiran(LaporanNodin $laporanNodin): View
+    {
+        $laporanNodin->load('penandatangan', 'photos');
+
+        return view('laporan_nodins.photo_lampiran', compact('laporanNodin'));
+    }
+
+    public function photos(LaporanNodin $laporanNodin): View
+    {
+        $laporanNodin->load('photos');
+
+        return view('laporan_nodins.photos', compact('laporanNodin'));
+    }
+
+    public function storePhoto(Request $request, LaporanNodin $laporanNodin): RedirectResponse
+    {
+        $request->validate([
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            PhotoNodin::create([
+                'laporan_nodin_id' => $laporanNodin->id,
+                'caption' => $request->input('caption'),
+                'mime' => $file->getClientMimeType(),
+                'image' => file_get_contents($file->getRealPath()),
+            ]);
+        }
+
+        return redirect()->route('laporan-nodins.photos', $laporanNodin)
+            ->with('success', 'Foto berhasil ditambahkan.');
+    }
+
+    public function editPhoto(LaporanNodin $laporanNodin, PhotoNodin $photo): View
+    {
+        $laporanNodin->load('photos');
+
+        return view('laporan_nodins.photos_edit', compact('laporanNodin', 'photo'));
+    }
+
+    public function updatePhoto(Request $request, LaporanNodin $laporanNodin, PhotoNodin $photo): RedirectResponse
+    {
+        $request->validate([
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp|max:5120',
+            'caption' => 'nullable|string|max:255',
+        ]);
+
+        $photo->laporan_nodin_id = $laporanNodin->id;
+        $photo->caption = $request->input('caption');
+
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $photo->mime = $file->getClientMimeType();
+            $photo->image = file_get_contents($file->getRealPath());
+        }
+
+        $photo->save();
+
+        return redirect()->route('laporan-nodins.photos', $laporanNodin)
+            ->with('success', 'Foto berhasil diperbarui.');
+    }
+
+    public function destroyPhoto(Request $request, LaporanNodin $laporanNodin, PhotoNodin $photo): RedirectResponse
+    {
+        $photo->delete();
+
+        return redirect()->route('laporan-nodins.photos', $laporanNodin)
+            ->with('success', 'Foto berhasil dihapus.');
     }
 
     private function validateData(Request $request): array
