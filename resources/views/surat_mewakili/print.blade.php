@@ -11,7 +11,8 @@
         body {
             font-family: Arial, Helvetica, sans-serif;
             line-height: 1.5;
-            margin: 0;
+            font-size: 16pt;
+            margin: 1cm 1cm;
             padding: 40px;
             background-color: #525659;
             display: flex;

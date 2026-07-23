@@ -6,7 +6,7 @@
     <style>
       @page {
         size: A4;
-        margin: 0.5cm 2.5cm 1cm 2.5cm;
+        margin: 1cm 1cm;
       }
       body {
         background-color: #525659;

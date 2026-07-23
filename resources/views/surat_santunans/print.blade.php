@@ -6,13 +6,13 @@
     <style>
       @page {
         size: A4;
-        margin: 0.5cm 2.5cm 1cm 2.5cm;
+        margin: 1cm 1cm;
       }
       body {
-                  background-color: #525659;
+        background-color: #525659;
         font-family: Arial, sans-serif;
         font-size: 14pt;
-        line-height: 1.3;
+        line-height: 1.2;
         color: #333;
       }
       .kop-surat-container {

@@ -11,12 +11,12 @@
       }
       @page {
         size: A4;
-        margin: 0.5cm 2cm 0.5cm 2.5cm;
+        margin: 1cm 1cm;
       }
       body {
         background-color: #525659;
         font-family: "Times New Roman", Times, serif;
-        font-size: 16pt;
+        font-size: 14pt;
         line-height: 1.4;
         color: #000;
         background: white;
