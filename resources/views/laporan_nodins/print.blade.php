@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Laporan Nota Dinas</title>
+    <title>Laporan Nota Dinas{{ $laporanNodin->tanggal ? ' ' . \App\Http\Controllers\LaporanNodinController::formatTanggal($laporanNodin->tanggal, '%d_%m_%Y') : '' }}</title>
     <style>
         body {
                     background-color: #525659;
