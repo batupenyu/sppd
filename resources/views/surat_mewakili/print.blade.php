@@ -84,7 +84,7 @@
         <h4>Surat Penunjukan Mewakili</h4>
         <p>Nomor : {{ $suratMewakili->nomor ?: '800/ ...... / SMKN 1 Kb/Dindik/2026' }}</p>
     </div>
-
+    <br>
     <div class="content-section">
         Yang bertanda tangan di bawah ini :
     </div>
@@ -176,9 +176,11 @@
             }
 
             $jumlahHari = 1;
-            if ($suratMewakili->tanggal_awal && $suratMewakili->tanggal_akhir) {
-                $diff = \Carbon\Carbon::parse($suratMewakili->tanggal_akhir)->diffInDays(\Carbon\Carbon::parse($suratMewakili->tanggal_awal));
-                $jumlahHari = $diff + 1;
+            if (!empty($suratMewakili->tanggal_awal) && !empty($suratMewakili->tanggal_akhir)) {
+                $awal = \Carbon\Carbon::parse($suratMewakili->tanggal_awal)->startOfDay();
+                $akhir = \Carbon\Carbon::parse($suratMewakili->tanggal_akhir)->startOfDay();
+                $diff = $akhir->diffInDays($awal, true);
+                $jumlahHari = (int) $diff + 1;
             }
 
             $terbilang = match($jumlahHari) {
