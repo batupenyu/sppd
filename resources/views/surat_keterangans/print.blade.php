@@ -9,7 +9,7 @@
         margin: 1cm 1.5cm 0.5cm 1.5cm;
       }
       body {
-                  background-color: #525659;
+        background-color: #525659;
         font-family: "Helvetica", sans-serif;
         font-size: 16pt;
         line-height: 1.5;
@@ -156,7 +156,7 @@
     <div class="signature" style="padding-left: 250pt">
       <p>
         {{ $suratKeterangan->tempat_ditetapkan }}, {{ $fmt($suratKeterangan->tanggal_ditetapkan) }} <br />
-        {{ $penandatangan ? ($penandatangan->tugas_tambahan ?: ($penandatangan->jenis_ptk ?: '')) : '' }},
+        {{ $penandatangan ? ($penandatangan->tugas_tambahan ?: ($penandatangan->jabatan ?: '')) : '' }},
       </p>
       <br />
       <br />

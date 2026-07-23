@@ -6,12 +6,13 @@
     <style>
         @page {
             size: A4;
-            margin: 1cm 2cm 0.5cm 2cm;
+            margin: 1cm 1cm;
         }
         body {
-                    background-color: #525659;
-            font-family: 'Times New Roman', Times, serif;
+            background-color: #525659;
+            font-family: 'arial', sans-serif;
             font-size: 12pt;
+            line-height: 20pt;
         }
         .kop-surat {
             text-align: center;

@@ -6,13 +6,13 @@
     <style>
       @page {
         size: A4;
-        margin: 1cm 1.5cm 0.5cm 1.5cm;
+        margin: 1cm 1cm;
       }
       body {
-                  background-color: #525659;
+        background-color: #525659;
         font-family: "Helvetica", sans-serif;
-        font-size: 11pt;
-        line-height: 1.5;
+        font-size: 14pt;
+        line-height: 1.2;
         color: #000;
       }
       td.label {
@@ -71,11 +71,10 @@
     @endif
     <div class="header" style="text-align: center">
       <p>
-        <strong>SURAT REKOMENDASI STUDI LANJUT</strong><br />
+        <strong><u>SURAT REKOMENDASI STUDI LANJUT</u></strong><br />
         <strong>Nomor : {{ $suratRekomendasi->nomor_surat }}</strong>
       </p>
     </div>
-    <br />
     <div class="content">
       <p>Yang bertanda tangan di bawah ini:</p>
       <table>
@@ -100,7 +99,6 @@
           <td>{{ $suratRekomendasi->instansi }}</td>
         </tr>
       </table>
-      <br />
       <p>
         Dengan ini memberikan rekomendasi kepada pegawai di bawah ini:
       </p>
@@ -128,13 +126,11 @@
         </tr>
       </table>
       @endif
-      <br />
-      <p>
+      <p style="text-align: justify">
         Untuk mengikuti program pendidikan Pascasarjana (S2) di
         <strong>{{ $suratRekomendasi->nama_universitas }}</strong> pada program studi
         <strong>{{ $suratRekomendasi->program_studi }}</strong>.
       </p>
-      <br />
       <p><strong>Pertimbangan Rekomendasi:</strong></p>
       <ol class="pertimbangan" style="text-align: justify; line-height: 1.5; margin-top: 0; padding-left: 20pt">
         @forelse($pertimbanganLines as $line)
@@ -143,26 +139,21 @@
         <li style="margin-bottom: 0; line-height: 1.5">-</li>
         @endforelse
       </ol>
-      <br />
       <p style="text-align: justify">
         Pihak instansi mendukung penuh rencana pendidikan yang bersangkutan,
         dengan ketentuan bahwa pendidikan tersebut tidak mengganggu tugas
         kedinasan utama, sesuai dengan peraturan perundang-undangan yang berlaku.
       </p>
-      <br />
       <p style="text-align: justify">
         Demikian surat rekomendasi ini dibuat dengan sebenar-benarnya agar
         dapat dipergunakan sebagaimana mestinya.
       </p>
     </div>
-    <br />
     <div class="signature" style="padding-left: 250pt">
       <p>
         {{ $suratRekomendasi->tempat_ditetapkan }}, {{ $fmt($suratRekomendasi->tanggal_ditetapkan) }} <br />
-        {{ $penandatangan->jabatan ?? ($penandatangan->tugas_tambahan ?: ($penandatangan->jenis_ptk ?: '')) }},
+        {{ $penandatangan->jabatan ?? ($penandatangan->tugas_tambahan ?: ($penandatangan->jabatan ?: '')) }},
       </p>
-      <br />
-      <br />
       <br />
       <p>
         {{ $penandatangan->nama ?? '' }} <br />

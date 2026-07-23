@@ -10,13 +10,13 @@
             margin: 0 2cm;
         }
         body {
-                    background-color: #525659;
-            font-family: 'Times New Roman', Times, serif;
+            background-color: #525659;
+            font-family: 'arial', sans-serif;
             font-size: 16pt;
-            line-height: 1.0;
+            line-height: 20pt;
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
+            background-color: #1e0707;
         }
         .document-container {
             background-color: #ffffff;
@@ -235,7 +235,7 @@
                         &nbsp;
                     @endif
                     <br>
-                    {{ $penandatangan->tugas_tambahan ?? ($penandatangan->jenis_ptk ?? 'Kepala Sekolah') }}
+                    {{ $penandatangan->tugas_tambahan ?? ($penandatangan->jabatan ?? 'Kepala Sekolah') }}
                 </p>
                 <div class="signature-space"></div>
                 <p style="margin-bottom: 0;">{{ $penandatangan->nama ?? 'Nama' }}</p>

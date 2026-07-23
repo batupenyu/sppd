@@ -19,14 +19,14 @@
 
         @page {
             size: A4;
-            margin: 0.5cm 2cm 0.5cm 2.5cm;
+            margin: 1cm 1cm;
         }
 
         body {
-                    background-color: #525659;
+            background-color: #525659;
             font-family: 'Times New Roman', Times, serif;
             font-size: 14pt;
-            line-height: 1.4;
+            line-height: 1.5;
             color: #000;
             background: white;
         }
@@ -311,7 +311,7 @@
         Demikian undangan ini kami sampaikan, atas perhatian dan kerja sama yang baik kami ucapkan terima kasih.
     </p>
 
-    <div class="signature-wrapper">
+    <!-- <div class="signature-wrapper">
         <div class="signature-left">
             <div class="signature-item">
                 <div class="jabatan">Wali Kelas,</div>
@@ -349,11 +349,12 @@
                 @endif
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <div class="mengetahui-wrapper">
+    <div class="mengetahui-wrapper" style="padding-left:300px;">
         <div class="mengetahui-block">
-            <div class="jabatan-mengetahui">Mengetahui :<br>Wakil Kepala Sekolah Bidang Kesiswaan,</div>
+            <!-- <div class="jabatan-mengetahui">Mengetahui :<br>Wakil Kepala Sekolah Bidang Kesiswaan,</div> -->
+            <div class="jabatan-mengetahui">Guru BK,</div>
             <div style="margin-bottom: 30px;"></div>
             @if($wakasek)
             <div class="nama-mengetahui">
