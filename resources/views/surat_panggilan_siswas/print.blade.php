@@ -26,7 +26,7 @@
             background-color: #525659;
             font-family: 'Times New Roman', Times, serif;
             font-size: 14pt;
-            line-height: 1.5;
+            line-height: 1.2;
             color: #000;
             background: white;
         }
@@ -40,6 +40,10 @@
             height: auto;
             display: block;
             margin: 0 auto 10px auto;
+        }
+
+        .tempat-tanggal {
+            text-align: right;
         }
 
         .letter-header {
@@ -111,6 +115,10 @@
         .info-table td.label {
             width: 110px;
             font-weight: 500;
+        }
+        .info-table td.colon {
+            width: 15px;
+            text-align: center;
         }
         .acara-text, .bertemu-text {
             text-align: justify;
@@ -260,6 +268,10 @@
     </div>
     @endif
 
+    <div class="tempat-tanggal">
+       {{ $s->tempat_ditetapkan }}, {{ $fmt::formatTanggal($s->tanggal_ditetapkan, '%d %B %Y') }}
+    </div>
+    <br>
     <div class="letter-header">
         <table class="header-details">
             <tr>
@@ -281,7 +293,7 @@
         <p>Yth. Bapak/Ibu Orang Tua/Wali dari Siswa :</p>
         <p><strong>{{ $siswa->nama ?? '(Nama Siswa)' }}</strong></p>
         <p>di –</p>
-        <p><strong>{{ $s->tempat_panggilan ?: 'SMK Negeri 2 Pelaihari' }}</strong></p>
+        <p><strong>{{ $s->tempat_panggilan ?: 'Tempat' }}</strong></p>
     </div>
 
   <p style="text-indent: 1cm; margin-top: 15px; text-align: justify;">
@@ -291,15 +303,18 @@
     <table class="info-table">
         <tr>
             <td class="label">Hari/Tanggal</td>
-            <td>: {{ $s->tanggal_panggilan ? $fmt::formatTanggal($s->tanggal_panggilan, '%A, %d %B %Y') : '_________, __________' }}</td>
+            <td class="colon">:</td>
+            <td>{{ $s->tanggal_panggilan ? $fmt::formatTanggal($s->tanggal_panggilan, '%A, %d %B %Y') : '_________, __________' }}</td>
         </tr>
         <tr>
             <td class="label">Waktu</td>
-            <td>: {{ $s->waktu_panggilan ?: '________ WITA' }} WITA</td>
+            <td class="colon">:</td>
+            <td>{{ $s->waktu_panggilan ?: '________ WITA' }} WITA</td>
         </tr>
         <tr>
             <td class="label">Tempat</td>
-            <td>: {{ $s->tempat_panggilan ?: 'SMK Negeri 2 Pelaihari, Jln. Husni Thamrin Rt.6 Desa Pemuda KNPI Kec. Pelaihari' }}</td>
+            <td class="colon">:</td>
+            <td>{{ $s->tempat_panggilan ?: 'SMK Negeri 2 Pelaihari, Jln. Husni Thamrin Rt.6 Desa Pemuda KNPI Kec. Pelaihari' }}</td>
         </tr>
     </table>
 
