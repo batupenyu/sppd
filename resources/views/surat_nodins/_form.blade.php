@@ -10,32 +10,38 @@
 
     <div>
         <label class="block font-medium mb-1">Nomor</label>
-        <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '............/............/............') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div>
         <label class="block font-medium mb-1">Sifat</label>
-        <input type="text" name="sifat" value="{{ old('sifat', $suratNodin->sifat ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="sifat" value="{{ old('sifat', $suratNodin->sifat ?? 'Penting') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div>
         <label class="block font-medium mb-1">Lampiran</label>
-        <input type="text" name="lampiran" value="{{ old('lampiran', $suratNodin->lampiran ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="lampiran" value="{{ old('lampiran', $suratNodin->lampiran ?? '-') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div>
         <label class="block font-medium mb-1">Hal</label>
-        <input type="text" name="hal" value="{{ old('hal', $suratNodin->hal ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="hal" value="{{ old('hal', $suratNodin->hal ?? 'Permohonan Izin Perjalanan Dinas') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Yth.</label>
-        <input type="text" name="kepada" value="{{ old('kepada', $suratNodin->kepada ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="kepada" value="{{ old('kepada', $suratNodin->kepada ?? 'Yth. Gubernur Kepulauan Bangka Belitung') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Dari</label>
-        <input type="text" name="dari" value="{{ old('dari', $suratNodin->dari ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="dari" value="{{ old('dari', $suratNodin->dari ?? 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <div class="mt-2">
+            <label class="inline-flex items-center">
+                <input type="checkbox" name="dari_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_plt', $suratNodin->dari_plt ?? false) ? 'checked' : '' }}>
+                <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
+            </label>
+        </div>
     </div>
 
     <div>
@@ -49,7 +55,7 @@
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Dasar Surat</label>
-        <textarea name="dasar_surat" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('dasar_surat', $suratNodin->dasar_surat ?? '') }}</textarea>
+        <textarea name="dasar_surat" rows="4" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('dasar_surat', $suratNodin->dasar_surat ?? '') }}</textarea>
     </div>
 
     <div class="md:col-span-2">
@@ -84,7 +90,8 @@
                     <tr>
                         <th class="px-2 py-2 text-left">Pegawai</th>
                         <th class="px-2 py-2 text-left">Siswa</th>
-                        <th class="px-2 py-2 text-left">Tanggal Kegiatan</th>
+                        <th class="px-2 py-2 text-left">Tgl Awal Kegiatan</th>
+                        <th class="px-2 py-2 text-left">Tgl Akhir Kegiatan</th>
                         <th class="px-2 py-2 text-left">Tempat Kegiatan</th>
                         <th class="px-2 py-2 text-left"></th>
                     </tr>
@@ -165,6 +172,12 @@
                 </option>
             @endforeach
         </select>
+        <div class="mt-2">
+            <label class="inline-flex items-center">
+                <input type="checkbox" name="penandatangan_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_plt', $suratNodin->penandatangan_plt ?? false) ? 'checked' : '' }}>
+                <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
+            </label>
+        </div>
     </div>
 
     <div class="md:col-span-2">
@@ -173,7 +186,7 @@
 
     <div>
         <label class="block font-medium mb-1">Tempat Ditetapkan</label>
-        <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $suratNodin->tempat_ditetapkan ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $suratNodin->tempat_ditetapkan ?? 'Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
     <div>
         <label class="block font-medium mb-1">Tanggal Ditetapkan</label>

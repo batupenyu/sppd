@@ -13,12 +13,14 @@ class PesertaSuratUsulan extends Model
         'surat_nodin_id',
         'pegawai_id',
         'siswa_id',
-        'tanggal_kegiatan',
+        'tgl_awal_kegiatan',
+        'tgl_akhir_kegiatan',
         'tempat_kegiatan',
     ];
 
     protected $casts = [
-        'tanggal_kegiatan' => 'date',
+        'tgl_awal_kegiatan' => 'date',
+        'tgl_akhir_kegiatan' => 'date',
     ];
 
     public function suratNodin(): BelongsTo

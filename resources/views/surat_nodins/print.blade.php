@@ -173,7 +173,7 @@
       <tr>
         <td>Dari</td>
         <td>:</td>
-        <td>{{ $suratNodin->dari ?: '-' }}</td>
+          <td>@php $dari = $suratNodin->dari; echo ($suratNodin->dari_plt ?? false) ? 'Plt. ' . $dari : ($dari ?: '-'); @endphp</td>
       </tr>
       <tr>
         <td>Tanggal</td>
@@ -232,11 +232,12 @@
             $pesertaList = $suratNodin->pesertaSuratUsulans;
             $groups = [];
             foreach ($pesertaList as $peserta) {
-                $key = ($peserta->tanggal_kegiatan ?? '') . '|' . ($peserta->tempat_kegiatan ?? '');
+                $key = ($peserta->tgl_awal_kegiatan ?? '') . '|' . ($peserta->tgl_akhir_kegiatan ?? '') . '|' . ($peserta->tempat_kegiatan ?? '');
                 if (!isset($groups[$key])) {
                     $groups[$key] = [
                         'items' => [],
-                        'tanggal' => $peserta->tanggal_kegiatan,
+                        'tgl_awal' => $peserta->tgl_awal_kegiatan,
+                        'tgl_akhir' => $peserta->tgl_akhir_kegiatan,
                         'tempat' => $peserta->tempat_kegiatan,
                     ];
                 }
@@ -268,19 +269,22 @@
                       -
                     @endif
                   </td>
-                  <td>
-                    @if($peserta->pegawai)
-                      @if($peserta->pegawai->pangkat && $peserta->pegawai->pangkat != '-' && $peserta->pegawai->golongan && $peserta->pegawai->golongan != '-')
-                        {{ $peserta->pegawai->pangkat }},{{ $peserta->pegawai->golongan }}
+                    @php
+                        $pangkat = $peserta->pegawai->pangkat ?? null;
+                        $golongan = $peserta->pegawai->golongan ?? null;
+                        $pangkatGolongan = $pangkat || $golongan
+                            ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
+                            : '-';
+                    @endphp
+                    <td style="text-align: {{ $pangkatGolongan === 'IX' ? 'center' : 'left' }};">
+                      @if($peserta->pegawai)
+                        {{ $pangkatGolongan }}
+                      @elseif($peserta->siswa)
+                        {{ $peserta->siswa->kelas ?: '-' }}
                       @else
                         -
                       @endif
-                    @elseif($peserta->siswa)
-                      {{ $peserta->siswa->kelas ?: '-' }}
-                    @else
-                      -
-                    @endif
-                  </td>
+                    </td>
                   <td>
                     @if($peserta->pegawai)
                       {{ $peserta->pegawai->jabatan ?: '-' }}
@@ -292,7 +296,23 @@
                   </td>
                   <?php if($index == 0): ?>
                   <td rowspan="<?php echo e($rowspan); ?>">
-                    {{ $peserta->tanggal_kegiatan ? \App\Http\Controllers\SuratNodinController::formatTanggal($peserta->tanggal_kegiatan, '%d %B %Y') : '-' }} di {{ $peserta->tempat_kegiatan ?: '-' }}
+                    @php
+                        $awal = $group['tgl_awal'];
+                        $akhir = $group['tgl_akhir'];
+                        $tempat = $group['tempat'] ?? '-';
+                        if ($awal && $akhir && $awal->isSameDay($akhir)) {
+                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
+                        } elseif ($awal && $akhir && $awal->format('n') === $akhir->format('n') && $awal->format('Y') === $akhir->format('Y')) {
+                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
+                        } elseif ($awal && $akhir) {
+                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
+                        } elseif ($awal) {
+                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
+                        } else {
+                            $tanggalText = '-';
+                        }
+                    @endphp
+                    {{ $tanggalText }} di {{ $tempat ?: '-' }}
                   </td>
                   <?php endif; ?>
                 </tr>
@@ -315,19 +335,34 @@
     <div class="clearfix">
       <div class="signature-container">
         <div class="signature-title">
-            @if(stripos($suratNodin->penandatangan->jabatan ?? '', 'kepala dinas') !== false)
-                {{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @php
+                $jabatan = $suratNodin->penandatangan->jabatan ?? '';
+                $prefix = ($suratNodin->penandatangan_plt ?? false) ? 'Plt. ' : '';
+                $isKepalaDinas = stripos($jabatan, 'kepala dinas') !== false;
+                $isKepalaSMK = stripos($jabatan, 'Kepala SMKN 1 Koba') !== true;
+            @endphp
+            @if($isKepalaDinas)
+                {{ $prefix . $jabatan }}
+            @elseif($isKepalaSMK)
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $prefix . $jabatan }}
             @else
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->jabatan ?? '' }}
+                @if($prefix)
+                    {{ $prefix . $jabatan }}
+                @else
+                    &nbsp;&nbsp;{{ $jabatan }}
+                @endif
             @endif
-          <span class="signature-unit">{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
+          @if(stripos($jabatan, 'Kepala SMKN 1 Koba') === false)
+          <span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
+          @endif
         </div>
+        <br>
         <div class="signature-body">
-          <div class="signature-name">{{ $suratNodin->penandatangan->nama ?? '' }}<br>
+          <div class="signature-name">&nbsp;&nbsp;{{ $suratNodin->penandatangan->nama ?? '' }}<br>
             @if($suratNodin->penandatangan->pangkat && $suratNodin->penandatangan->pangkat != '-' && $suratNodin->penandatangan->golongan && $suratNodin->penandatangan->golongan != '-')
-              {{ $suratNodin->penandatangan->pangkat }}<br>
+              &nbsp;&nbsp;{{ $suratNodin->penandatangan->pangkat }}<br>
             @endif
-            NIP. {{ $suratNodin->penandatangan->nip ?? '' }}
+            &nbsp;&nbsp;NIP. {{ $suratNodin->penandatangan->nip ?? '' }}
           </div>
         </div>
       </div>

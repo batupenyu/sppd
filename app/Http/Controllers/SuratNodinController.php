@@ -173,26 +173,34 @@ class SuratNodinController extends Controller
 
     private function validateData(Request $request): array
     {
-        return $request->validate([
+        $validated = $request->validate([
             'nomor' => 'nullable|string|max:255',
             'sifat' => 'nullable|string|max:255',
             'lampiran' => 'nullable|string|max:255',
             'hal' => 'nullable|string|max:255',
             'kepada' => 'nullable|string|max:255',
             'dari' => 'nullable|string|max:255',
+            'dari_plt' => 'nullable|boolean',
             'tanggal' => 'nullable|date',
             'dasar_surat' => 'nullable|string',
             'isi_surat' => 'nullable|string',
             'penandatangan_id' => 'nullable|exists:asns,id',
+            'penandatangan_plt' => 'nullable|boolean',
             'tempat_ditetapkan' => 'nullable|string|max:255',
             'tanggal_ditetapkan' => 'nullable|date',
             'kop_surat' => 'nullable|string|max:255',
             'peserta' => 'nullable|array',
             'peserta.*.pegawai_id' => 'nullable|exists:asns,id',
             'peserta.*.siswa_id' => 'nullable|exists:data_siswa,id',
-            'peserta.*.tanggal_kegiatan' => 'nullable|date',
+            'peserta.*.tgl_awal_kegiatan' => 'nullable|date',
+            'peserta.*.tgl_akhir_kegiatan' => 'nullable|date',
             'peserta.*.tempat_kegiatan' => 'nullable|string|max:255',
         ]);
+
+        $validated['penandatangan_plt'] = $request->boolean('penandatangan_plt');
+        $validated['dari_plt'] = $request->boolean('dari_plt');
+
+        return $validated;
     }
 
     private function syncPeserta(SuratNodin $suratNodin, Request $request): void
@@ -212,7 +220,8 @@ class SuratNodinController extends Controller
             $suratNodin->pesertaSuratUsulans()->create([
                 'pegawai_id' => $item['pegawai_id'] ?: null,
                 'siswa_id' => $item['siswa_id'] ?: null,
-                'tanggal_kegiatan' => $item['tanggal_kegiatan'] ?: null,
+                'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
+                'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
                 'tempat_kegiatan' => $item['tempat_kegiatan'] ?: null,
             ]);
         }

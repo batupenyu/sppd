@@ -2,7 +2,8 @@
     $item = $item ?? [
         'pegawai_id' => '',
         'siswa_id' => '',
-        'tanggal_kegiatan' => '',
+        'tgl_awal_kegiatan' => '',
+        'tgl_akhir_kegiatan' => '',
         'tempat_kegiatan' => '',
     ];
     $asns = $asns ?? [];
@@ -30,7 +31,10 @@
         </select>
     </td>
     <td class="px-2 py-2">
-        <input type="date" name="peserta[{{ $index }}][tanggal_kegiatan]" value="{{ $item['tanggal_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="date" name="peserta[{{ $index }}][tgl_awal_kegiatan]" value="{{ $item['tgl_awal_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+    </td>
+    <td class="px-2 py-2">
+        <input type="date" name="peserta[{{ $index }}][tgl_akhir_kegiatan]" value="{{ $item['tgl_akhir_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </td>
     <td class="px-2 py-2">
         <input type="text" name="peserta[{{ $index }}][tempat_kegiatan]" value="{{ $item['tempat_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">

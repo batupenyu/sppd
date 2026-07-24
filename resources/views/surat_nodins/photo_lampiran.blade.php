@@ -202,10 +202,14 @@
       <!-- <div class="clearfix">
         <div class="signature-container">
           <div class="signature-title">
-            @if(stripos($suratNodin->penandatangan->jabatan ?? '', 'kepala dinas') !== false)
-                {{ $suratNodin->penandatangan->jabatan ?? '' }}
+            @php
+                $jabatan = $suratNodin->penandatangan->jabatan ?? '';
+                $prefix = ($suratNodin->penandatangan_plt ?? false) ? 'Plt. ' : '';
+            @endphp
+            @if(stripos($jabatan, 'kepala dinas') !== false)
+                {{ $prefix . $jabatan }}
             @else
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->jabatan ?? '' }}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $prefix . $jabatan }}
             @endif
             <span class="signature-unit">{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
           </div>
