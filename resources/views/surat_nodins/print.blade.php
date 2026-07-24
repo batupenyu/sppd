@@ -329,7 +329,7 @@
     </table>
 
     <div class="content">
-      <p>Demikian surat permohonan ini kami sampaikan. Atas perhatian Bapak, Kami sampaikan terima kasih.</p>
+      <p>Demikian surat permohonan ini kami sampaikan atas perhatian Bapak, Kami ucapkan terima kasih.</p>
     </div>
 
     <div class="clearfix">
