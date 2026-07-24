@@ -17,19 +17,19 @@
 
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Nomor Surat</label>
-                            <input type="text" name="nomor_surat" value="{{ old('nomor_surat') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="nomor_surat" value="{{ old('nomor_surat','800.1.11.04/ ..... /SMKN 1 Kb/2026') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Sifat Surat</label>
-                            <input type="text" name="sifat_surat" value="{{ old('sifat_surat') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="sifat_surat" value="{{ old('sifat_surat','penting') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Lampiran Surat</label>
-                            <input type="text" name="lampiran_surat" value="{{ old('lampiran_surat') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="lampiran_surat" value="{{ old('lampiran_surat','-') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Perihal Surat</label>
-                            <input type="text" name="perihal_surat" value="{{ old('perihal_surat') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="perihal_surat" value="{{ old('perihal_surat','Permohonan Cuti Tahunan') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Jenis Cuti</label>
@@ -37,7 +37,7 @@
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Tujuan Surat</label>
-                            <input type="text" name="tujuan_surat" value="{{ old('tujuan_surat') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="tujuan_surat" value="{{ old('tujuan_surat','Kepala SMK Negeri 1 Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
 
                         <div class="md:col-span-2">
@@ -54,7 +54,7 @@
                         </div>
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Alasan Cuti</label>
-                            <textarea name="alasan_cuti" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('alasan_cuti') }}</textarea>
+                            <textarea name="alasan_cuti" rows="3" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('alasan_cuti','Urusan Keluarga') }}</textarea>
                         </div>
 
                         <div class="md:col-span-2">
@@ -105,7 +105,7 @@
 
                         <div>
                             <label class="block font-medium mb-1">Tempat Ditetapkan</label>
-                            <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan','Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Tanggal Surat</label>

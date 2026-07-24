@@ -169,7 +169,7 @@
         </table>
 
         <div style="margin-top: 0.5cm" class="left-align justify indent">
-            Dengan ini mengajukan permintaan {{ $suratCuti->jenis_cuti ?: '.........................' }} {{ $leaveDurationText ?: '' }}@if($suratCuti->alasan_cuti), dengan alasan {{ $suratCuti->alasan_cuti }}@endif.
+            Dengan ini mengajukan permintaan {{ $suratCuti->jenis_cuti ?: '.........................' }} {{ $leaveDurationText ?: '' }}@if($suratCuti->alasan_cuti), dengan alasan {{ $suratCuti->alasan_cuti }}@endif, dengan alamat {{$p->alamat_jalan ?? '.........................'}} dengan nomor contact {{$p->hp ?? '.........................'}}, selama menjalani cuti saya akan tetap mematuhi peraturan yang berlaku dan bersedia untuk dihubungi sewaktu-waktu jika diperlukan.
         </div>
 
         <div style="margin-top: 0.5cm" class="left-align justify indent">

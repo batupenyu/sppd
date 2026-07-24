@@ -137,6 +137,9 @@ class SuratCutiController extends Controller
             return 'selama '.$days.' ('.$daysTerbilang.') hari, yaitu tanggal '.$fmt($mulai, '%d %B %Y');
         }
 
+        $days = abs($mulai->diffInDays($selesai)) + 1;
+        $daysTerbilang = $this->terbilangHari($days);
+
         return 'selama '.$days.' ('.$daysTerbilang.') hari, yaitu tanggal '.$fmt($mulai, '%d %B %Y').' sampai dengan tanggal '.$fmt($selesai, '%d %B %Y');
     }
 
