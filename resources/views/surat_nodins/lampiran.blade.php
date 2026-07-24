@@ -127,6 +127,7 @@
         .page {
           box-shadow: none;
           margin: 0;
+          padding-top: 0;
           page-break-after: always;
         }
         .no-print {

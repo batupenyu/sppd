@@ -6,9 +6,8 @@
     <title>Laporan Nota Dinas{{ $laporanNodin->tanggal ? ' ' . \App\Http\Controllers\LaporanNodinController::formatTanggal($laporanNodin->tanggal, '%d_%m_%Y') : '' }}</title>
     <style>
         body {
-                    background-color: #525659;
             font-family: Arial, sans-serif;
-            line-height: 1.6;
+            line-height: 1.3;
             margin: 0;
             padding: 40px;
             background-color: #f9f9f9;
@@ -18,7 +17,6 @@
             margin: 0 auto;
             background: #ffffff;
             padding: 50px 60px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
         .kop-surat-image {
             width: 100%;

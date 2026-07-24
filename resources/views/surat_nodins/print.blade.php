@@ -6,13 +6,13 @@
     <style>
       @page {
         size: A4;
-        margin: 1cm 2cm 0.5cm 2cm;
+        margin: 0.5cm 1cm;
       }
       body {
-                  background-color: #525659;
+        background-color: #525659;
         font-family: Arial, sans-serif;
         font-size: 16pt;
-        line-height: 1.5;
+        line-height: 1.3;
         color: #000;
         margin: 0;
         background: #fff;
