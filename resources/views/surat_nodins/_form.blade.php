@@ -106,10 +106,11 @@
                             @php
                                 $pegawaiId = $peserta->pegawai_id ?? '';
                                 $siswaId = $peserta->siswa_id ?? '';
-                                $tanggalKegiatan = $peserta->tanggal_kegiatan ? \Carbon\Carbon::parse($peserta->tanggal_kegiatan)->format('Y-m-d') : '';
+                                $tglAwal = $peserta->tgl_awal_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan)->format('Y-m-d') : '';
+                                $tglAkhir = $peserta->tgl_akhir_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan)->format('Y-m-d') : '';
                                 $tempatKegiatan = $peserta->tempat_kegiatan ?? '';
                             @endphp
-                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiId, 'siswa_id' => $siswaId, 'tanggal_kegiatan' => $tanggalKegiatan, 'tempat_kegiatan' => $tempatKegiatan], 'asns' => $asns, 'siswas' => $siswas])
+                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiId, 'siswa_id' => $siswaId, 'tgl_awal_kegiatan' => $tglAwal, 'tgl_akhir_kegiatan' => $tglAkhir, 'tempat_kegiatan' => $tempatKegiatan], 'asns' => $asns, 'siswas' => $siswas])
                         @endforeach
                     @endif
                     @if($pesertaIndex == 0)

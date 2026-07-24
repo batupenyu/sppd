@@ -106,6 +106,13 @@ class SuratNodinController extends Controller
         return view('surat_nodins.photo_lampiran', compact('suratNodin'));
     }
 
+    public function lampiranTabelPeserta(SuratNodin $suratNodin): View
+    {
+        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
+
+        return view('surat_nodins.lampiran_tabel_peserta', compact('suratNodin'));
+    }
+
     public function photos(SuratNodin $suratNodin): View
     {
         $suratNodin->load('photos');

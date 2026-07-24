@@ -221,7 +221,16 @@
               -
             @endif
           </td>
-          <td>{{ $peserta->tanggal_kegiatan ? \App\Http\Controllers\SuratNodinController::formatTanggal($peserta->tanggal_kegiatan, '%d %B %Y') : '-' }}</td>
+          <td>
+            @php
+              $tglAwal = $peserta->tgl_awal_kegiatan ? \App\Http\Controllers\SuratNodinController::formatTanggal($peserta->tgl_awal_kegiatan, '%d %B %Y') : null;
+              $tglAkhir = $peserta->tgl_akhir_kegiatan ? \App\Http\Controllers\SuratNodinController::formatTanggal($peserta->tgl_akhir_kegiatan, '%d %B %Y') : null;
+              $tanggal = $tglAkhir && $tglAkhir !== $tglAwal
+                ? $tglAwal . ' s.d. ' . $tglAkhir
+                : ($tglAwal ?: ($tglAkhir ?: '-'));
+            @endphp
+            {{ $tanggal }}
+          </td>
           <td>{{ $peserta->tempat_kegiatan ?: '-' }}</td>
         </tr>
         @endforeach

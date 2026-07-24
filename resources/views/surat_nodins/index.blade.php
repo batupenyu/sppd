@@ -32,18 +32,18 @@
                                 <td class="px-4 py-2">{{ $suratNodin->hal ?: '-' }}</td>
                                 <td class="px-4 py-2">{{ $suratNodin->tanggal ? \Carbon\Carbon::parse($suratNodin->tanggal)->format('d-m-Y') : '-' }}</td>
                                 <td class="px-4 py-2">
-                                    <div class="flex items-center gap-3">
-                                        <!-- <a href="{{ route('surat-nodins.photos', $suratNodin) }}" class="text-green-600 hover:text-green-800" title="Foto Lampiran" aria-label="Foto Lampiran">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                                            </svg>
-                                        </a> -->
-                                        <a href="{{ route('surat-nodins.print', $suratNodin) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">
-                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z"/>
-                                            </svg>
-                                        </a>
-                                        <a href="{{ route('surat-nodins.edit', $suratNodin) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit" aria-label="Edit">
+                                        <div class="flex items-center gap-3">
+                                            <a href="{{ route('surat-nodins.print', $suratNodin) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="{{ route('surat-nodins.lampiran-tabel-peserta', $suratNodin) }}" target="_blank" class="text-green-600 hover:text-green-800" title="Lampiran Tabel Peserta" aria-label="Lampiran Tabel Peserta">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                                                </svg>
+                                            </a>
+                                            <a href="{{ route('surat-nodins.edit', $suratNodin) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit" aria-label="Edit">
                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.12 2.12 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                             </svg>
