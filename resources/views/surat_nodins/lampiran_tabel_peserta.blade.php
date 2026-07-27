@@ -287,7 +287,7 @@
                 @elseif($isKepalaSMK)
                     <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
                 @else
-                    <br>{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
                 @endif
             </div>
             <div class="signature-body">
