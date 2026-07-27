@@ -128,7 +128,7 @@
             <tr>
                 <td class="label">LAMPIRAN I</td>
                 <td class="colon">:</td>
-                <td>Kepala Dinas Pendidikan Prov. Kepulauan Bangka Belitung</td>
+                <td>Surat {{ $suratNodin->dari ?: '-' }}</td>
             </tr>
             <tr>
                 <td class="label">NOMOR</td>
