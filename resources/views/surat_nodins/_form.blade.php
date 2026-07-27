@@ -190,6 +190,18 @@
     </div>
 
     <div class="md:col-span-2">
+        <label class="block font-medium mb-1">Pilih Pegawai Yang Diberi Tugas</label>
+        <select name="pegawai_tugas_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            <option value="">-- Pilih Pegawai Tugas --</option>
+            @foreach($asns as $asn)
+                <option value="{{ $asn->id }}" {{ old('pegawai_tugas_id', $suratNodin->pegawai_tugas_id ?? '') == $asn->id ? 'selected' : '' }}>
+                    {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                </option>
+            @endforeach
+        </select>
+    </div>
+
+    <div class="md:col-span-2">
         <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Penetapan</h2>
     </div>
 

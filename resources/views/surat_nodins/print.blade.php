@@ -96,7 +96,7 @@
       }
       .signature-title {
         font-weight: bold;
-        margin-bottom: 60px;
+        margin-bottom: 10px;
         font-size: 16pt;
       }
       .signature-name {
@@ -114,7 +114,7 @@
         font-size: 16pt;
       }
       .signature-body {
-        padding-left: 29px;
+        font-weight: bold;
         font-size: 16pt;
       }
       .signature-nip {
@@ -345,44 +345,61 @@
       <div class="signature-container">
         <div class="signature-title">
             @php
-                $jabatan = $suratNodin->penandatangan->jabatan ?? '';
+                $atasan = $suratNodin->penandatangan;
+                $pegawaiTugas = $suratNodin->pegawaiTugas;
+
+                $jabatanAtasan = $atasan->jabatan ?? '';
+                $unitKerjaAtasan = $atasan->unit_kerja ?? '';
+                $nama = $atasan->nama ?? '';
+                    $pangkat = $atasan->pangkat_golongan ?? '';
+                    $golongan = '';
+                $nip = $atasan->nip ?? '';
+
+                $jabatanTugas = $pegawaiTugas->jabatan ?? '';
+                $unitKerjaTugas = $pegawaiTugas->unit_kerja ?? '';
+
+                $isPlt = $suratNodin->penandatangan_plt ?? false;
+                $isAn = $suratNodin->penandatangan_an ?? false;
+
+                if ($isPlt && $isAn) {
+                    $isAn = false;
+                }
+
                 $prefix = '';
-                if (($suratNodin->penandatangan_plt ?? false)) $prefix .= 'Plt. ';
-                if (($suratNodin->penandatangan_an ?? false)) $prefix .= 'a.n. ';
-                $isKepalaDinas = stripos($jabatan, 'kepala dinas') !== false;
-                $isKepalaSMK = stripos($jabatan, 'Kepala SMKN 1 Koba') !== false;
+                $indent = false;
+                $showTugas = false;
+                $unitKerja = '';
+
+                if ($isPlt) {
+                    $prefix = 'Plt.' . html_entity_decode('&nbsp;');
+                    $indent = true;
+                    $showTugas = true;
+                    $unitKerja = $unitKerjaTugas ?: $unitKerjaAtasan;
+                } elseif ($isAn) {
+                    $prefix = 'a.n.' . html_entity_decode('&nbsp;');
+                    $indent = true;
+                    $showTugas = true;
+                    $unitKerja = $unitKerjaAtasan;
+                } else {
+                    $prefix = '';
+                    $indent = false;
+                    $showTugas = false;
+                    $unitKerja = $unitKerjaAtasan;
+                }
+
+                $indentChar = html_entity_decode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
             @endphp
-            @if($isKepalaDinas)
-                {{ $prefix . $jabatan }}
-            @elseif($isKepalaSMK)
-                {{ $prefix . $jabatan }}
-            @else
-                @if($prefix)
-                    {{ $prefix . $jabatan }}
-                @else
-                    &nbsp;&nbsp;{{ $jabatan }}
-                @endif
+            {{ $prefix . $jabatanAtasan }}
+            <br>{{ $indent ? $indentChar . $unitKerja : $unitKerja }}
+            <br><br><br>
+            @if($showTugas && $jabatanTugas)
+                <br>{{ $indentChar . $jabatanTugas }}
             @endif
-          @if(($suratNodin->penandatangan_an ?? false))
-              @if($isKepalaSMK)
-                  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
-              @else
-                  <br>{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
-              @endif
-          @elseif($isKepalaSMK)
-              <br><span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
-          @else
-              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
-          @endif
-        </div>
-        <br>
-        <div class="signature-body">
-          <div class="signature-name">&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->nama ?? '' }}<br>
-            @if($suratNodin->penandatangan->pangkat && $suratNodin->penandatangan->pangkat != '-' && $suratNodin->penandatangan->golongan && $suratNodin->penandatangan->golongan != '-')
-              &nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->pangkat }}<br>
+            <br>{{ $indent ? $indentChar . $nama : $nama }}
+            @if($pangkat && $pangkat != '-')
+                <br>{{ $indent ? $indentChar . $pangkat : $pangkat }}
             @endif
-            &nbsp;&nbsp;&nbsp;NIP. {{ $suratNodin->penandatangan->nip ?? '' }}
-          </div>
+            <br>{{ $indent ? $indentChar . 'NIP. ' . $nip : 'NIP. ' . $nip }}
         </div>
       </div>
     </div>

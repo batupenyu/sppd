@@ -25,6 +25,7 @@ class SuratNodin extends Model
         'penandatangan_id',
         'penandatangan_plt',
         'penandatangan_an',
+        'pegawai_tugas_id',
         'tempat_ditetapkan',
         'tanggal_ditetapkan',
         'kop_surat',
@@ -38,6 +39,11 @@ class SuratNodin extends Model
     public function penandatangan(): BelongsTo
     {
         return $this->belongsTo(Asn::class, 'penandatangan_id');
+    }
+
+    public function pegawaiTugas(): BelongsTo
+    {
+        return $this->belongsTo(Asn::class, 'pegawai_tugas_id');
     }
 
     public function pesertaSuratUsulans(): HasMany

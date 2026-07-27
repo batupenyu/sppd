@@ -80,7 +80,7 @@ class SuratNodinController extends Controller
 
     public function print(SuratNodin $suratNodin): View
     {
-        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
+        $suratNodin->load('penandatangan', 'pegawaiTugas', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
 
         $kopSuratBase64 = null;
         $logoName = $suratNodin->kop_surat ?: 'kop_smk';
@@ -94,21 +94,21 @@ class SuratNodinController extends Controller
 
     public function lampiran(SuratNodin $suratNodin): View
     {
-        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
+        $suratNodin->load('penandatangan', 'pegawaiTugas', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
 
         return view('surat_nodins.lampiran', compact('suratNodin'));
     }
 
     public function photoLampiran(SuratNodin $suratNodin): View
     {
-        $suratNodin->load('penandatangan', 'photos');
+        $suratNodin->load('penandatangan', 'pegawaiTugas', 'photos');
 
         return view('surat_nodins.photo_lampiran', compact('suratNodin'));
     }
 
     public function lampiranTabelPeserta(SuratNodin $suratNodin): View
     {
-        $suratNodin->load('penandatangan', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
+        $suratNodin->load('penandatangan', 'pegawaiTugas', 'pesertaSuratUsulans.pegawai', 'pesertaSuratUsulans.siswa');
 
         return view('surat_nodins.lampiran_tabel_peserta', compact('suratNodin'));
     }
@@ -195,6 +195,7 @@ class SuratNodinController extends Controller
             'penandatangan_id' => 'nullable|exists:asns,id',
             'penandatangan_plt' => 'nullable|boolean',
             'penandatangan_an' => 'nullable|boolean',
+            'pegawai_tugas_id' => 'nullable|exists:asns,id',
             'tempat_ditetapkan' => 'nullable|string|max:255',
             'tanggal_ditetapkan' => 'nullable|date',
             'kop_surat' => 'nullable|string|max:255',
