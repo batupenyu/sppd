@@ -161,10 +161,19 @@
         <tbody>
             @php
                 $pesertaList = $suratNodin->pesertaSuratUsulans;
+                $sorted = $pesertaList->sortBy(function ($p) {
+                    $awal = ($p->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_awal_kegiatan->format('Y-m-d') : ($p->tgl_awal_kegiatan ?? '');
+                    $akhir = ($p->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_akhir_kegiatan->format('Y-m-d') : ($p->tgl_akhir_kegiatan ?? '');
+                    $tempat = $p->tempat_kegiatan ?? '';
+                    return $awal . '|' . $akhir . '|' . $tempat;
+                })->values();
                 $groups = [];
                 $current = null;
-                foreach ($pesertaList as $p) {
-                    $key = ($p->tgl_awal_kegiatan ?? '') . '|' . ($p->tgl_akhir_kegiatan ?? '') . '|' . ($p->tempat_kegiatan ?? '');
+                foreach ($sorted as $p) {
+                    $awal = ($p->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_awal_kegiatan->format('Y-m-d') : ($p->tgl_awal_kegiatan ?? '');
+                    $akhir = ($p->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_akhir_kegiatan->format('Y-m-d') : ($p->tgl_akhir_kegiatan ?? '');
+                    $tempat = $p->tempat_kegiatan ?? '';
+                    $key = $awal . '|' . $akhir . '|' . $tempat;
                     if ($current !== null && $current['key'] === $key) {
                         $current['items'][] = $p;
                     } else {
@@ -172,9 +181,9 @@
                         $current = [
                             'key' => $key,
                             'items' => [$p],
-                            'tgl_awal' => $p->tgl_awal_kegiatan,
-                            'tgl_akhir' => $p->tgl_akhir_kegiatan,
-                            'tempat' => $p->tempat_kegiatan,
+                            'tgl_awal' => $awal,
+                            'tgl_akhir' => $akhir,
+                            'tempat' => $tempat,
                         ];
                     }
                 }
@@ -265,26 +274,26 @@
                 @if(stripos($jabatan, 'kepala dinas') !== false)
                     {{ $prefix . $jabatan }}
                 @elseif($isKepalaSMK)
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $prefix . $jabatan }}
+                    {{ $prefix . $jabatan }}
                 @else
                     {{ $prefix . $jabatan }}
                 @endif
                 @if(($suratNodin->penandatangan_an ?? false))
                     @if($isKepalaSMK)
-                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
                     @else
                         <br>{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
                     @endif
                 @elseif($isKepalaSMK)
-                    <span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
                 @else
-                    {{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+                    <br>{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
                 @endif
             </div>
             <div class="signature-body">
                 <div class="signature-nip">
+                    {{ $suratNodin->penandatangan->nama ?? '' }}<br>
                     @if($suratNodin->penandatangan->pangkat && $suratNodin->penandatangan->pangkat != '-' && $suratNodin->penandatangan->golongan && $suratNodin->penandatangan->golongan != '-')
-                        {{ $suratNodin->penandatangan->nama }}<br>
                         {{ $suratNodin->penandatangan->pangkat }}<br>
                     @endif
                     NIP. {{ $suratNodin->penandatangan->nip ?? '' }}

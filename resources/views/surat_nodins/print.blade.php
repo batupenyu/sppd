@@ -230,15 +230,24 @@
       <tbody>
         <?php
             $pesertaList = $suratNodin->pesertaSuratUsulans;
+            $sorted = $pesertaList->sortBy(function ($peserta) {
+                $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_awal_kegiatan->format('Y-m-d') : ($peserta->tgl_awal_kegiatan ?? '');
+                $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_akhir_kegiatan->format('Y-m-d') : ($peserta->tgl_akhir_kegiatan ?? '');
+                $tempat = $peserta->tempat_kegiatan ?? '';
+                return $awal . '|' . $akhir . '|' . $tempat;
+            })->values();
             $groups = [];
-            foreach ($pesertaList as $peserta) {
-                $key = ($peserta->tgl_awal_kegiatan ?? '') . '|' . ($peserta->tgl_akhir_kegiatan ?? '') . '|' . ($peserta->tempat_kegiatan ?? '');
+            foreach ($sorted as $peserta) {
+                $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_awal_kegiatan->format('Y-m-d') : ($peserta->tgl_awal_kegiatan ?? '');
+                $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_akhir_kegiatan->format('Y-m-d') : ($peserta->tgl_akhir_kegiatan ?? '');
+                $tempat = $peserta->tempat_kegiatan ?? '';
+                $key = $awal . '|' . $akhir . '|' . $tempat;
                 if (!isset($groups[$key])) {
                     $groups[$key] = [
                         'items' => [],
-                        'tgl_awal' => $peserta->tgl_awal_kegiatan,
-                        'tgl_akhir' => $peserta->tgl_akhir_kegiatan,
-                        'tempat' => $peserta->tempat_kegiatan,
+                        'tgl_awal' => $awal,
+                        'tgl_akhir' => $akhir,
+                        'tempat' => $tempat,
                     ];
                 }
                 $groups[$key]['items'][] = $peserta;
@@ -297,8 +306,8 @@
                   <?php if($index == 0): ?>
                   <td rowspan="<?php echo e($rowspan); ?>">
                     @php
-                        $awal = $group['tgl_awal'];
-                        $akhir = $group['tgl_akhir'];
+                        $awal = $group['tgl_awal'] ? \Carbon\Carbon::parse($group['tgl_awal']) : null;
+                        $akhir = $group['tgl_akhir'] ? \Carbon\Carbon::parse($group['tgl_akhir']) : null;
                         $tempat = $group['tempat'] ?? '-';
                         if ($awal && $akhir && $awal->isSameDay($akhir)) {
                             $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
