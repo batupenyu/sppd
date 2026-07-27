@@ -41,6 +41,10 @@
                 <input type="checkbox" name="dari_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_plt', $suratNodin->dari_plt ?? false) ? 'checked' : '' }}>
                 <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
             </label>
+            <label class="inline-flex items-center ml-4">
+                <input type="checkbox" name="dari_an" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_an', $suratNodin->dari_an ?? false) ? 'checked' : '' }}>
+                <span class="ml-2 text-sm text-gray-600">a.n (Atas Nama)</span>
+            </label>
         </div>
     </div>
 
@@ -177,6 +181,10 @@
             <label class="inline-flex items-center">
                 <input type="checkbox" name="penandatangan_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_plt', $suratNodin->penandatangan_plt ?? false) ? 'checked' : '' }}>
                 <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
+            </label>
+            <label class="inline-flex items-center ml-4">
+                <input type="checkbox" name="penandatangan_an" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_an', $suratNodin->penandatangan_an ?? false) ? 'checked' : '' }}>
+                <span class="ml-2 text-sm text-gray-600">a.n (Atas Nama)</span>
             </label>
         </div>
     </div>

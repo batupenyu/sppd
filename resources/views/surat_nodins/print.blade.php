@@ -173,7 +173,7 @@
       <tr>
         <td>Dari</td>
         <td>:</td>
-          <td>@php $dari = $suratNodin->dari; echo ($suratNodin->dari_plt ?? false) ? 'Plt. ' . $dari : ($dari ?: '-'); @endphp</td>
+          <td>@php $dari = $suratNodin->dari; $prefix = ''; if (($suratNodin->dari_plt ?? false)) $prefix .= 'Plt. '; if (($suratNodin->dari_an ?? false)) $prefix .= 'a.n. '; echo $prefix . ($dari ?: '-'); @endphp</td>
       </tr>
       <tr>
         <td>Tanggal</td>
@@ -337,14 +337,16 @@
         <div class="signature-title">
             @php
                 $jabatan = $suratNodin->penandatangan->jabatan ?? '';
-                $prefix = ($suratNodin->penandatangan_plt ?? false) ? 'Plt. ' : '';
+                $prefix = '';
+                if (($suratNodin->penandatangan_plt ?? false)) $prefix .= 'Plt. ';
+                if (($suratNodin->penandatangan_an ?? false)) $prefix .= 'a.n. ';
                 $isKepalaDinas = stripos($jabatan, 'kepala dinas') !== false;
-                $isKepalaSMK = stripos($jabatan, 'Kepala SMKN 1 Koba') !== true;
+                $isKepalaSMK = stripos($jabatan, 'Kepala SMKN 1 Koba') !== false;
             @endphp
             @if($isKepalaDinas)
                 {{ $prefix . $jabatan }}
             @elseif($isKepalaSMK)
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $prefix . $jabatan }}
+                {{ $prefix . $jabatan }}
             @else
                 @if($prefix)
                     {{ $prefix . $jabatan }}
@@ -352,17 +354,25 @@
                     &nbsp;&nbsp;{{ $jabatan }}
                 @endif
             @endif
-          @if(stripos($jabatan, 'Kepala SMKN 1 Koba') === false)
-          <span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
+          @if(($suratNodin->penandatangan_an ?? false))
+              @if($isKepalaSMK)
+                  <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+              @else
+                  <br>{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+              @endif
+          @elseif($isKepalaSMK)
+              <br><span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
+          @else
+              <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
           @endif
         </div>
         <br>
         <div class="signature-body">
-          <div class="signature-name">&nbsp;&nbsp;{{ $suratNodin->penandatangan->nama ?? '' }}<br>
+          <div class="signature-name">&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->nama ?? '' }}<br>
             @if($suratNodin->penandatangan->pangkat && $suratNodin->penandatangan->pangkat != '-' && $suratNodin->penandatangan->golongan && $suratNodin->penandatangan->golongan != '-')
-              &nbsp;&nbsp;{{ $suratNodin->penandatangan->pangkat }}<br>
+              &nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->pangkat }}<br>
             @endif
-            &nbsp;&nbsp;NIP. {{ $suratNodin->penandatangan->nip ?? '' }}
+            &nbsp;&nbsp;&nbsp;NIP. {{ $suratNodin->penandatangan->nip ?? '' }}
           </div>
         </div>
       </div>

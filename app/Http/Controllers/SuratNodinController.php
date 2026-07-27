@@ -188,11 +188,13 @@ class SuratNodinController extends Controller
             'kepada' => 'nullable|string|max:255',
             'dari' => 'nullable|string|max:255',
             'dari_plt' => 'nullable|boolean',
+            'dari_an' => 'nullable|boolean',
             'tanggal' => 'nullable|date',
             'dasar_surat' => 'nullable|string',
             'isi_surat' => 'nullable|string',
             'penandatangan_id' => 'nullable|exists:asns,id',
             'penandatangan_plt' => 'nullable|boolean',
+            'penandatangan_an' => 'nullable|boolean',
             'tempat_ditetapkan' => 'nullable|string|max:255',
             'tanggal_ditetapkan' => 'nullable|date',
             'kop_surat' => 'nullable|string|max:255',
@@ -205,7 +207,9 @@ class SuratNodinController extends Controller
         ]);
 
         $validated['penandatangan_plt'] = $request->boolean('penandatangan_plt');
+        $validated['penandatangan_an'] = $request->boolean('penandatangan_an');
         $validated['dari_plt'] = $request->boolean('dari_plt');
+        $validated['dari_an'] = $request->boolean('dari_an');
 
         return $validated;
     }

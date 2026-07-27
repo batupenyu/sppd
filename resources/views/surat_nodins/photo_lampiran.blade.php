@@ -204,14 +204,29 @@
           <div class="signature-title">
             @php
                 $jabatan = $suratNodin->penandatangan->jabatan ?? '';
-                $prefix = ($suratNodin->penandatangan_plt ?? false) ? 'Plt. ' : '';
+                $prefix = '';
+                if (($suratNodin->penandatangan_plt ?? false)) $prefix .= 'Plt. ';
+                if (($suratNodin->penandatangan_an ?? false)) $prefix .= 'a.n. ';
+                $isKepalaSMK = stripos($jabatan, 'Kepala SMKN 1 Koba') !== false;
             @endphp
             @if(stripos($jabatan, 'kepala dinas') !== false)
                 {{ $prefix . $jabatan }}
-            @else
+            @elseif($isKepalaSMK)
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $prefix . $jabatan }}
+            @else
+                {{ $prefix . $jabatan }}
             @endif
-            <span class="signature-unit">{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
+            @if(($suratNodin->penandatangan_an ?? false))
+                @if($isKepalaSMK)
+                    <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+                @else
+                    <br>{{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+                @endif
+            @elseif($isKepalaSMK)
+                <span class="signature-unit">&nbsp;&nbsp;{{ $suratNodin->penandatangan->unit_kerja ?? '' }},</span>
+            @else
+                {{ $suratNodin->penandatangan->unit_kerja ?? '' }},
+            @endif
           </div>
           <div class="signature-body">
             <div class="signature-name">{{ $suratNodin->penandatangan->nama ?? '' }}<br>
