@@ -51,11 +51,11 @@
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Tanggal Mulai</label>
-                            <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai', $suratTugas->tanggal_mulai) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="date" name="tanggal_mulai" value="{{ old('tanggal_mulai', $suratTugas->tanggal_mulai ? $suratTugas->tanggal_mulai->format('Y-m-d') : '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Tanggal Selesai</label>
-                            <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai', $suratTugas->tanggal_selesai) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="date" name="tanggal_selesai" value="{{ old('tanggal_selesai', $suratTugas->tanggal_selesai ? $suratTugas->tanggal_selesai->format('Y-m-d') : '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Pukul</label>
@@ -87,7 +87,7 @@
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Tanggal Dikeluarkan</label>
-                            <input type="date" name="tanggal_dikeluarkan" value="{{ old('tanggal_dikeluarkan', $suratTugas->tanggal_dikeluarkan) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="date" name="tanggal_dikeluarkan" value="{{ old('tanggal_dikeluarkan', $suratTugas->tanggal_dikeluarkan ? $suratTugas->tanggal_dikeluarkan->format('Y-m-d') : '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Pilih Penandatangan dari Data Pegawai</label>
@@ -103,7 +103,28 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <div class="mt-2">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="penandatangan_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_plt', $suratTugas->penandatangan_plt ?? false) ? 'checked' : '' }}>
+                                    <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
+                                </label>
+                                <label class="inline-flex items-center ml-4">
+                                    <input type="checkbox" name="penandatangan_an" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_an', $suratTugas->penandatangan_an ?? false) ? 'checked' : '' }}>
+                                    <span class="ml-2 text-sm text-gray-600">a.n (Atas Nama)</span>
+                                </label>
+                            </div>
                             <p class="text-sm text-gray-500 mt-1">Pilih pegawai, lalu nama & jabatan akan terisi otomatis (masih bisa diedit).</p>
+                        </div>
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Pilih Pegawai Yang Diberi Tugas</label>
+                            <select name="pegawai_tugas_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                <option value="">-- Pilih Pegawai Tugas --</option>
+                                @foreach($asns as $asn)
+                                    <option value="{{ $asn->id }}" {{ old('pegawai_tugas_id', $suratTugas->pegawai_tugas_id ?? '') == $asn->id ? 'selected' : '' }}>
+                                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Nama Penandatangan</label>

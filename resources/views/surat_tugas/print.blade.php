@@ -13,7 +13,7 @@
     max-width: 750px;
     margin: 1cm auto;
     padding: 20px 20px;
-    line-height: 20pt;
+    line-height: 18pt;
     text-align: justify;
   }
   .title { text-align: center; margin-bottom: 4px; }
@@ -218,15 +218,67 @@
   </table>
 
   <div class="signature">
-    <div class="line">{{ $suratTugas->dikeluarkan_di ?: 'Nama Tempat' }}, {{ $tanggalDikeluarkan ?: 'Tanggal' }}<br>
-    {{ $suratTugas->penandatangan?->jabatan ?: 'Gubernur' }}
+    <div class="line">
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratTugas->dikeluarkan_di ?: 'Nama Tempat' }}, {{ $tanggalDikeluarkan ?: 'Tanggal' }}
     </div>
-    <div class="spacer"></div>
-    <!-- <div class="line">{{ $suratTugas->jabatan_penandatangan ?: 'Gubernur' }}</div> -->
-    <!-- <div class="line">Kepulauan Bangka Belitung,</div> -->
     <!-- <div class="spacer"></div> -->
-    <div class="line">{{ $suratTugas->penandatangan?->nama ?: 'Nama' }}<br>
-    NIP.{{ $suratTugas->penandatangan?->nip ?: 'NIP' }}
+    <div class="line">
+      @php
+        $atasan = $suratTugas->penandatangan;
+        $pegawaiTugas = $suratTugas->pegawaiTugas;
+
+        $jabatanAtasan = $atasan->jabatan ?? '';
+        $unitKerjaAtasan = $atasan->unit_kerja ?? '';
+        $nama = $atasan->nama ?? '';
+        $pangkat = $atasan->pangkat_golongan ?? '';
+        $nip = $atasan->nip ?? '';
+
+        $jabatanTugas = $pegawaiTugas->jabatan ?? '';
+        $unitKerjaTugas = $pegawaiTugas->unit_kerja ?? '';
+
+        $isPlt = $suratTugas->penandatangan_plt ?? false;
+        $isAn = $suratTugas->penandatangan_an ?? false;
+
+        if ($isPlt && $isAn) {
+            $isAn = false;
+        }
+
+        $prefix = '';
+        $indent = false;
+        $showTugas = false;
+        $unitKerja = '';
+
+        if ($isPlt) {
+            $prefix = 'Plt.' . html_entity_decode('&nbsp;');
+            $indent = true;
+            $showTugas = true;
+            $unitKerja = $unitKerjaTugas ?: $unitKerjaAtasan;
+        } elseif ($isAn) {
+            $prefix = 'a.n.' . html_entity_decode('&nbsp;');
+            $indent = true;
+            $showTugas = true;
+            $unitKerja = $unitKerjaAtasan;
+        } else {
+            $prefix = '';
+            $indent = false;
+            $showTugas = false;
+            $unitKerja = $unitKerjaAtasan;
+        }
+
+        $indentChar = html_entity_decode('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
+      @endphp
+      {{ $prefix . $jabatanAtasan }}
+      <br>{{ $indent ? $indentChar . $unitKerja : $unitKerja }}
+      <br>
+      <br><br>
+      @if($showTugas && $jabatanTugas)
+        <br>{{ $indentChar . $jabatanTugas }}
+      @endif
+      <br>{{ $indent ? $indentChar . $nama : $nama }}
+      @if($pangkat && $pangkat != '-')
+        <br>{{ $indent ? $indentChar . $pangkat : $pangkat }}
+      @endif
+      <br>{{ $indent ? $indentChar . 'NIP. ' . $nip : 'NIP. ' . $nip }}
     </div>
   </div>
 

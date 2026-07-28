@@ -36,6 +36,9 @@ class SuratTugas extends Model
         'penandatangan_id',
         'nama_penandatangan',
         'nip_penandatangan',
+        'penandatangan_plt',
+        'penandatangan_an',
+        'pegawai_tugas_id',
     ];
 
     protected $casts = [
@@ -48,6 +51,11 @@ class SuratTugas extends Model
     public function penandatangan(): BelongsTo
     {
         return $this->belongsTo(Asn::class, 'penandatangan_id');
+    }
+
+    public function pegawaiTugas(): BelongsTo
+    {
+        return $this->belongsTo(Asn::class, 'pegawai_tugas_id');
     }
 
     public function getPeserta(): array

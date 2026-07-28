@@ -164,12 +164,23 @@
             </tr>
         </thead>
         <tbody>
-                <tr>
-                    <td style="text-align: center;height: 200px">1.</td>
-                    <td class="text-justify">{{ $suratPengantar->isi_surat ?: '&nbsp;' }}</td>
-                    <td>{{ $suratPengantar->banyaknya ?: '1 (satu) berkas' }}</td>
-                    <td class="text-left">{{ $suratPengantar->keterangan ?: 'Demikian disampaikan untuk dapat ditindaklanjuti' }}</td>
-                </tr>
+            @php
+                $isiItems = array_filter(array_map('trim', explode("\n", $suratPengantar->isi_surat ?? '')), fn ($l) => $l !== '');
+            @endphp
+            <tr>
+                <td style="text-align: center;height: 200px">1.</td>
+                <td class="text-justify">
+                    @if(!empty($isiItems))
+                        @foreach($isiItems as $item)
+                            {{ $item }}<br>
+                        @endforeach
+                    @else
+                        &nbsp;
+                    @endif
+                </td>
+                <td>{{ $suratPengantar->banyaknya ?: '1 (satu) berkas' }}</td>
+                <td class="text-left">{{ $suratPengantar->keterangan ?: 'Demikian disampaikan untuk dapat ditindaklanjuti' }}</td>
+            </tr>
         </tbody>
     </table>
 
@@ -193,7 +204,7 @@
                 <div class="ttd-box">
                     <br>
                     Pengirim<br>
-                    {{ $suratPengantar->penandatangan->jabatan ?? '' }},<br>
+                    <!-- {{ $suratPengantar->penandatangan->jabatan ?? '' }},<br> -->
                     <div class="space-ttd"></div>
                     <strong><u>{{ $suratPengantar->penandatangan->nama ?? '' }}</u></strong><br>
                     {{ $suratPengantar->penandatangan->pangkat ?? '' }}, {{ $suratPengantar->penandatangan->golongan ?? '' }}<br>

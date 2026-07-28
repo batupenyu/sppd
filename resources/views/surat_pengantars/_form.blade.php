@@ -7,7 +7,7 @@
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Nomor Surat</label>
-        <input type="text" name="nomor_surat" value="{{ old('nomor_surat', $sp->nomor_surat ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="nomor_surat" value="{{ old('nomor_surat', $sp->nomor_surat ?? '400.3.5.11/............/SMKN1 Kb/2026') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div>
@@ -37,6 +37,7 @@
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Naskah Dinas / Barang yang Dikirimkan</label>
         <textarea name="isi_surat" rows="6" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('isi_surat', $sp->isi_surat ?? '') }}</textarea>
+        <p class="text-sm text-gray-500 mt-1">Satu baris untuk setiap item.</p>
     </div>
 
     <div>

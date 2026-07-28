@@ -49,6 +49,9 @@ class SuratTugasController extends Controller
             'tanggal_dikeluarkan' => 'nullable|date',
             'nama_penandatangan' => 'nullable|string|max:255',
             'nip_penandatangan' => 'nullable|string|max:255',
+            'penandatangan_plt' => 'nullable|boolean',
+            'penandatangan_an' => 'nullable|boolean',
+            'pegawai_tugas_id' => 'nullable|exists:asns,id',
         ]);
 
         SuratTugas::create($validated);
@@ -87,6 +90,9 @@ class SuratTugasController extends Controller
             'tanggal_dikeluarkan' => 'nullable|date',
             'nama_penandatangan' => 'nullable|string|max:255',
             'nip_penandatangan' => 'nullable|string|max:255',
+            'penandatangan_plt' => 'nullable|boolean',
+            'penandatangan_an' => 'nullable|boolean',
+            'pegawai_tugas_id' => 'nullable|exists:asns,id',
         ]);
 
         $suratTugas->update($validated);
@@ -103,7 +109,7 @@ class SuratTugasController extends Controller
 
     public function print(SuratTugas $suratTugas): View
     {
-        $suratTugas->load('penandatangan');
+        $suratTugas->load('penandatangan', 'pegawaiTugas');
         $peserta = $suratTugas->getPeserta();
 
         $kopSuratBase64 = null;
