@@ -334,7 +334,7 @@
           <div class="field-dots">{{ $spd->tanggal_berangkat ? $spd->tanggal_berangkat->format('d-m-Y') : '' }}</div>
         </div>
         <div class="field-row">
-          <div class="field-label">Kepala</div>
+          <div class="field-label">{{ $pejabatAsn ? $pejabatAsn->jabatan : '' }}</div>
           <div class="field-colon"></div>
           <div class="field-dots" style="border-bottom:none;"></div>
         </div>
