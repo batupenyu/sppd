@@ -6,11 +6,11 @@
 <style>
   @page {
     size: A4;
-    margin: 0.5cm 10mm;
+    margin: 0.5cm 1cm 0.5cm 1cm;
   }
   * { box-sizing: border-box; }
   body {
-              background-color: #525659;
+    background-color: #525659;
     font-family: "Times New Roman", Times, serif;
     font-size: 13px;
     color: #000;
@@ -22,7 +22,7 @@
     width: 210mm;
     min-height: 297mm;
     padding: 15mm 18mm;
-    margin: 20px auto;
+    margin: 10px auto;
     background: white;
     position: relative;
     box-shadow: 0 0 6px rgba(0,0,0,0.3);
@@ -356,7 +356,6 @@
         <div class="sign-space"></div>
         <br>
         <br>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -367,7 +366,6 @@
         <div class="field-row"><div class="field-label">Pada Tanggal</div><div class="field-colon">:</div><div class="field-dots"></div></div>
         <div class="field-row"><div class="field-label">Kepala</div><div class="field-colon"></div><div class="field-dots" style="border-bottom:none;"></div></div>
         <div class="sign-space"></div>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -382,7 +380,6 @@
         <div class="sign-space"></div>
         <br>
         <br>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -393,7 +390,6 @@
         <div class="field-row"><div class="field-label">Pada Tanggal</div><div class="field-colon">:</div><div class="field-dots"></div></div>
         <div class="field-row"><div class="field-label">Kepala</div><div class="field-colon"></div><div class="field-dots" style="border-bottom:none;"></div></div>
         <div class="sign-space"></div>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -408,7 +404,6 @@
         <div class="sign-space"></div>
         <br>
         <br>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -419,7 +414,6 @@
         <div class="field-row"><div class="field-label">Pada Tanggal</div><div class="field-colon">:</div><div class="field-dots"></div></div>
         <div class="field-row"><div class="field-label">Kepala</div><div class="field-colon"></div><div class="field-dots" style="border-bottom:none;"></div></div>
         <div class="sign-space"></div>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -434,7 +428,6 @@
         <div class="sign-space"></div>
         <br>
         <br>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -445,7 +438,6 @@
         <div class="field-row"><div class="field-label">Pada Tanggal</div><div class="field-colon">:</div><div class="field-dots"></div></div>
         <div class="field-row"><div class="field-label">Kepala</div><div class="field-colon"></div><div class="field-dots" style="border-bottom:none;"></div></div>
         <div class="sign-space"></div>
-        <br>
         <div>(...............................)</div>
         <div>NIP</div>
       </td>
@@ -461,7 +453,7 @@
         <br>
         <div style="padding-left:50px">
           {{ $pejabatAsn ? $pejabatAsn->jabatan : '' }},<br>
-          <div class="space" style="height:55px;"></div>
+          <div class="space" style="height:50px;"></div>
           <br>
           ({{ $spd->pejabat_pemberi_tugas ?: '......................................' }})<br>
           NIP. {{ $pejabatAsn ? $pejabatAsn->nip : '' }}
@@ -476,7 +468,7 @@
           @if($spd->jenis_pembiayaan === 'APBD')
             {{ $atasanAsn ? $atasanAsn->jabatan : '' }}<br>
             {{ $atasanAsn ? $atasanAsn->unit_kerja : '' }}<br>
-            <div class="space" style="height:55px;"></div>
+            <div class="space" style="height:50px;"></div>
             ({{ $atasanAsn ? $atasanAsn->nama : '......................................' }})<br>
             NIP. {{ $atasanAsn ? $atasanAsn->nip : '' }}
           @else
