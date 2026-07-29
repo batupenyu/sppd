@@ -124,6 +124,7 @@
   .field-row { display: flex; margin-bottom: 3px; }
   .field-label { width: 130px; flex-shrink: 0; }
   .field-colon { width: 12px; flex-shrink: 0; }
+  .field-value { width: auto;flex-grow: 1; min-height: 14px; }
   .field-dots {
     border-bottom: 1px dotted #000;
     flex-grow: 1;
