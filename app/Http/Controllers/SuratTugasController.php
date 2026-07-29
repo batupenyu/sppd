@@ -144,6 +144,8 @@ class SuratTugasController extends Controller
         if ($mulai && $selesai) {
             if ($mulai->format('Y-m-d') === $selesai->format('Y-m-d')) {
                 $tanggalText = 'tanggal '.$fmt($mulai);
+            } elseif ($mulai->format('Y-m') === $selesai->format('Y-m')) {
+                $tanggalText = 'tanggal '.$mulai->format('d').' s.d '.$selesai->format('d').' '.$months[(int) $mulai->format('n')].' '.$mulai->format('Y');
             } else {
                 $tanggalText = 'tanggal '.$fmt($mulai).' s.d tanggal '.$fmt($selesai);
             }

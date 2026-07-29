@@ -60,6 +60,25 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Atasan Pejabat</label>
+                            <select name="atasan_pejabat" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                <option value="">-- Pilih Atasan --</option>
+                                @foreach($asns as $asn)
+                                    <option value="{{ $asn->nama }}" {{ (old('atasan_pejabat') == $asn->nama) ? 'selected' : '' }}>
+                                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-medium mb-1">Jenis Pembiayaan</label>
+                            <select name="jenis_pembiayaan" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                <option value="">-- Pilih --</option>
+                                <option value="APBD" {{ old('jenis_pembiayaan') == 'APBD' ? 'selected' : '' }}>APBD</option>
+                                <option value="APBN" {{ old('jenis_pembiayaan') == 'APBN' ? 'selected' : '' }}>APBN</option>
+                            </select>
+                        </div>
                         <div>
                             <label class="block font-medium mb-1">Nama Pegawai *</label>
                             <input type="text" name="nama" id="nama" value="{{ old('nama', $selectedAsn?->nama) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>

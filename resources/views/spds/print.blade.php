@@ -141,7 +141,7 @@
     text-align: left;
     margin-top: 16px;
     margin-left: auto;
-    width: 230px;
+    width: 250px;
     line-height: 1.6;
   }
 
@@ -198,7 +198,7 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-      <td class="num" rowspan="3">3.</td>
+      <td class="num" rowspan="4">3.</td>
       <td class="desc">a.&nbsp; Pangkat dan Golongan</td>
       <td class="sub-letter">a. {{ $spd->pangkat_golongan ?: '-' }}</td>
       <td>&nbsp;</td>
@@ -209,12 +209,17 @@
       <td>&nbsp;</td>
     </tr>
     <tr>
-      <td class="desc">c.&nbsp; Tingkat Biaya Perjalanan Dinas</td>
-      <td class="sub-letter">c. {{ $spd->tingkat_biaya ?: '-' }}</td>
-      <td>&nbsp;</td>
-    </tr>
-    <tr>
-      <td class="num">4.</td>
+       <td class="desc">c.&nbsp; Tingkat Biaya Perjalanan Dinas</td>
+       <td class="sub-letter">c. {{ $spd->tingkat_biaya ?: '-' }}</td>
+       <td>&nbsp;</td>
+     </tr>
+     <tr>
+       <td class="desc">d.&nbsp; Jenis Pembiayaan</td>
+       <td class="sub-letter">d. {{ $spd->jenis_pembiayaan ?: '-' }}</td>
+       <td>&nbsp;</td>
+     </tr>
+     <tr>
+       <td class="num">4.</td>
       <td class="desc">Maksud Perjalanan Dinas</td>
       <td class="sub-letter">{{ $spd->maksud_perjalanan ?: '-' }}</td>
       <td>&nbsp;</td>
@@ -290,7 +295,7 @@
     PA/KPA/PPK/Pejabat Berwenang<br>
     <div class="space"></div>
     ({{ $spd->pejabat_pemberi_tugas ?: '......................................' }})<br>
-    NIP. {{ $spd->nip ?: '' }}
+    NIP. {{ $pejabatAsn ? $pejabatAsn->nip : '' }}
   </div>
 
   <div class="no-print" style="text-align:center; margin-top:20px;padding-left:15px">
@@ -334,8 +339,9 @@
           <div class="field-dots" style="border-bottom:none;"></div>
         </div>
         <div class="sign-space"></div>
-        <div>(...............................)</div>
-        <div>NIP</div>
+        <div>({{ $spd->pejabat_pemberi_tugas ?: '......................................' }})<br>
+          NIP. {{ $pejabatAsn ? $pejabatAsn->nip : '' }}
+        </div>
       </td>
     </tr>
     <tr>
@@ -428,16 +434,40 @@
 
     <tr>
       <td class="roman">VI.</td>
-      <td class="left-cell">
+      <td class="left-cell" style="font-size:12.5px; line-height:1.3;text-align:justify;">
         <div class="field-row"><div class="field-label">Tiba di</div><div class="field-colon">:</div><div class="field-dots"></div></div>
         <div class="field-row"><div class="field-label">Pada Tanggal</div><div class="field-colon">:</div><div class="field-dots"></div></div>
         <div class="field-row"><div class="field-label">Kepala</div><div class="field-colon">:</div><div class="field-dots"></div></div>
         <div class="sign-space"></div>
-        <div>(...............................)</div>
-        <div>NIP</div>
-      </td>
-      <td class="right-cell" style="font-size:12.5px; line-height:1.5;">
+        <br>
+        <div style="padding-left:50px">
+          {{ $pejabatAsn ? $pejabatAsn->jabatan : '' }},<br>
+          <div class="space" style="height:55px;"></div>
+          <br>
+          ({{ $spd->pejabat_pemberi_tugas ?: '......................................' }})<br>
+          NIP. {{ $pejabatAsn ? $pejabatAsn->nip : '' }}
+        </div>
+        </td>
+      <td class="right-cell" style="font-size:12.5px; line-height:1.3;text-align:justify;">
         Telah diperiksa, dengan keterangan bahwa perjalanan tersebut diatas benar dilakukan atas perintahnya dan semata-mata untuk kepentingan jabatan dalam waktu yang sesingkat-singkatnya
+        <br>
+        <br>
+        <div style="padding-left:50px">
+          Kuasa Pengguna Anggaran<br>
+          @if($spd->jenis_pembiayaan === 'APBD')
+            {{ $atasanAsn ? $atasanAsn->jabatan : '' }}<br>
+            {{ $atasanAsn ? $atasanAsn->unit_kerja : '' }}<br>
+            <div class="space" style="height:55px;"></div>
+            ({{ $atasanAsn ? $atasanAsn->nama : '......................................' }})<br>
+            NIP. {{ $atasanAsn ? $atasanAsn->nip : '' }}
+          @else
+            {{ $pejabatAsn ? $pejabatAsn->jabatan : '' }}<br>
+            {{ $atasanAsn ? $atasanAsn->unit_kerja : '' }}<br>
+            <div class="space" style="height:55px;"></div>
+            ({{ $spd->pejabat_pemberi_tugas ?: '......................................' }})<br>
+            NIP. {{ $pejabatAsn ? $pejabatAsn->nip : '' }}
+          @endif
+        </div>
       </td>
     </tr>
 
@@ -454,13 +484,21 @@
       </td>
     </tr>
   </table>
-
+<!-- 
   <div class="final-signoff">
-    PA/KPA/PPK/Pejabat Berwenang,<br>
-    <div class="space" style="height:55px;"></div>
-    ({{ $spd->pejabat_pemberi_tugas ?: '......................................' }})<br>
-    NIP. {{ $spd->nip ?: '' }}
-  </div>
+    @if($spd->jenis_pembiayaan === 'APBD')
+      PA/KPA/PPK/Pejabat Berwenang,<br>
+      <div class="space" style="height:55px;"></div>
+      ({{ $atasanAsn ? $atasanAsn->nama : '......................................' }})<br>
+      NIP. {{ $atasanAsn ? $atasanAsn->nip : '' }}
+    @else
+      PA/KPA/PPK/Pejabat Berwenang,<br>
+      <div class="space" style="height:55px;"></div>
+      ({{ $spd->pejabat_pemberi_tugas ?: '......................................' }})<br>
+      NIP. {{ $pejabatAsn ? $pejabatAsn->nip : '' }}
+    @endif
+  </div> -->
+
 </div>
 
 </body>

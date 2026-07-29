@@ -38,6 +38,8 @@ class SpdController extends Controller
             'lembar_ke' => 'nullable|string|max:50',
             'kode_no' => 'nullable|string|max:50',
             'pejabat_pemberi_tugas' => 'required|string|max:255',
+'atasan_pejabat' => 'nullable|string|max:255',
+            'jenis_pembiayaan' => 'nullable|in:APBD,APBN',
             'nama' => 'required|string|max:255',
             'nip' => 'nullable|string|max:50',
             'pangkat_golongan' => 'nullable|string|max:100',
@@ -77,6 +79,8 @@ class SpdController extends Controller
             'lembar_ke' => 'nullable|string|max:50',
             'kode_no' => 'nullable|string|max:50',
             'pejabat_pemberi_tugas' => 'required|string|max:255',
+'atasan_pejabat' => 'nullable|string|max:255',
+            'jenis_pembiayaan' => 'nullable|in:APBD,APBN',
             'nama' => 'required|string|max:255',
             'nip' => 'nullable|string|max:50',
             'pangkat_golongan' => 'nullable|string|max:100',
@@ -123,7 +127,17 @@ class SpdController extends Controller
             $lamaHuruf = $spd->lama_perjalanan.' ('.$this->terbilangHari($spd->lama_perjalanan).') hari';
         }
 
-        return view('spds.print', compact('spd', 'kopSuratBase64', 'lamaHuruf'));
+        $pejabatAsn = null;
+        if ($spd->pejabat_pemberi_tugas) {
+            $pejabatAsn = Asn::where('nama', $spd->pejabat_pemberi_tugas)->first();
+        }
+
+        $atasanAsn = null;
+        if ($spd->atasan_pejabat) {
+            $atasanAsn = Asn::where('nama', $spd->atasan_pejabat)->first();
+        }
+
+        return view('spds.print', compact('spd', 'kopSuratBase64', 'lamaHuruf', 'pejabatAsn', 'atasanAsn'));
     }
 
     private function terbilangHari(int $n): string

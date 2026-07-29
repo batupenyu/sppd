@@ -58,6 +58,25 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Atasan Pejabat</label>
+                            <select name="atasan_pejabat" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                <option value="">-- Pilih Atasan --</option>
+                                @foreach($asns as $asn)
+                                    <option value="{{ $asn->nama }}" {{ (old('atasan_pejabat', $spd->atasan_pejabat) == $asn->nama) ? 'selected' : '' }}>
+                                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block font-medium mb-1">Jenis Pembiayaan</label>
+                            <select name="jenis_pembiayaan" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                                <option value="">-- Pilih --</option>
+                                <option value="APBD" {{ old('jenis_pembiayaan', $spd->jenis_pembiayaan) == 'APBD' ? 'selected' : '' }}>APBD</option>
+                                <option value="APBN" {{ old('jenis_pembiayaan', $spd->jenis_pembiayaan) == 'APBN' ? 'selected' : '' }}>APBN</option>
+                            </select>
+                        </div>
                         <div>
                             <label class="block font-medium mb-1">Nama Pegawai *</label>
                             <input type="text" name="nama" value="{{ old('nama', $spd->nama) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
@@ -147,4 +166,16 @@
         </div>
     </div>
 </div>
+
+    <script>
+document.getElementById('asn_id').addEventListener('change', function () {
+    const opt = this.options[this.selectedIndex];
+    if (this.value) {
+        document.getElementById('nama').value = opt.textContent.split(' (')[0].trim();
+        document.getElementById('nip').value = opt.dataset.nip || '';
+        document.getElementById('pangkat_golongan').value = opt.dataset.pangkat || '';
+        document.getElementById('jabatan_instansi').value = opt.dataset.jabatan || '';
+    }
+});
+</script>
 @endsection

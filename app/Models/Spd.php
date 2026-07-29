@@ -13,6 +13,8 @@ class Spd extends Model
         'lembar_ke',
         'kode_no',
         'pejabat_pemberi_tugas',
+        'atasan_pejabat',
+        'jenis_pembiayaan',
         'nama',
         'nip',
         'pangkat_golongan',
