@@ -393,9 +393,9 @@
     </div>
     @endif
 
-    <footer>
+    <!-- <footer>
         * Surat ini bersifat resmi dan harap dibawa saat pertemuan.
-    </footer>
+    </footer> -->
 
     <div class="no-print" style="text-align:center; margin-top:20px;padding-left:15px">
     <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
