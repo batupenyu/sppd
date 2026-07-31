@@ -47,7 +47,7 @@
 
     <div>
         <label class="block font-medium mb-1">Tempat Panggilan</label>
-        <input type="text" name="tempat_panggilan" value="{{ old('tempat_panggilan', $s->tempat_panggilan ?? 'Tempat') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="tempat_panggilan" value="{{ old('tempat_panggilan', $s->tempat_panggilan ?? 'SMK Negeri 1 Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div class="md:col-span-2">
