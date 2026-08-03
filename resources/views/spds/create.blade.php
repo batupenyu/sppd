@@ -195,9 +195,7 @@ if (asnSelect) {
     asnSelect.addEventListener('change', function () {
         fillAsnData(this);
     });
-    document.addEventListener('DOMContentLoaded', function () {
-        fillAsnData(asnSelect);
-    });
+    fillAsnData(asnSelect);
 }
 </script>
 @endsection
