@@ -18,18 +18,18 @@
 
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Pegawai (ASN) *</label>
-            <select name="asn_id" id="asn_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
-                <option value="">-- Pilih Pegawai --</option>
-                @foreach($asns as $asn)
-                    <option value="{{ $asn->id }}"
+                            <select name="asn_id" id="asn_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
+                                <option value="">-- Pilih Pegawai --</option>
+                                @foreach($asns as $asn)
+                                    <option value="{{ $asn->id }}"
                                         {{ (old('asn_id', $spd->asn_id) == $asn->id) ? 'selected' : '' }}
                                         data-nip="{{ $asn->nip }}"
                                         data-pangkat="{{ $asn->pangkat_golongan }}"
                                         data-jabatan="{{ $asn->tugas_tambahan }}">
-                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
-                    </option>
-                @endforeach
-            </select>
+                                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                                    </option>
+                                @endforeach
+                            </select>
                             @error('asn_id')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
@@ -80,21 +80,31 @@
                                 <option value="APBN" {{ old('jenis_pembiayaan', $spd->jenis_pembiayaan) == 'APBN' ? 'selected' : '' }}>APBN</option>
                             </select>
                         </div>
-                        <div>
+
+                        <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Nama Pegawai *</label>
-                            <input type="text" name="nama" value="{{ old('nama', $spd->nama) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
+                            <div id="asn-preview" class="hidden rounded border p-3 mb-2" style="background:#f3f4f6; border-color:#d1d5db;">
+                                <div style="font-weight:600; font-size:15px;" id="preview-nama"></div>
+                                <div style="font-size:13px; color:#4b5563;" id="preview-nip"></div>
+                                <div style="font-size:13px; color:#4b5563;" id="preview-pangkat"></div>
+                                <div style="font-size:13px; color:#4b5563;" id="preview-jabatan"></div>
+                            </div>
+                            <div id="asn-fields">
+                                <input type="text" name="nama" id="input-nama" value="{{ old('nama', $spd->nama) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
+                            </div>
+                            @error('nama')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
-                        <div>
+                        <div id="field-nip">
                             <label class="block font-medium mb-1">NIP</label>
-                            <input type="text" name="nip" value="{{ old('nip', $spd->nip) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="nip" id="input-nip" value="{{ old('nip', $spd->nip) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
-                        <div>
+                        <div id="field-pangkat">
                             <label class="block font-medium mb-1">Pangkat dan Golongan</label>
-                            <input type="text" name="pangkat_golongan" value="{{ old('pangkat_golongan', $spd->pangkat_golongan) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="pangkat_golongan" id="input-pangkat" value="{{ old('pangkat_golongan', $spd->pangkat_golongan) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
-                        <div>
+                        <div id="field-jabatan">
                             <label class="block font-medium mb-1">Jabatan/Instansi</label>
-                            <input type="text" name="jabatan_instansi" value="{{ old('jabatan_instansi', $spd->jabatan_instansi) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                            <input type="text" name="jabatan_instansi" id="input-jabatan" value="{{ old('jabatan_instansi', $spd->jabatan_instansi) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                         </div>
                         <div>
                             <label class="block font-medium mb-1">Tingkat Biaya Perjalanan Dinas</label>
@@ -170,33 +180,72 @@
     </div>
 </div>
 
-    <script>
-    function fillAsnData(select) {
-        const opt = select.options[select.selectedIndex];
-        const namaEl = document.getElementById('nama');
-        const nipEl = document.getElementById('nip');
-        const pangkatEl = document.getElementById('pangkat_golongan');
-        const jabatanEl = document.getElementById('jabatan_instansi');
+<script>
+(function() {
+    var select = document.getElementById('asn_id');
+    if (!select) return;
 
-        if (select.value) {
-            namaEl.value = opt.textContent.split(' (')[0].trim();
-            nipEl.value = opt.dataset.nip || '';
-            pangkatEl.value = opt.dataset.pangkat || '';
-            jabatanEl.value = opt.dataset.jabatan || '';
+    var preview = document.getElementById('asn-preview');
+    var fields = document.getElementById('asn-fields');
+    var fieldNip = document.getElementById('field-nip');
+    var fieldPangkat = document.getElementById('field-pangkat');
+    var fieldJabatan = document.getElementById('field-jabatan');
+
+    var inputNama = document.getElementById('input-nama');
+    var inputNip = document.getElementById('input-nip');
+    var inputPangkat = document.getElementById('input-pangkat');
+    var inputJabatan = document.getElementById('input-jabatan');
+
+    function showPreview(opt) {
+        var nama = opt.textContent.split(' (')[0].trim();
+        var nip = opt.dataset.nip || '';
+        var pangkat = opt.dataset.pangkat || '';
+        var jabatan = opt.dataset.jabatan || '';
+
+        inputNama.value = nama;
+        inputNip.value = nip;
+        inputPangkat.value = pangkat;
+        inputJabatan.value = jabatan;
+
+        document.getElementById('preview-nama').textContent = nama;
+        document.getElementById('preview-nip').textContent = 'NIP. ' + nip;
+        document.getElementById('preview-pangkat').textContent = 'Pangkat/Golongan: ' + pangkat;
+        document.getElementById('preview-jabatan').textContent = 'Jabatan/Instansi: ' + jabatan;
+
+        preview.style.display = 'block';
+        fields.style.display = 'none';
+        fieldNip.style.display = 'none';
+        fieldPangkat.style.display = 'none';
+        fieldJabatan.style.display = 'none';
+    }
+
+    function showFields() {
+        inputNama.value = '';
+        inputNip.value = '';
+        inputPangkat.value = '';
+        inputJabatan.value = '';
+
+        preview.style.display = 'none';
+        fields.style.display = '';
+        fieldNip.style.display = '';
+        fieldPangkat.style.display = '';
+        fieldJabatan.style.display = '';
+    }
+
+    select.addEventListener('change', function() {
+        if (this.value) {
+            var opt = this.options[this.selectedIndex];
+            showPreview(opt);
         } else {
-            namaEl.value = '';
-            nipEl.value = '';
-            pangkatEl.value = '';
-            jabatanEl.value = '';
+            showFields();
         }
-    }
+    });
 
-    const asnSelect = document.getElementById('asn_id');
-    if (asnSelect) {
-        asnSelect.addEventListener('change', function () {
-            fillAsnData(this);
-        });
-        fillAsnData(asnSelect);
+    if (select.value) {
+        showPreview(select.options[select.selectedIndex]);
+    } else {
+        showFields();
     }
-    </script>
+})();
+</script>
 @endsection
