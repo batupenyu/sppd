@@ -1,381 +1,293 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surat Keterangan Tunjangan Keluarga</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            font-size: 12px;
-            line-height: 1.4;
-            color: #000;
-            margin: 20px;
-            background-color: #f9f9f9;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 30px;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .header-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-            border-bottom: 3px double #000;
-            padding-bottom: 10px;
-        }
-        .header-table td {
-            vertical-align: middle;
-            border: none;
-        }
-        .logo-cell {
-            width: 12%;
-            text-align: center;
-        }
-        .logo-img {
-            max-width: 70px;
-            height: auto;
-        }
-        .text-cell {
-            text-align: center;
-        }
-        .text-cell h1 {
-            font-size: 14px;
-            margin: 0;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        .text-cell h2 {
-            font-size: 13px;
-            margin: 2px 0;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        .text-cell h3 {
-            font-size: 12px;
-            margin: 2px 0;
-            text-transform: uppercase;
-            font-weight: bold;
-        }
-        .text-cell p {
-            margin: 2px 0;
-            font-size: 10px;
-            font-style: italic;
-        }
-        .title-area {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .title-area h2 {
-            font-size: 14px;
-            text-transform: uppercase;
-            margin: 0;
-            text-decoration: underline;
-            font-weight: bold;
-        }
-        .title-area h3 {
-            font-size: 13px;
-            text-transform: uppercase;
-            margin: 5px 0 0 0;
-            font-weight: bold;
-        }
-        .form-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-        }
-        .form-table td {
-            padding: 4px 2px;
-            vertical-align: top;
-            border: none;
-        }
-        .num-col { width: 4%; }
-        .label-col { width: 30%; }
-        .colon-col { width: 2%; text-align: center; }
-        .value-col { width: 64%; }
+<meta charset="UTF-8">
+<title>Surat Keterangan Tunjangan Keluarga - {{ $pegawai->nama ?? '' }}</title>
+<style>
+  @page { size: A4; margin: 15mm; }
+  @page :first { size: A4 portrait; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14pt;
+    color: #111;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 0;
+    background: #fff;
+  }
+  .kop-surat-container { text-align: center; margin-bottom: 8px; }
+  .kop-surat-image { max-width: 100%; max-height: 300px; height: auto; display: inline-block; }
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            margin-bottom: 15px;
-            font-size: 11px;
-        }
-        .data-table th, .data-table td {
-            border: 1px solid #000;
-            padding: 5px;
-            text-align: center;
-        }
-        .data-table th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        .text-left { text-align: left !important; }
+  .title { text-align: center; margin: 14px 0 18px; }
+  .title h3 { margin: 2px 0; font-size: 13px; text-decoration: underline; }
 
-        .note-section {
-            margin-top: 15px;
-            font-size: 11px;
-            text-align: justify;
-        }
-        .note-section ol, .note-section ul {
-            margin: 5px 0;
-            padding-left: 20px;
-        }
+  table.fields {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+  }
+  table.fields td {
+    padding: 2px 4px;
+    vertical-align: top;
+    font-size: 12px;
+  }
+  table.fields td.no { width: 18px; }
+  table.fields td.label { width: 190px; }
+  table.fields td.colon { width: 12px; }
 
-        .footer-area {
-            width: 100%;
-            margin-top: 30px;
-            font-size: 11px;
-        }
-        .footer-area td {
-            border: none;
-            width: 50%;
-            vertical-align: top;
-        }
-        .signature-space {
-            height: 70px;
-        }
-        .page-break {
-            page-break-before: always;
-            margin-top: 40px;
-            border-top: 1px dashed #ccc;
-            padding-top: 20px;
-        }
-        @media print {
-            .no-print { display: none !important; }
-        }
-    </style>
+  .keterangan-block { margin: 12px 0 8px; font-size: 12px; }
+  .keterangan-block p { margin: 3px 0; }
+  .keterangan-block .indent { margin-left: 0px; }
+  .keterangan-block .indent2 { margin-left: 14px; }
+
+  table.tanggungan {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px;
+    font-size: 11px;
+  }
+  table.tanggungan th, table.tanggungan td {
+    border: 1px solid #000;
+    padding: 5px 6px;
+    text-align: center;
+  }
+  table.tanggungan th { background: #f2f2f2; }
+
+  .footer-note {
+    font-size: 11px;
+    text-align: justify;
+    margin: 14px 0 30px;
+    line-height: 1.4;
+  }
+
+  .signatures {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 12px;
+  }
+  .sign-left { width: 45%; text-align: center; }
+  .sign-right { width: 45%; text-align: center; margin-left: auto; }
+  .sign-right .place-date { text-align: right; margin-bottom: 4px; margin-right: 10px;}
+  .sign-space { height: 40px; }
+  .sign-name { font-weight: normal; margin-top: 2px; }
+
+  .page-break { page-break-before: always; margin-top: 20px; }
+  .page2-table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 10px; table-layout: fixed; }
+  .page2-table th, .page2-table td { border: 1px solid #000; padding: 4px 3px; text-align: center; word-wrap: break-word; }
+  .page2-table th { background: #f2f2f2; }
+  .page2-table .text-left { text-align: left !important; }
+  .mt-5 { margin-top: 20px; }
+    
+  ul.roman-upper {
+    list-style-type: upper-roman;
+  }
+
+  @media print {
+    @page { size: A4 landscape; margin: 15mm; }
+    @page :first { size: A4 portrait; margin: 15mm; }
+    body { margin: 0; }
+    .no-print { display: none !important; }
+  }
+</style>
 </head>
 <body>
-    @php
-        $fmt = fn ($d) => $d ? \App\Http\Controllers\SuratKp4OldController::formatTanggal($d, '%d %B %Y') : '';
-        $pegawai = $suratKp4Old->pegawai;
-        $penandatangan = $suratKp4Old->penandatangan;
-        $pangkat = $pegawai->pangkat ?? '';
-        $golongan = $pegawai->golongan ?? '';
-    @endphp
 
-<div class="container">
-    <!-- HALAMAN 1 -->
-    <!-- Kop Surat -->
-    <table class="header-table">
-        <tr>
-            <td class="logo-cell">
-                @if($kopSuratBase64)
-                    <img class="logo-img" src="{{ $kopSuratBase64 }}" alt="Logo">
-                @else
-                    <img class="logo-img" src="https://wikimedia.org" alt="Logo Bangka Belitung">
-                @endif
-            </td>
-            <td class="text-cell">
-                <h1>Pemerintah Provinsi Kepulauan Bangka Belitung</h1>
-                <h2>Dinas Pendidikan</h2>
-                <h3>Bidang Kepala Dinas Pendidikan</h3>
-                <h2>{{ $pegawai->unit_kerja ?? 'Sekolah Luar Biasa' }}</h2>
-                <p>{{ $pegawai->alamat_jalan ?? '' }}{{ $pegawai->nama_dusun ? ' Dusun ' . $pegawai->nama_dusun : '' }}{{ $pegawai->desa_kelurahan ? ' ' . $pegawai->desa_kelurahan : '' }}{{ $pegawai->kecamatan ? ' Kec. ' . $pegawai->kecamatan : '' }}</p>
-                <p>Email: dinpendidikan@bangkabelitungprov.go.id</p>
-            </td>
-        </tr>
-    </table>
+@php
+    $fmt = fn ($d) => $d ? \App\Http\Controllers\SuratKp4OldController::formatTanggal($d, '%d %B %Y') : '';
+    $pegawai = $suratKp4Old->pegawai;
+    $penandatangan = $suratKp4Old->penandatangan;
+    $golongan = $pegawai->golongan ?? '';
+    $pangkat = $pegawai->pangkat ?? '';
+    $namaAyah = $pegawai && $pegawai->jk === 'L' ? $pegawai->nama : ($pegawai->nama_suami_istri ?? '-');
+    $namaIbu = $pegawai && $pegawai->jk === 'L' ? ($pegawai->nama_suami_istri ?? '-') : $pegawai->nama;
+    $anakKategori1 = $suratKp4Old->anak->where('kat', 1);
+    $anakKategori2 = $suratKp4Old->anak->where('kat', 2);
+@endphp
 
-    <!-- Judul Dokumen -->
-    <div class="title-area">
-        <h2>Surat Keterangan</h2>
-        <h3>Untuk Mendapatkan Pembayaran Tunjangan Keluarga</h3>
-    </div>
+  <!-- HALAMAN 1 -->
+  <div id="page1-content">
+  <div class="kop-surat-container">
+    @if($kopSuratBase64)
+      <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
+    @endif
+  </div>
 
+  <div class="title">
+    <h3>SURAT KETERANGAN</h3>
+    <h3>UNTUK MENDAPATKAN PEMBAYARAN TUNJANGAN KELUARGA</h3>
+  </div>
+
+  <table class="fields">
+    <tr>
+      <td class="no">1</td>
+      <td class="label">Nama Lengkap</td>
+      <td class="colon">:</td>
+      <td><strong>{{ $pegawai->nama ?? '' }}</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; NIPPPK. {{ $pegawai->nip ?? '' }}</td>
+    </tr>
+    <tr>
+      <td class="no">2</td>
+      <td class="label">Tempat / Tanggal Lahir</td>
+      <td class="colon">:</td>
+      <td>{{ ($pegawai->tempat_lahir ?? '') }}{{ $pegawai && $pegawai->tanggal_lahir ? ', ' . $fmt($pegawai->tanggal_lahir) : '' }}</td>
+    </tr>
+    <tr>
+      <td class="no">3</td>
+      <td class="label">Jenis Kelamin</td>
+      <td class="colon">:</td>
+      <td>{{ $pegawai->jk === 'L' ? 'Laki-laki' : ($pegawai->jk === 'P' ? 'Perempuan' : ($pegawai->jk ?? '-')) }}</td>
+    </tr>
+    <tr>
+      <td class="no">4</td>
+      <td class="label">Agama</td>
+      <td class="colon">:</td>
+      <td>{{ $pegawai->agama ?? '' }}</td>
+    </tr>
+    <tr>
+      <td class="no">5</td>
+      <td class="label">Kebangsaan</td>
+      <td class="colon">:</td>
+      <td>{{ $pegawai->kewarganegaraan ?? 'Indonesia' }}</td>
+    </tr>
+    <tr>
+      <td class="no">6</td>
+      <td class="label">Golongan / Status<br>Kepegawaian</td>
+      <td class="colon">:</td>
+      <td>{{ $golongan }}&nbsp;/ {{ $suratKp4Old->status_kepegawaian ?? ($pegawai->status_kepegawaian ?? '') }}</td>
+    </tr>
+    <tr>
+      <td class="no">7</td>
+      <td class="label">Jabatan Struktural/Fungsional</td>
+      <td class="colon">:</td>
+      <td>{{ $pegawai->jabatan ?? '' }}{{ $pegawai->tugas_tambahan ? ' / ' . $pegawai->tugas_tambahan : '' }}</td>
+    </tr>
+    <tr>
+      <td class="no">8</td>
+      <td class="label">Pada Instansi, Dept. Lembaga</td>
+      <td class="colon">:</td>
+      <td>{{ $pegawai->unit_kerja ?? '' }}</td>
+    </tr>
+    <tr>
+      <td class="no">9</td>
+      <td class="label">Masa Kerja Golongan</td>
+      <td class="colon">:</td>
+      <td>{{ $suratKp4Old->masa_kerja_golongan ?? '-' }}</td>
+    </tr>
+    <tr>
+      <td class="no">10</td>
+      <td class="label">Digaji menurut</td>
+      <td class="colon">:</td>
+      <td>{{ $suratKp4Old->digaji_menurput ?? '-' }}</td>
+    </tr>
+    <tr>
+      <td class="no"></td>
+      <td class="label">Alamat / Tempat Tinggal</td>
+      <td class="colon">:</td>
+      <td>{{ $pegawai->alamat_jalan ?? '' }}{{ $pegawai->nama_dusun ? ' Dusun ' . $pegawai->nama_dusun : '' }}{{ $pegawai->desa_kelurahan ? ' ' . $pegawai->desa_kelurahan : '' }}{{ $pegawai->kecamatan ? ' Kec. ' . $pegawai->kecamatan : '' }}</td>
+    </tr>
+  </table>
+
+  <div class="keterangan-block">
     <p>Menerangkan dengan sesungguhnya bahwa saya :</p>
+    <p class="indent">a. Disamping Jabatan Utama tersebut, bekerja pula sebagai :</p>
+    <p class="indent2">dengan mendapat penghasilan sebesar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rp&nbsp;&nbsp;&nbsp;{{ $suratKp4Old->penghasilan_disamping ?? '-' }}&nbsp; sebulan</p>
+    <p class="indent">b. Mempunyai Pensiun / Pensiun Janda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rp&nbsp;&nbsp;&nbsp;{{ $suratKp4Old->pensiun_janda ?? '-' }}&nbsp; sebulan</p>
+    <p class="indent">c. Kawin sah dengan :</p>
+    <p class="indent2">{{ $suratKp4Old->kawin_sah ?? '-' }}</p>
+  </div>
 
-    <!-- Data Pegawai -->
-    <table class="form-table">
-        <tr>
-            <td class="num-col">1</td>
-            <td class="label-col">Nama Lengkap</td>
-            <td class="colon-col">:</td>
-            <td class="value-col"><strong>{{ $pegawai->nama ?? '' }}</strong></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>NIP/NRK</td>
-            <td>:</td>
-            <td>{{ $pegawai->nip ?? '' }}{{ $pegawai->nuptk ? ' / ' . $pegawai->nuptk : '' }}</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Tempat / Tanggal Lahir</td>
-            <td>:</td>
-            <td>{{ ($pegawai->tempat_lahir ?? '') }}{{ ($pegawai && $pegawai->tanggal_lahir) ? ', ' . $fmt($pegawai->tanggal_lahir) : '' }}</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <td>Jenis Kelamin</td>
-            <td>:</td>
-            <td>{{ $pegawai->jk === 'L' ? 'Laki-laki' : ($pegawai->jk === 'P' ? 'Perempuan' : ($pegawai->jk ?? '-')) }}</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <td>Agama</td>
-            <td>:</td>
-            <td>{{ $pegawai->agama ?? '' }}</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <td>Golongan / Status Kepegawaian</td>
-            <td>:</td>
-            <td>{{ $suratKp4Old->status_kepegawaian ?? '' }}</td>
-        </tr>
-        <tr>
-            <td>7</td>
-            <td>Jabatan Struktural/Fungsional</td>
-            <td>:</td>
-            <td>{{ $pegawai->jabatan ?? '' }}{{ $pegawai->tugas_tambahan ? ' / ' . $pegawai->tugas_tambahan : '' }}</td>
-        </tr>
-        <tr>
-            <td>8</td>
-            <td>Pangkat/Golongan</td>
-            <td>:</td>
-            <td>{{ $pegawai ? trim(($pangkat ?? '') . ($golongan ? ' / ' . $golongan : '')) : '' }}</td>
-        </tr>
-        <tr>
-            <td>9</td>
-            <td>Pada Instansi, Dept. Lembaga</td>
-            <td>:</td>
-            <td>{{ $pegawai->unit_kerja ?? '' }}</td>
-        </tr>
-        <tr>
-            <td>10</td>
-            <td>Masa Kerja Golongan</td>
-            <td>:</td>
-            <td>{{ $suratKp4Old->masa_kerja_golongan ?? '-' }}</td>
-        </tr>
-        <tr>
-            <td>11</td>
-            <td>Digaji menurut</td>
-            <td>:</td>
-            <td>{{ $suratKp4Old->digaji_menurut ?? '-' }}</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>Alamat / Tempat Tinggal</td>
-            <td>:</td>
-            <td>{{ $pegawai->alamat_jalan ?? '' }}{{ $pegawai->nama_dusun ? ' Dusun ' . $pegawai->nama_dusun : '' }}{{ $pegawai->desa_kelurahan ? ' ' . $pegawai->desa_kelurahan : '' }}{{ $pegawai->kecamatan ? ' Kec. ' . $pegawai->kecamatan : '' }}</td>
-        </tr>
-    </table>
+  <table class="tanggungan">
+    <thead>
+      <tr>
+        <th rowspan="2">No.</th>
+        <th rowspan="2">Nama Istri / Suami<br>Tanggungan</th>
+        <th colspan="2">Tanggal</th>
+        <th rowspan="2">Pekerjaan</th>
+        <th rowspan="2">Penghasilan<br>Sebulan</th>
+        <th rowspan="2">Keterangan</th>
+      </tr>
+      <tr>
+        <th>Kelahiran</th>
+        <th>Perkawinan</th>
+      </tr>
+    </thead>
+    <tbody>
+      @forelse($suratKp4Old->anggotaKeluarga as $index => $anggota)
+      <tr>
+        <td>{{ $index + 1 }}.</td>
+        <td class="text-left">{{ $anggota->nama }}</td>
+        <td>{{ $anggota->tanggal_kelahiran ? $anggota->tanggal_kelahiran->format('d/m/Y') : '-' }}</td>
+        <td>{{ $anggota->tanggal_perkawinan ? $anggota->tanggal_perkawinan->format('d/m/Y') : '-' }}</td>
+        <td>{{ $anggota->pekerjaan ?? '-' }}</td>
+        <td>{{ $anggota->penghasilan_sebulan ? 'Rp ' . $anggota->penghasilan_sebulan : '-' }}</td>
+        <td>{{ $anggota->keterangan ?? '-' }}</td>
+      </tr>
+      @empty
+      <tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
+      @endforelse
+      <tr>
+        <td>/</td>
+        <td class="text-left">-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+      <tr>
+        <td>/</td>
+        <td class="text-left">-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+        <td>-</td>
+      </tr>
+    </tbody>
+  </table>
 
-    <!-- Keterangan Tambahan -->
-    <table class="form-table">
-        <tr>
-            <td class="num-col">a.</td>
-            <td style="width: 50%;">Disamping Jabatan Utama tersebut, bekerja pula sebagai</td>
-            <td class="colon-col">:</td>
-            <td>{{ $suratKp4Old->disamping_jabatan ?? '-' }}</td>
-        </tr>
-        <tr>
-            <td></td>
-            <td>dengan mendapat penghasilan sebesar</td>
-            <td>:</td>
-            <td>Rp {{ $suratKp4Old->penghasilan_disamping ?? '-' }} sebulan</td>
-        </tr>
-        <tr>
-            <td>b.</td>
-            <td>Mempunyai Pensiun / Pensiun Janda</td>
-            <td>:</td>
-            <td>Rp {{ $suratKp4Old->pensiun_janda ?? '-' }} sebulan</td>
-        </tr>
-        <tr>
-            <td>c.</td>
-            <td>Kawin sah dengan</td>
-            <td>:</td>
-            <td>{{ $suratKp4Old->kawin_sah ?? '-' }}</td>
-        </tr>
-    </table>
+  <div class="keterangan-block">
+    <p class="indent">d. Mempunyai anak &ndash; anak seperti dalam daftar sebelah ini, yaitu :</p>
+    <ul style="list-style-type: upper-roman;margin-left: -13px;text-align: justify;">
+      <li>
+        <strong>Anak Kandung (Ak), Anak Tiri (At)</strong> yang masih menjadi tanggungan, belum mempunyai pekerjaan sendiri dan masuk dalam daftar Gaji.
+      </li>
+      <li>
+        <strong>Anak Kandung (Ak), Anak Tiri (At), Anak Angkat (Aa)</strong> yang masih menjadi tanggungan, tetapi tidak termasuk dalam daftar Gaji.
+      </li>
+    </ul>
+    <p class="indent">e. Jumlah anak seluruh ( {{ $suratKp4Old->anak->count() ?? 0 }} Orang ) yang menjadi tanggungan termasuk yang tidak termasuk dalam daftar gaji.</p>
+  </div>
 
-    <!-- Tabel Tanggungan Pasangan -->
-    <table class="data-table">
-        <thead>
-            <tr>
-                <th rowspan="2" style="width: 5%;">No.</th>
-                <th rowspan="2" style="width: 30%;">Nama Istri / Suami Tanggungan</th>
-                <th colspan="2">Tanggal</th>
-                <th rowspan="2" style="width: 20%;">Pekerjaan</th>
-                <th rowspan="2" style="width: 15%;">Penghasilan Sebulan</th>
-                <th rowspan="2" style="width: 15%;">Keterangan</th>
-            </tr>
-            <tr>
-                <th style="width: 12%;">Kelahiran</th>
-                <th style="width: 12%;">Perkawinan</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($suratKp4Old->anggotaKeluarga as $index => $anggota)
-            <tr>
-                <td class="text-center">{{ $index + 1 }}.</td>
-                <td class="text-left">{{ $anggota->nama }}</td>
-                <td class="text-center">{{ $anggota->tanggal_kelahiran ? $anggota->tanggal_kelahiran->format('d-m-Y') : '-' }}</td>
-                <td class="text-center">{{ $anggota->tanggal_perkawinan ? $anggota->tanggal_perkawinan->format('d-m-Y') : '-' }}</td>
-                <td class="text-center">{{ $anggota->pekerjaan ?? '-' }}</td>
-                <td class="text-center">{{ $anggota->penghasilan_sebulan ? 'Rp ' . $anggota->penghasilan_sebulan : '-' }}</td>
-                <td class="text-center">{{ $anggota->keterangan ?? '-' }}</td>
-            </tr>
-            @empty
-            <tr><td class="text-center" colspan="7">-</td></tr>
-            @endforelse
-            @for ($i = 0; $i < 2; $i++)
-            <tr>
-                <td class="text-center">/</td>
-                <td class="text-left">-</td>
-                <td class="text-center">-</td>
-                <td class="text-center">-</td>
-                <td class="text-center">-</td>
-                <td class="text-center">-</td>
-                <td class="text-center">-</td>
-            </tr>
-            @endfor
-        </tbody>
-    </table>
+  <p class="footer-note">
+    Keterangan ini saya buat dengan sesungguhnya dan apabila keterangan ini ternyata tidak benar / palsu, saya bersedia dituntut dimuka Pengadilan
+    berdasarkan undang-undang yang berlaku, dan bersedia mengembalikan semua uang tunjangan anak yang telah saya terima yang seharusnya
+    bukan menjadi hak saya.
+  </p>
 
-    <!-- Keterangan Anak -->
-    <div class="note-section">
-        <p>d. Mempunyai anak – anak seperti dalam daftar sebelah ini, yaitu :</p>
-        <ul style="list-style-type: none; padding-left: 15px;">
-            <li>I. Anak Kandung (Ak) Anak Tiri (At) yang masih menjadi tanggungan, belum mempunyai pekerjaan sendiri dan masuk dalam daftar Gaji.</li>
-            <li>II. Anak Angkatan keluarga / Anak Di Tinggalkan.</li>
-            <li>III. Anak Yang Duda / Yatim Piatu.</li>
-            <li>IV. Nama anak di atas mempunyai kartu keluarga dan masuk dalam sistem gaji atau tidak.</li>
-        </ul>
+  <div class="signatures">
+    <div class="sign-left">
+      <p>Mengetahui:<br>{{ $penandatangan ? ($penandatangan->tugas_tambahan ?: ($penandatangan->jabatan ?: 'Kepala')) : 'Kepala' }} {{ $penandatangan->unit_kerja ?? '' }}</p>
+      <div class="sign-space"></div>
+      <br>
+      <p class="sign-name">{{ $penandatangan->nama ?? '' }}<br>{{ ($penandatangan->pangkat ?? '') . ($penandatangan->golongan ? ' / ' . $penandatangan->golongan : '') }}<br>NIP. {{ $penandatangan->nip ?? '' }}</p>
     </div>
-
-    <!-- Footer -->
-    <div class="footer-area">
-        <table>
-            <tr>
-                <td>
-                    Mengetahui,<br>
-                    {{ $penandatangan ? ($penandatangan->tugas_tambahan ?: ($penandatangan->jabatan ?: 'Kepala')) : 'Kepala' }}
-                    <div class="signature-space"></div>
-                    <div style="font-weight: bold; text-decoration: underline;">{{ $penandatangan->nama ?? '' }}</div>
-                    @if($penandatangan)NIP. {{ $penandatangan->nip }}@endif
-                </td>
-                <td>
-                    {{ $suratKp4Old->tempat_ditetapkan ?? '' }}, {{ $fmt($suratKp4Old->tanggal_ditetapkan ?? null) }}<br>
-                    Yang menerangkan,
-                    <div class="signature-space"></div>
-                    <div style="font-weight: bold; text-decoration: underline;">{{ $pegawai->nama ?? '' }}</div>
-                    @if($pegawai)NIP. {{ $pegawai->nip }}@endif
-                </td>
-            </tr>
-        </table>
+    <div class="sign-right">
+      <p>{{ $suratKp4Old->tempat_ditetapkan ?? '' }}, {{ $fmt($suratKp4Old->tanggal_ditetapkan ?? null) }}</p>
+      <p>Yang Menerangkan,</p>
+      <div class="sign-space"></div>
+      <p class="sign-name">{{ $pegawai->nama ?? '' }}<br>{{ ($pegawai->pangkat ?? '') . ($pegawai->golongan ? ' / ' . $pegawai->golongan : '') }}<br>NIP. {{ $pegawai->nip ?? '' }}</p>
     </div>
+  </div>
 
-    <div class="no-print" style="text-align:center; margin-top:20px;">
-        <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
-        <a href="{{ route('surat-kp4-olds.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
-    </div>
-</div>
+  </div>
+
+  <div class="no-print" style="text-align:center; margin-top:20px;">
+    <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
+    <a href="{{ route('surat-kp4-olds.print-page2', $suratKp4Old) }}" target="_blank" style="display:inline-block; margin-left:0.5rem; background:#dc2525; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Cetak Halaman 2 (Landscape)</a>
+    <a href="{{ route('surat-kp4-olds.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+  </div>
 
 </body>
 </html>

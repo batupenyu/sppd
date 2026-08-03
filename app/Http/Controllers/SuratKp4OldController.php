@@ -38,6 +38,7 @@ class SuratKp4OldController extends Controller
         $suratKp4Old = SuratKp4Old::create($validated);
 
         $this->syncAnggotaKeluarga($suratKp4Old, $request);
+        $this->syncAnak($suratKp4Old, $request);
 
         return redirect()->route('surat-kp4-olds.print', $suratKp4Old)
             ->with('success', 'Surat KP4 Lama berhasil disimpan.');
@@ -46,7 +47,7 @@ class SuratKp4OldController extends Controller
     public function edit(SuratKp4Old $suratKp4Old): View
     {
         $asns = Asn::orderBy('nama')->get();
-        $suratKp4Old->load('pegawai', 'penandatangan', 'anggotaKeluarga');
+        $suratKp4Old->load('pegawai', 'penandatangan', 'anggotaKeluarga', 'anak');
 
         $defaultPenandatanganId = Asn::defaultPenandatanganId();
 
@@ -60,6 +61,7 @@ class SuratKp4OldController extends Controller
         $suratKp4Old->update($validated);
 
         $this->syncAnggotaKeluarga($suratKp4Old, $request);
+        $this->syncAnak($suratKp4Old, $request);
 
         return redirect()->route('surat-kp4-olds.print', $suratKp4Old)
             ->with('success', 'Surat KP4 Lama berhasil diperbarui.');
@@ -75,7 +77,7 @@ class SuratKp4OldController extends Controller
 
     public function print(SuratKp4Old $suratKp4Old): View
     {
-        $suratKp4Old->load('pegawai', 'penandatangan', 'anggotaKeluarga');
+        $suratKp4Old->load('pegawai', 'penandatangan', 'anggotaKeluarga', 'anak');
 
         $kopSuratBase64 = null;
         $logo = LogoSetting::where('name', 'kop_smk')->first() ?? LogoSetting::latest()->first();
@@ -84,6 +86,18 @@ class SuratKp4OldController extends Controller
         }
 
         return view('surat_kp4_olds.print', compact('suratKp4Old', 'kopSuratBase64'));
+    }
+
+    public function printPage2(SuratKp4Old $suratKp4Old): View
+    {
+        $suratKp4Old->load('pegawai', 'anak');
+
+        $pegawai = $suratKp4Old->pegawai;
+        $jk = $pegawai->jk === 'L' ? 'Laki-Laki' : ($pegawai->jk === 'P' ? 'Perempuan' : '-');
+        $namaAyah = $pegawai->jk === 'L' ? $pegawai->nama : ($pegawai->nama_suami_istri ?? '-');
+        $namaIbu = $pegawai->jk === 'L' ? ($pegawai->nama_suami_istri ?? '-') : $pegawai->nama;
+
+        return view('surat_kp4_olds.print_page2', compact('suratKp4Old', 'pegawai', 'jk', 'namaAyah', 'namaIbu'));
     }
 
     private function validateData(Request $request): array
@@ -127,6 +141,34 @@ class SuratKp4OldController extends Controller
                 'penghasilan_sebulan' => $item['penghasilan_sebulan'] ?? null,
                 'keterangan' => $item['keterangan'] ?? null,
                 'mendapat_tunjangan' => isset($item['mendapat_tunjangan']),
+            ]);
+        }
+    }
+
+    private function syncAnak(SuratKp4Old $suratKp4Old, Request $request): void
+    {
+        $suratKp4Old->anak()->delete();
+
+        $anak = $request->input('anak', []);
+        if (! is_array($anak)) {
+            return;
+        }
+
+        foreach ($anak as $item) {
+            if (empty($item['name'])) {
+                continue;
+            }
+
+            $suratKp4Old->anak()->create([
+                'name' => $item['name'],
+                'anak' => $item['anak'] ?? null,
+                'tgl_lahir' => $item['tgl_lahir'] ?? null,
+                'perkawinan' => $item['perkawinan'] ?? null,
+                'status_sekolah' => $item['status_sekolah'] ?? null,
+                'status_beasiswa' => $item['status_beasiswa'] ?? null,
+                'pekerjaan' => $item['pekerjaan'] ?? null,
+                'kat' => $item['kat'] ?? 1,
+                'tgl_mendinggal_cerai' => $item['tgl_meninggal_cerai'] ?? null,
             ]);
         }
     }

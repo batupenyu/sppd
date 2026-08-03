@@ -1,5 +1,6 @@
 @php($kp4 = $suratKp4Old ?? null)
 @php($anggota = old('anggota', $kp4 && $kp4->anggotaKeluarga ? $kp4->anggotaKeluarga->toArray() : []))
+@php($anak = old('anak', $kp4 && $kp4->anak ? $kp4->anak->toArray() : []))
 
 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <div class="md:col-span-2">
@@ -33,7 +34,7 @@
 
     <div>
         <label class="block font-medium mb-1">Digaji Menurut</label>
-        <textarea name="digaji_menurut" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" rows="3">{{ old('digaji_menurut', $kp4->digaji_menurut ?? '') }}</textarea>
+        <textarea name="digaji_menurut" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" rows="3">{{ old('digaji_menurut', $kp4->digaji_menurut ?? 'PP Nomor 05 Tahun 2024 (CPNS dan PNS), Perpres Nomor 11 Tahun 2024 (PPPK)') }}</textarea>
     </div>
 
     <div>
@@ -119,6 +120,45 @@
 <table style="display:none;">
     <tbody id="anggota-template">
         @include('surat_kp4_olds._anggota_row', ['a' => null, 'i' => '__INDEX__'])
+    </tbody>
+</table>
+
+<div class="mt-8">
+    <div class="flex justify-between items-center mb-2">
+        <h2 class="text-lg font-semibold border-b pb-2">Daftar Anak</h2>
+        <button type="button" id="tambah-anak" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded">+ Tambah Anak</button>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="min-w-full table-auto border" id="tabel-anak">
+            <thead class="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                    <th class="px-2 py-2 text-left">Nama</th>
+                    <th class="px-2 py-2 text-left">Status Anak</th>
+                    <th class="px-2 py-2 text-left">Tgl Lahir</th>
+                    <th class="px-2 py-2 text-left">Perkawinan</th>
+                    <th class="px-2 py-2 text-left">Status Sekolah</th>
+                    <th class="px-2 py-2 text-left">Beasiswa/Darmasiswa</th>
+                    <th class="px-2 py-2 text-left">Pekerjaan</th>
+                    <th class="px-2 py-2 text-left">Kategori</th>
+                    <th class="px-2 py-2 text-left">Tgl Meninggal/Cerai</th>
+                    <th class="px-2 py-2 text-left"></th>
+                </tr>
+            </thead>
+            <tbody class="anak-list">
+                @forelse($anak as $index => $a)
+                    @include('surat_kp4_olds._anak_row', ['a' => $a, 'i' => $index])
+                @empty
+                    @include('surat_kp4_olds._anak_row', ['a' => null, 'i' => 0])
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<table style="display:none;">
+    <tbody id="anak-template">
+        @include('surat_kp4_olds._anak_row', ['a' => null, 'i' => '__INDEX__'])
     </tbody>
 </table>
 
@@ -208,5 +248,43 @@ document.addEventListener('DOMContentLoaded', function () {
             e.target.closest('tr.anggota-row').remove();
         }
     });
+
+    const anakList = document.querySelector('.anak-list');
+    const anakTemplate = document.querySelector('#anak-template tr');
+    const btnTambahAnak = document.getElementById('tambah-anak');
+
+    function nextAnakIndex() {
+        return anakList ? anakList.querySelectorAll('tr.anak-row').length : 0;
+    }
+
+    if (btnTambahAnak) {
+        btnTambahAnak.addEventListener('click', function () {
+            if (!anakTemplate) return;
+            const clone = anakTemplate.cloneNode(true);
+            const index = nextAnakIndex();
+            clone.querySelectorAll('input, select, textarea').forEach(function(el) {
+                if (el.name) {
+                    el.name = el.name.replace('__INDEX__', index);
+                }
+                if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'date')) {
+                    el.value = '';
+                } else if (el.tagName === 'INPUT' && el.type === 'checkbox') {
+                    el.checked = false;
+                }
+                if (el.tagName === 'SELECT') {
+                    el.selectedIndex = 0;
+                }
+            });
+            anakList.appendChild(clone);
+        });
+    }
+
+    if (anakList) {
+        anakList.addEventListener('click', function (e) {
+            if (e.target.closest('.hapus-anak')) {
+                e.target.closest('tr.anak-row').remove();
+            }
+        });
+    }
 });
 </script>

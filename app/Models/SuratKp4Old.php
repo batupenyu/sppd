@@ -43,4 +43,9 @@ class SuratKp4Old extends Model
     {
         return $this->hasMany(AnggotaKeluargaKp4Old::class);
     }
+
+    public function anak(): HasMany
+    {
+        return $this->hasMany(AnakKp4Old::class);
+    }
 }
