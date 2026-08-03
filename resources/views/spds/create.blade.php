@@ -170,14 +170,34 @@
 </div>
 
 <script>
-document.getElementById('asn_id').addEventListener('change', function () {
-    const opt = this.options[this.selectedIndex];
-    if (this.value) {
-        document.getElementById('nama').value = opt.textContent.split(' (')[0].trim();
-        document.getElementById('nip').value = opt.dataset.nip || '';
-        document.getElementById('pangkat_golongan').value = opt.dataset.pangkat || '';
-        document.getElementById('jabatan_instansi').value = opt.dataset.jabatan || '';
+function fillAsnData(select) {
+    const opt = select.options[select.selectedIndex];
+    const namaEl = document.getElementById('nama');
+    const nipEl = document.getElementById('nip');
+    const pangkatEl = document.getElementById('pangkat_golongan');
+    const jabatanEl = document.getElementById('jabatan_instansi');
+
+    if (select.value) {
+        namaEl.value = opt.textContent.split(' (')[0].trim();
+        nipEl.value = opt.dataset.nip || '';
+        pangkatEl.value = opt.dataset.pangkat || '';
+        jabatanEl.value = opt.dataset.jabatan || '';
+    } else {
+        namaEl.value = '';
+        nipEl.value = '';
+        pangkatEl.value = '';
+        jabatanEl.value = '';
     }
-});
+}
+
+const asnSelect = document.getElementById('asn_id');
+if (asnSelect) {
+    asnSelect.addEventListener('change', function () {
+        fillAsnData(this);
+    });
+    document.addEventListener('DOMContentLoaded', function () {
+        fillAsnData(asnSelect);
+    });
+}
 </script>
 @endsection

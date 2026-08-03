@@ -18,15 +18,18 @@
 
                         <div class="md:col-span-2">
                             <label class="block font-medium mb-1">Pegawai (ASN) *</label>
-                            <select name="asn_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
-                                <option value="">-- Pilih Pegawai --</option>
-                                @foreach($asns as $asn)
-                                    <option value="{{ $asn->id }}"
-                                        {{ (old('asn_id', $spd->asn_id) == $asn->id) ? 'selected' : '' }}>
-                                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
-                                    </option>
-                                @endforeach
-                            </select>
+            <select name="asn_id" id="asn_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" required>
+                <option value="">-- Pilih Pegawai --</option>
+                @foreach($asns as $asn)
+                    <option value="{{ $asn->id }}"
+                                        {{ (old('asn_id', $spd->asn_id) == $asn->id) ? 'selected' : '' }}
+                                        data-nip="{{ $asn->nip }}"
+                                        data-pangkat="{{ $asn->pangkat_golongan }}"
+                                        data-jabatan="{{ $asn->tugas_tambahan }}">
+                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                    </option>
+                @endforeach
+            </select>
                             @error('asn_id')<span class="text-red-500 text-sm">{{ $message }}</span>@enderror
                         </div>
 
@@ -168,14 +171,34 @@
 </div>
 
     <script>
-document.getElementById('asn_id').addEventListener('change', function () {
-    const opt = this.options[this.selectedIndex];
-    if (this.value) {
-        document.getElementById('nama').value = opt.textContent.split(' (')[0].trim();
-        document.getElementById('nip').value = opt.dataset.nip || '';
-        document.getElementById('pangkat_golongan').value = opt.dataset.pangkat || '';
-        document.getElementById('jabatan_instansi').value = opt.dataset.jabatan || '';
+    function fillAsnData(select) {
+        const opt = select.options[select.selectedIndex];
+        const namaEl = document.getElementById('nama');
+        const nipEl = document.getElementById('nip');
+        const pangkatEl = document.getElementById('pangkat_golongan');
+        const jabatanEl = document.getElementById('jabatan_instansi');
+
+        if (select.value) {
+            namaEl.value = opt.textContent.split(' (')[0].trim();
+            nipEl.value = opt.dataset.nip || '';
+            pangkatEl.value = opt.dataset.pangkat || '';
+            jabatanEl.value = opt.dataset.jabatan || '';
+        } else {
+            namaEl.value = '';
+            nipEl.value = '';
+            pangkatEl.value = '';
+            jabatanEl.value = '';
+        }
     }
-});
-</script>
+
+    const asnSelect = document.getElementById('asn_id');
+    if (asnSelect) {
+        asnSelect.addEventListener('change', function () {
+            fillAsnData(this);
+        });
+        document.addEventListener('DOMContentLoaded', function () {
+            fillAsnData(asnSelect);
+        });
+    }
+    </script>
 @endsection

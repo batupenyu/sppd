@@ -13,6 +13,7 @@ use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratDispensasiController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratKp4Controller;
+use App\Http\Controllers\SuratKp4OldController;
 use App\Http\Controllers\SuratMewakiliController;
 use App\Http\Controllers\SuratNodinController;
 use App\Http\Controllers\SuratPanggilanSiswaController;
@@ -100,6 +101,12 @@ Route::resource('surat-kp4s', SuratKp4Controller::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-kp4s/{surat_kp4}', [SuratKp4Controller::class, 'destroy'])->name('surat-kp4s.destroy');
 Route::get('surat-kp4s/{surat_kp4}/print', [SuratKp4Controller::class, 'print'])->name('surat-kp4s.print');
+
+Route::resource('surat-kp4-olds', SuratKp4OldController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update'])
+    ->parameter('surat-kp4-olds', 'surat_kp4_old');
+Route::delete('surat-kp4-olds/{surat_kp4_old}', [SuratKp4OldController::class, 'destroy'])->name('surat-kp4-olds.destroy');
+Route::get('surat-kp4-olds/{surat_kp4_old}/print', [SuratKp4OldController::class, 'print'])->name('surat-kp4-olds.print');
 Route::resource('surat-panggilan-siswas', SuratPanggilanSiswaController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-panggilan-siswas/{surat_panggilan_siswa}', [SuratPanggilanSiswaController::class, 'destroy'])->name('surat-panggilan-siswas.destroy');
