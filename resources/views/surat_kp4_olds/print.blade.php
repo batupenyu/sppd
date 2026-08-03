@@ -151,6 +151,13 @@
     </style>
 </head>
 <body>
+    @php
+        $fmt = fn ($d) => $d ? \App\Http\Controllers\SuratKp4OldController::formatTanggal($d, '%d %B %Y') : '';
+        $pegawai = $suratKp4Old->pegawai;
+        $penandatangan = $suratKp4Old->penandatangan;
+        $pangkat = $pegawai->pangkat ?? '';
+        $golongan = $pegawai->golongan ?? '';
+    @endphp
 
 <div class="container">
     <!-- HALAMAN 1 -->
@@ -180,14 +187,6 @@
         <h2>Surat Keterangan</h2>
         <h3>Untuk Mendapatkan Pembayaran Tunjangan Keluarga</h3>
     </div>
-
-    @php
-        $fmt = fn ($d) => $d ? \App\Http\Controllers\SuratKp4OldController::formatTanggal($d, '%d %B %Y') : '';
-        $pegawai = $suratKp4Old->pegawai;
-        $penandatangan = $suratKp4Old->penandatangan;
-        $pangkat = $pegawai->pangkat ?? '';
-        $golongan = $pegawai->golongan ?? '';
-    @endphp
 
     <p>Menerangkan dengan sesungguhnya bahwa saya :</p>
 
