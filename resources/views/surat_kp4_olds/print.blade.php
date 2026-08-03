@@ -180,13 +180,13 @@
       <td class="no">9.</td>
       <td class="label">Masa Kerja Golongan</td>
       <td class="colon">:</td>
-      <td>{{ $suratKp4Old->masa_kerja_golongan ?? '-' }}</td>
+      <td>{{ $suratKp4Old->masa_kerja_golongan ?? '.....Tahun .....Bulan, Masa Kerja Tambahan .....Tahun .....Bulan, Masa Kerja Seluruhnya .....Tahun .....Bulan' }}</td>
     </tr>
     <tr>
       <td class="no">10.</td>
       <td class="label">Digaji menurut</td>
       <td class="colon">:</td>
-      <td>{{ $suratKp4Old->digaji_menurput ?? '-' }}</td>
+      <td>{{ $suratKp4Old->digaji_menurput ?? 'PP Nomor 05 Tahun 2024 (CPNS dan PNS), Perpres Nomor 11 Tahun 2024 (PPPK)' }}</td>
     </tr>
     <tr>
       <td class="no"></td>
