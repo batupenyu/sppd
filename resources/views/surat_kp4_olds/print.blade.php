@@ -271,13 +271,13 @@
       <p>Mengetahui:<br>{{ $penandatangan ? ($penandatangan->tugas_tambahan ?: ($penandatangan->jabatan ?: 'Kepala')) : 'Kepala' }} {{ $penandatangan->unit_kerja ?? '' }}</p>
       <div class="sign-space"></div>
       <br>
-      <p class="sign-name">{{ $penandatangan->nama ?? '' }}{{ ($penandatangan->status_kepegawaian ?? '') === 'PPPK' ? '' : <br>. (($penandatangan->pangkat ?? '') . ($penandatangan->golongan ? ' / ' . $penandatangan->golongan : '')) }}<br>NIP. {{ $penandatangan->nip ?? '' }}</p>
+      <p class="sign-name">{{ $penandatangan->nama ?? '' }}{{ ($penandatangan->status_kepegawaian ?? '') === 'PPPK' ? '<br>' : '<br>'. (($penandatangan->pangkat ?? '') . ($penandatangan->golongan ? ' / ' . $penandatangan->golongan : '')) }}<br>NIP. {{ $penandatangan->nip ?? '' }}</p>
     </div>
     <div class="sign-right">
       <p>{{ $suratKp4Old->tempat_ditetapkan ?? '' }}, {{ $fmt($suratKp4Old->tanggal_ditetapkan ?? null) }}</p>
       <p>Yang Menerangkan,</p>
       <div class="sign-space"></div>
-      <p class="sign-name">{{ $pegawai->nama ?? '' }}{{ ($suratKp4Old->status_kepegawaian ?? '') === 'PPPK' ? '' : '<br>'. (($pegawai->pangkat ?? '') . ($pegawai->golongan ? ' / ' . $pegawai->golongan : '')) }}<br>NIP. {{ $pegawai->nip ?? '' }}</p>
+      <p class="sign-name">{{ $pegawai->nama ?? '' }}{{ ($suratKp4Old->status_kepegawaian ?? '') === 'PPPK' ? '<br>' : '<br>'. (($pegawai->pangkat ?? '') . ($pegawai->golongan ? ' / ' . $pegawai->golongan : '')) }}<br>NIP. {{ $pegawai->nip ?? '' }}</p>
     </div>
   </div>
 
