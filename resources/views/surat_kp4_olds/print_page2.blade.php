@@ -16,6 +16,7 @@
     background: #fff;
   }
   .mt-5 { margin-top: 20px; }
+  table { width: 100%; }
   @media print {
     body { margin: 0; }
     .no-print { display: none !important; }
