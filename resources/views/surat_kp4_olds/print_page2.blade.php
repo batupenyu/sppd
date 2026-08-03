@@ -4,26 +4,35 @@
 <meta charset="UTF-8">
 <title>Halaman 2 - Daftar Anak - {{ $pegawai->nama ?? '' }}</title>
 <style>
-  @page { size: A4 landscape; margin: 15mm; }
+  @page { size: A4 landscape; margin: 5mm; }
   * { box-sizing: border-box; }
   body {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 12px;
     color: #111;
-    width: 100%;
     margin: 0;
     padding: 0;
+    background: #f5f5f5;
+  }
+  .container {
+    max-width: 1200px;
+    margin: 20px auto;
     background: #fff;
+    padding: 15mm;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
   }
   .mt-5 { margin-top: 20px; }
-  table { width: 100%; }
+  table { width: 100%; border-collapse: collapse; }
+  table, table th, table td { border: 1px solid #000; }
   @media print {
     body { margin: 0; }
     .no-print { display: none !important; }
+    .container { box-shadow: none; }
   }
 </style>
 </head>
 <body>
+<div class="container">
 
 @php
     $data = $pegawai;
@@ -161,6 +170,7 @@
 
 <P>A. Supaya dilampirkan salinan Surat Keputusan Pengadilan Negeri yang disahkan <br>B. Supaya diisi jika anak dilahirkan dari istri/suami yang telah meninggal dunia atau diceraikan
 </P>
+</div>
 
 <div class="no-print" style="text-align:center; margin-top:20px;">
 <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak Halaman 2</button>

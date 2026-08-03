@@ -1,7 +1,7 @@
 @php($a = $a ?? null)
 @php($i = $i ?? 0)
 <tr class="anak-row border-t">
-    <td class="px-2 py-2">
+    <td class="px-2 py-2 w-80">
         <input type="text" name="anak[{{ $i }}][name]" value="{{ old('anak.' . $i . '.name', $a['name'] ?? '') }}" placeholder="Nama" class="w-full border rounded px-2 py-1 dark:bg-gray-700 dark:text-gray-100">
     </td>
     <td class="px-2 py-2">

@@ -133,7 +133,7 @@
         <table class="min-w-full table-auto border" id="tabel-anak">
             <thead class="bg-gray-50 dark:bg-gray-700">
                 <tr>
-                    <th class="px-2 py-2 text-left">Nama</th>
+                    <th class="px-2 py-2 text-left w-80">Nama</th>
                     <th class="px-2 py-2 text-left">Status Anak</th>
                     <th class="px-2 py-2 text-left">Tgl Lahir</th>
                     <th class="px-2 py-2 text-left">Perkawinan</th>
