@@ -4,8 +4,28 @@
 <meta charset="UTF-8">
 <title>Surat Keterangan Tunjangan Keluarga - {{ $pegawai->nama ?? '' }}</title>
 <style>
-  @page { size: A4; margin: 5mm 5mm 5mm 5mm; }
-  @page :first { size: A4 portrait; }
+  /* =========================================================
+     PENTING (khusus DomPDF):
+     Kita definisikan 2 "named page":
+       - @page (default)   -> A4 potrait, dipakai Halaman 1
+       - @page landscape   -> A4 landscape, dipakai Halaman 2
+     Elemen yang diberi CSS "page: landscape;" akan otomatis
+     dirender memakai ukuran/orientasi halaman "landscape"
+     tersebut oleh DomPDF (CSS3 Paged Media).
+     ========================================================= */
+  @page {
+    size: A4 portrait;
+    margin: 5mm;
+  }
+  @page :first {
+    size: A4 portrait;
+    margin: 5mm;
+  }
+  @page landscape {
+    size: A4 landscape;
+    margin: 5mm;
+  }
+
   * { box-sizing: border-box; }
   body {
     font-family: Arial, sans-serif;
@@ -15,6 +35,8 @@
     padding: 0;
     background: #fff;
   }
+
+  /* ---------- HALAMAN 1 (potrait) ---------- */
   .container {
     max-width: 210mm;
     margin: 0 auto;
@@ -79,23 +101,39 @@
   .sign-space { height: 20px; }
   .sign-name { font-weight: normal; margin-top: 1px; }
 
-  .page-break { page-break-before: always; margin-top: 20px; }
-  .page2-table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 10px; table-layout: fixed; }
-  .page2-table th, .page2-table td { border: 1px solid #000; padding: 4px 3px; text-align: center; word-wrap: break-word; }
-  .page2-table th { background: #f2f2f2; }
+  ul.roman-upper { list-style-type: upper-roman; }
+
+  /* ---------- HALAMAN 2 (landscape) ---------- */
+  .page-break {
+    page-break-before: always;   /* mulai halaman baru */
+    page: landscape;             /* pakai named-page "landscape" di atas */
+    margin-top: 20px;
+  }
+  .page2-container {
+    max-width: 287mm;   /* lebar A4 landscape dikurangi margin */
+    margin: 0 auto;
+  }
+  .page2-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px;
+    font-size: 10px;
+    table-layout: fixed;
+  }
+  .page2-table th, .page2-table td {
+    border: 1px solid #000;
+    padding: 4px 3px;
+    text-align: center;
+    word-wrap: break-word;
+  }
+  .page2-table th { background: #bbbdbf; }
   .page2-table .text-left { text-align: left !important; }
   .mt-5 { margin-top: 20px; }
-    
-  ul.roman-upper {
-    list-style-type: upper-roman;
-  }
 
   @media print {
-    @page { size: A4; margin: 15mm; }
-    @page :first { size: A4 portrait; margin: 15mm; }
     body { margin: 0; }
     .no-print { display: none !important; }
-    .container { box-shadow: none; }
+    .container, .page2-container { box-shadow: none; }
   }
 </style>
 </head>
@@ -111,11 +149,13 @@
     $namaIbu = $pegawai && $pegawai->jk === 'L' ? ($pegawai->nama_suami_istri ?? '-') : $pegawai->nama;
     $anakKategori1 = $suratKp4Old->anak->where('kat', 1);
     $anakKategori2 = $suratKp4Old->anak->where('kat', 2);
+    $totalAnak1 = $anakKategori1->count();
+    $totalAnak2 = $anakKategori2->count();
+    $jk = $pegawai->jk === 'L' ? 'Laki-Laki' : ($pegawai->jk === 'P' ? 'Perempuan' : '-');
 @endphp
 
-<div class="container">
-  <!-- HALAMAN 1 -->
-  <div id="page1-content">
+<!-- ======================= HALAMAN 1 (POTRAIT) ======================= -->
+<div class="container" id="page1-content">
   <div class="kop-surat-container">
     @if($kopSuratBase64)
       <img src="{{ $kopSuratBase64 }}" alt="Kop Surat" class="kop-surat-image">
@@ -158,11 +198,12 @@
       <td class="colon">:</td>
       <td>Indonesia</td>
     </tr>
+@php($status = $suratKp4Old->status_kepegawaian ?? ($pegawai->status_kepegawaian ?? ''))
     <tr>
       <td class="no">6.</td>
       <td class="label">Golongan / Status<br>Kepegawaian</td>
       <td class="colon">:</td>
-      <td>{{ $pangkat }}&nbsp;/ {{ $suratKp4Old->status_kepegawaian ?? ($pegawai->status_kepegawaian ?? '') }}</td>
+      <td>{{ $pangkat }}&nbsp;/ @if($status == 'PPPK')Pegawai Pemerintah dengan Perjanjian Kerja (PPPK). @else{{ $status }}@endif</td>
     </tr>
     <tr>
       <td class="no">7.</td>
@@ -203,9 +244,7 @@
         <p style="margin-left: 0px;">dengan mendapat penghasilan sebesar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rp&nbsp;&nbsp;&nbsp;{{ $suratKp4Old->penghasilan_disamping ?? '-' }}&nbsp; sebulan</p>
       </li>
       <li>Mempunyai Pensiun / Pensiun Janda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rp&nbsp;&nbsp;&nbsp;{{ $suratKp4Old->pensiun_janda ?? '-' }}&nbsp; sebulan</li>
-      <li>Kawin sah dengan :
-        <!-- <p style="margin-left: -26px;">{{ $suratKp4Old->kawin_sah ?? '-' }}</p> -->
-      </li>
+      <li>Kawin sah dengan :</li>
     </ol>
   </div>
 
@@ -238,20 +277,15 @@
       @empty
       <tr><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td></tr>
       @endforelse
-      
     </tbody>
   </table>
 
   <div class="keterangan-block">
     <ol type="a" start="4" style="margin-left: -26px;text-align: justify;">
       <li>Mempunyai anak &ndash; anak seperti dalam daftar sebelah ini, yaitu :
-        <ul style="list-style-type: upper-roman;margin-left: -26px;text-align: justify;">
-          <li>
-            <strong>Anak Kandung (Ak), Anak Tiri (At)</strong> yang masih menjadi tanggungan, belum mempunyai pekerjaan sendiri dan masuk dalam daftar Gaji.
-          </li>
-          <li>
-            <strong>Anak Kandung (Ak), Anak Tiri (At), Anak Angkat (Aa)</strong> yang masih menjadi tanggungan, tetapi tidak termasuk dalam daftar Gaji.
-          </li>
+        <ul class="roman-upper" style="margin-left: -26px;text-align: justify;">
+          <li><strong>Anak Kandung (Ak), Anak Tiri (At)</strong> yang masih menjadi tanggungan, belum mempunyai pekerjaan sendiri dan masuk dalam daftar Gaji.</li>
+          <li><strong>Anak Kandung (Ak), Anak Tiri (At), Anak Angkat (Aa)</strong> yang masih menjadi tanggungan, tetapi tidak termasuk dalam daftar Gaji.</li>
         </ul>
       </li>
       <li>Jumlah anak seluruh ( {{ $suratKp4Old->anak->count() ?? 0 }} Orang ) yang menjadi tanggungan termasuk yang tidak termasuk dalam daftar gaji.</li>
@@ -279,13 +313,93 @@
       <p class="sign-name">{{ $pegawai->nama ?? '' }}{!! ($suratKp4Old->status_kepegawaian ?? '') !== 'PPPK' ? '<br>' . e(($pegawai->pangkat ?? '') . ($pegawai->golongan ? ' / ' . $pegawai->golongan : '')) : '' !!}<br>{!! ($suratKp4Old->status_kepegawaian ?? '') == 'PPPK' ? 'NIPPPK' : 'NIP' !!}. {{ $pegawai->nip ?? '' }}</p>
     </div>
   </div>
+</div>
 
-  <div class="no-print" style="text-align:center; margin-top:20px;">
-    <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
-    <a href="{{ route('surat-kp4-olds.print-page2', $suratKp4Old) }}" target="_blank" style="display:inline-block; margin-left:0.5rem; background:#dc2525; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;"> Halaman 2</a>
-    <a href="{{ route('surat-kp4-olds.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
-  </div>
-  </div>
+<!-- ======================= HALAMAN 2 (LANDSCAPE) ======================= -->
+<div class="page-break page2-container" id="page2-content">
+
+  <p class="mt-5" style="font-size: 14px;">I. Anak Kandung ( Ak ), Anak Tiri ( At ) dan Anak Angkat ( Aa ) yang masih menjadi tanggungan, belum mempunyai penghasilan sendiri dan masuk daftar gaji</p>
+  <table class="page2-table">
+    <?php $no = 1; ?>
+    <tr>
+      <th rowspan="2">No.</th>
+      <th rowspan="2">Nama</th>
+      <th rowspan="2">Status<br>Anak (ak)<br>(at) (aa)</th>
+      <th rowspan="2">Tanggal Lahir</th>
+      <th rowspan="2">Belum<br>Pernah<br>Kawin</th>
+      <th rowspan="2">Bersekolah/<br>Kuliah pada</th>
+      <th rowspan="2">Tidak mendapat<br>1. Beasiswa/ darmasiswa<br>2. Ikatan Dinas</th>
+      <th colspan="2">Lahir dari Perkawinan</th>
+      <th rowspan="2">Tanggal Meninggal/<br>diceraikannya<br>ayah/ibu</th>
+      <th rowspan="2">Keterangan<br>diangkat menurut :<br>a. Putusan pengadilan<br>b. Hukum adopsi bagi<br>keturunan Cina</th>
+    </tr>
+    <tr>
+      <th>Nama Ayah</th>
+      <th>Nama Ibu</th>
+    </tr>
+    @if ($totalAnak1 == 0)
+      <tr>
+        <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+      </tr>
+    @endif
+    @foreach ($anakKategori1 as $item)
+      <tr>
+        <td><?php echo $no++; ?>.</td>
+        <td class="text-left">{{ $item->name }}</td>
+        <td>{{ $item->anak }}</td>
+        <td>{{ \Carbon\Carbon::parse($item->tgl_lahir)->translatedFormat('d-m-Y') }}</td>
+        <td>{{ $item->perkawinan }}</td>
+        <td>{{ $item->status_sekolah }}</td>
+        <td>{{ $item->status_beasiswa }}</td>
+        <td>{{ $namaAyah }}</td>
+        <td>{{ $anggota->nama }}</td>
+        <td>{{ $item->tgl_meninggal_cerai ? \Carbon\Carbon::parse($item->tgl_meninggal_cerai)->translatedFormat('d-m-Y') : '-' }}</td>
+        <td></td>
+      </tr>
+    @endforeach
+  </table>
+
+  <p class="mt-5" style="font-size: 14px;">II. Anak Kandung ( Ak ), Anak Tiri ( At ) dan Anak Angkat ( Aa ) yang masih tanggungan, tetapi tidak masuk dalam daftar gaji</p>
+  <table class="page2-table">
+    <?php $no = 1; ?>
+    <tr>
+      <th>No.</th>
+      <th>Nama</th>
+      <th>Status<br>Anak (ak)<br>(at) (aa)</th>
+      <th>Tanggal Lahir</th>
+      <th>Belum<br>Pernah<br>Kawin</th>
+      <th>Bersekolah/<br>Kuliah pada</th>
+      <th>mendapat<br>1. Beasiswa/ darmasiswa<br>2. Ikatan Dinas</th>
+      <th>bekerja atau<br>tidak bekerja</th>
+      <th>Keterangan<br>diangkat menurut :<br>a. Putusan pengadilan<br>b. Hukum adopsi bagi<br>keturunan Cina</th>
+    </tr>
+    @if ($totalAnak2 == 0)
+      <tr>
+        <td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>
+      </tr>
+    @endif
+    @foreach ($anakKategori2 as $item)
+      <tr>
+        <td><?php echo $no++; ?>.</td>
+        <td class="text-left">{{ $item->name }}</td>
+        <td>{{ $item->anak }}</td>
+        <td>{{ \Carbon\Carbon::parse($item->tgl_lahir)->translatedFormat('d-m-Y') }}</td>
+        <td>{{ $item->perkawinan }}</td>
+        <td>{{ $item->status_sekolah }}</td>
+        <td>{{ $item->status_beasiswa }}</td>
+        <td>{{ $item->pekerjaan }}</td>
+        <td></td>
+      </tr>
+    @endforeach
+  </table>
+
+  <p style="font-size: 14px;">A. Supaya dilampirkan salinan Surat Keputusan Pengadilan Negeri yang disahkan <br>B. Supaya diisi jika anak dilahirkan dari istri/suami yang telah meninggal dunia atau diceraikan</p>
+</div>
+
+<!-- ======================= TOMBOL (tidak ikut tercetak) ======================= -->
+<div class="no-print" style="text-align:center; margin-top:20px;">
+  <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
+  <a href="{{ route('surat-kp4-olds.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
 </div>
 
 </body>
