@@ -8,11 +8,6 @@
     </div>
 
     <div>
-        <label class="block font-medium mb-1">Nomor Surat</label>
-        <input type="text" name="nomor_surat" value="{{ old('nomor_surat', $kp4->nomor_surat ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
-
-    <div>
         <label class="block font-medium mb-1">Tempat Ditetapkan</label>
         <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $kp4->tempat_ditetapkan ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>

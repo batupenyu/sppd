@@ -19,7 +19,6 @@
                     <table class="min-w-full table-auto">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th class="px-4 py-2 text-left">Nomor Surat</th>
                                 <th class="px-4 py-2 text-left">Pegawai</th>
                                 <th class="px-4 py-2 text-left">Tanggal</th>
                                 <th class="px-4 py-2 text-left">Aksi</th>
@@ -28,7 +27,6 @@
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
                             @forelse($suratKp4Olds as $suratKp4Old)
                             <tr>
-                                <td class="px-4 py-2">{{ $suratKp4Old->nomor_surat ?: '-' }}</td>
                                 <td class="px-4 py-2">{{ $suratKp4Old->pegawai->nama ?? '-' }}</td>
                                 <td class="px-4 py-2">{{ $suratKp4Old->tanggal_ditetapkan ? \Carbon\Carbon::parse($suratKp4Old->tanggal_ditetapkan)->format('d-m-Y') : '-' }}</td>
                                 <td class="px-4 py-2">
@@ -57,7 +55,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="px-4 py-2 text-center">Belum ada data Surat KP4 Lama.</td>
+                                <td colspan="3" class="px-4 py-2 text-center">Belum ada data Surat KP4 Lama.</td>
                             </tr>
                             @endforelse
                         </tbody>

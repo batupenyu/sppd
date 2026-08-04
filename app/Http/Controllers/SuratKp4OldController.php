@@ -103,7 +103,6 @@ class SuratKp4OldController extends Controller
     private function validateData(Request $request): array
     {
         return $request->validate([
-            'nomor_surat' => 'nullable|string|max:255',
             'status_kepegawaian' => 'nullable|string|max:255',
             'masa_kerja_golongan' => 'nullable|string|max:255',
             'digaji_menurut' => 'nullable|string|max:255',

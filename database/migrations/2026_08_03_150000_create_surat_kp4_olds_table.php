@@ -10,7 +10,6 @@ return new class extends Migration
     {
         Schema::create('surat_kp4_olds', function (Blueprint $table) {
             $table->id();
-            $table->string('nomor_surat')->nullable();
             $table->string('status_kepegawaian')->nullable();
             $table->string('masa_kerja_golongan')->nullable();
             $table->text('digaji_menurut')->nullable();

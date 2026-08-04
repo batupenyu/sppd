@@ -251,7 +251,7 @@
   <table class="tanggungan" style="margin-top: 4px; margin-bottom: 4px; margin-left: 26px; margin-right: 26px; width: 95%;">
     <thead>
       <tr>
-        <th rowspan="2">No.</th>
+      <th rowspan="2" style="width: 30px;">No.</th>
         <th rowspan="2">Nama Istri / Suami<br>Tanggungan</th>
         <th colspan="2">Tanggal</th>
         <th rowspan="2">Pekerjaan</th>
@@ -322,7 +322,7 @@
   <table class="page2-table">
     <?php $no = 1; ?>
     <tr>
-      <th rowspan="2">No.</th>
+      <th rowspan="2" style="width: 40px;">No.</th>
       <th rowspan="2">Nama</th>
       <th rowspan="2">Status<br>Anak (ak)<br>(at) (aa)</th>
       <th rowspan="2">Tanggal Lahir</th>
@@ -363,7 +363,7 @@
   <table class="page2-table">
     <?php $no = 1; ?>
     <tr>
-      <th>No.</th>
+      <th style="width: 40px;">No.</th>
       <th>Nama</th>
       <th>Status<br>Anak (ak)<br>(at) (aa)</th>
       <th>Tanggal Lahir</th>

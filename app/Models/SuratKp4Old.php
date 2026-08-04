@@ -11,7 +11,6 @@ class SuratKp4Old extends Model
     protected $table = 'surat_kp4_olds';
 
     protected $fillable = [
-        'nomor_surat',
         'status_kepegawaian',
         'masa_kerja_golongan',
         'digaji_menurut',
