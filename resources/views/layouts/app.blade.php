@@ -73,11 +73,11 @@
                         <a href="{{ route('surat-keterangans.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-keterangans.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                             Surat Keterangan
                         </a>
-                        <a href="{{ route('surat-kp4s.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-kp4s.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat KP4
-                        </a>
+                        <!-- <a href="{{ route('surat-kp4s.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-kp4s.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                            Surat KP4 New
+                        </a> -->
                         <a href="{{ route('surat-kp4-olds.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-kp4-olds.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat KP4 Lama
+                            Surat KP4
                         </a>
                         <a href="{{ route('surat-panggilan-siswas.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-panggilan-siswas.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                             Surat Panggilan Siswa
