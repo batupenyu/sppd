@@ -46,7 +46,7 @@
   .kop-surat-image { max-width: 100%; max-height: 180px; height: auto; display: inline-block; }
 
   .title { text-align: center; margin: 4px 0 6px; }
-  .title h3 { margin: 1px 0; font-size: 12px; text-decoration: underline; }
+  .title h3 { margin: 1px 0; font-size: 14px; text-decoration: underline; }
 
   table.fields {
     width: 100%;
@@ -82,7 +82,7 @@
   table.tanggungan th { background: #f2f2f2; }
 
   .footer-note {
-    font-size: 9.5pt;
+    font-size: 10pt;
     text-align: justify;
     margin: 4px 0 6px;
     line-height: 1.25;
@@ -166,7 +166,7 @@
     <h3>SURAT KETERANGAN</h3>
     <h3>UNTUK MENDAPATKAN PEMBAYARAN TUNJANGAN KELUARGA</h3>
   </div>
-
+  <br>
   <table class="fields">
     <tr>
       <td class="no">1.</td>
@@ -238,8 +238,8 @@
   </table>
 
   <div class="keterangan-block">
-    <p>Menerangkan dengan sesungguhnya bahwa saya :</p>
-    <ol type="a" style="margin-left: -26px;text-align: justify;">
+    <p style="margin-left: 26px;">Menerangkan dengan sesungguhnya bahwa saya :</p>
+    <ol type="a" style="margin-left: 0px;text-align: justify;">
       <li>Disamping Jabatan Utama tersebut, bekerja pula sebagai :
         <p style="margin-left: 0px;">dengan mendapat penghasilan sebesar&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rp&nbsp;&nbsp;&nbsp;{{ $suratKp4Old->penghasilan_disamping ?? '-' }}&nbsp; sebulan</p>
       </li>
@@ -248,7 +248,7 @@
     </ol>
   </div>
 
-  <table class="tanggungan">
+  <table class="tanggungan" style="margin-top: 4px; margin-bottom: 4px; margin-left: 26px; margin-right: 26px; width: 95%;">
     <thead>
       <tr>
         <th rowspan="2">No.</th>
@@ -281,9 +281,9 @@
   </table>
 
   <div class="keterangan-block">
-    <ol type="a" start="4" style="margin-left: -26px;text-align: justify;">
+    <ol type="a" start="4" style="margin-left: 0px;text-align: justify;">
       <li>Mempunyai anak &ndash; anak seperti dalam daftar sebelah ini, yaitu :
-        <ul class="roman-upper" style="margin-left: -26px;text-align: justify;">
+        <ul class="roman-upper" style="margin-left: -26px;text-align: justify;margin-right: 18px;">
           <li><strong>Anak Kandung (Ak), Anak Tiri (At)</strong> yang masih menjadi tanggungan, belum mempunyai pekerjaan sendiri dan masuk dalam daftar Gaji.</li>
           <li><strong>Anak Kandung (Ak), Anak Tiri (At), Anak Angkat (Aa)</strong> yang masih menjadi tanggungan, tetapi tidak termasuk dalam daftar Gaji.</li>
         </ul>
@@ -292,7 +292,7 @@
     </ol>
   </div>
 
-  <p class="footer-note">
+  <p class="footer-note" style="text-align: justify; margin-left: 26px; margin-right: 18px;">
     Keterangan ini saya buat dengan sesungguhnya dan apabila keterangan ini ternyata tidak benar / palsu, saya bersedia dituntut dimuka Pengadilan
     berdasarkan undang-undang yang berlaku, dan bersedia mengembalikan semua uang tunjangan anak yang telah saya terima yang seharusnya
     bukan menjadi hak saya.
