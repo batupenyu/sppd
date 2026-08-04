@@ -17,7 +17,6 @@ class SuratKp4Old extends Model
         'disamping_jabatan',
         'penghasilan_disamping',
         'pensiun_janda',
-        'kawin_sah',
         'tempat_ditetapkan',
         'tanggal_ditetapkan',
         'pegawai_id',

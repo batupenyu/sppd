@@ -109,7 +109,6 @@ class SuratKp4OldController extends Controller
             'disamping_jabatan' => 'nullable|string|max:255',
             'penghasilan_disamping' => 'nullable|string|max:255',
             'pensiun_janda' => 'nullable|string|max:255',
-            'kawin_sah' => 'nullable|string|max:255',
             'tempat_ditetapkan' => 'nullable|string|max:255',
             'tanggal_ditetapkan' => 'nullable|date',
             'pegawai_id' => 'nullable|exists:asns,id',

@@ -19,7 +19,7 @@
 
     <div>
         <label class="block font-medium mb-1">Status Kepegawaian</label>
-        <input type="text" name="status_kepegawaian" value="{{ old('status_kepegawaian', $kp4->status_kepegawaian ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" placeholder="Mis: IX / PPPK Provinsi Kepala Belitung">
+        <input type="text" name="status_kepegawaian" value="{{ old('status_kepegawaian', $kp4->status_kepegawaian ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" placeholder="Diisi otomatis dari data ASN">
     </div>
 
     <div>
@@ -45,11 +45,6 @@
     <div>
         <label class="block font-medium mb-1">Pensiun / Janda</label>
         <input type="text" name="pensiun_janda" value="{{ old('pensiun_janda', $kp4->pensiun_janda ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100" placeholder="Rp - sebulan">
-    </div>
-
-    <div>
-        <label class="block font-medium mb-1">Kawin Sah Dengan</label>
-        <input type="text" name="kawin_sah" value="{{ old('kawin_sah', $kp4->kawin_sah ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div class="md:col-span-2">
@@ -162,6 +157,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const pegawaiSelect = document.querySelector('select[name="pegawai_id"]');
     const pegawaiNamaSuamiIstri = {!! json_encode($asns->pluck('nama_suami_istri', 'id')->toArray()) !!};
     const pegawaiJk = {!! json_encode($asns->pluck('jk', 'id')->toArray()) !!};
+    const pegawaiStatusKepegawaian = {!! json_encode($asns->pluck('status_kepegawaian', 'id')->toArray()) !!};
+
+    function autoFillStatusKepegawaian(pegawaiId) {
+        const statusInput = document.querySelector('input[name="status_kepegawaian"]');
+        if (!statusInput || !pegawaiId) return;
+        statusInput.value = pegawaiStatusKepegawaian[pegawaiId] ?? '';
+    }
 
     function autoFillNamaForRow(row, pegawaiId) {
         const namaInput = row.querySelector('input[name$="[nama]"]');
@@ -196,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (firstRow) {
                 autoFillKeteranganForRow(firstRow, this.value);
             }
+
+            autoFillStatusKepegawaian(this.value);
         });
 
         if (pegawaiSelect.value) {
@@ -203,6 +207,8 @@ document.addEventListener('DOMContentLoaded', function () {
             if (firstRow) {
                 autoFillKeteranganForRow(firstRow, pegawaiSelect.value);
             }
+
+            autoFillStatusKepegawaian(pegawaiSelect.value);
         }
     }
 

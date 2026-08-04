@@ -16,7 +16,6 @@ return new class extends Migration
             $table->text('disamping_jabatan')->nullable();
             $table->string('penghasilan_disamping')->nullable();
             $table->string('pensiun_janda')->nullable();
-            $table->string('kawin_sah')->nullable();
             $table->string('tempat_ditetapkan')->nullable();
             $table->date('tanggal_ditetapkan')->nullable();
             $table->foreignId('pegawai_id')->nullable()->constrained('asns')->onDelete('set null');
