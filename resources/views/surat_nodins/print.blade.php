@@ -6,12 +6,12 @@
     <style>
       @page {
         size: A4;
-        margin: 0.5cm 1cm;
+        margin: 1cm 1cm ;
       }
       body {
         background-color: #525659;
         font-family: Arial, sans-serif;
-        font-size: 16pt;
+        font-size: 13pt;
         line-height: 1.3;
         color: #000;
         margin: 0;
@@ -35,7 +35,7 @@
       }
       .nota-title {
         text-align: center;
-        font-size: 16pt;
+        font-size: 13pt;
         font-weight: bold;
         text-decoration: underline;
         margin-bottom: 20px;
@@ -45,12 +45,12 @@
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
-        font-size: 16pt;
+        font-size: 13pt;
         page-break-inside: avoid;
       }
       .meta-table td {
         vertical-align: top;
-        font-size: 16pt;
+        font-size: 13pt;
       }
       .meta-table td:nth-child(1) { width: 12%; }
       .meta-table td:nth-child(2) { width: 3%; text-align: center; }
@@ -59,14 +59,14 @@
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
-        font-size: 11pt;
+        font-size: 10px;
         page-break-inside: auto;
       }
       .peserta-table th,
       .peserta-table td {
         border: 1px solid #000;
         padding: 6px;
-        font-size: 11pt;
+        font-size: 10px;
         text-align: left;
       }
       .peserta-table th {
@@ -78,30 +78,30 @@
         text-align: justify;
         text-indent: 40px;
         margin-bottom: 15px;
-        font-size: 16pt;
+        font-size: 13pt;
         page-break-inside: avoid;
       }
       .content p {
         margin: 0 0 15px 0;
-        font-size: 16pt;
+        font-size: 13pt;
       }
       .signature-container {
         margin-top: 40px;
         float: right;
         width: 50%;
         text-align: left;
-        font-size: 16pt;
+        font-size: 13pt;
         page-break-inside: avoid;
         page-break-after: avoid;
       }
       .signature-title {
         font-weight: bold;
         margin-bottom: 10px;
-        font-size: 16pt;
+        font-size: 13pt;
       }
       .signature-name {
         font-weight: bold;
-        font-size: 16pt;
+        font-size: 13pt;
       }
       .clearfix::after {
         content: "";
@@ -111,15 +111,15 @@
       .signature-unit {
         padding-left: 29px;
         display: block;
-        font-size: 16pt;
+        font-size: 13pt;
       }
       .signature-body {
         font-weight: bold;
-        font-size: 16pt;
+        font-size: 13pt;
       }
       .signature-nip {
         margin-top: 5px;
-        font-size: 16pt;
+        font-size: 13pt;
       }
       .page {
         width: 210mm;
@@ -139,6 +139,7 @@
         .page {
           box-shadow: none;
           margin: 0;
+          padding-top: 0;
           page-break-after: always;
         }
         .no-print {
