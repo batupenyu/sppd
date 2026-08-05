@@ -285,7 +285,7 @@
                             ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
                             : '-';
                     @endphp
-                    <td style="text-align: {{ $peserta->siswa ? 'center' : ($pangkatGolongan === 'IX' ? 'center' : 'left') }};">
+                    <td style="text-align: {{ $peserta->siswa || $pangkatGolongan === 'IX' || $pangkatGolongan === '-' ? 'center' : 'left' }};">
                       @if($peserta->pegawai)
                         {{ $pangkatGolongan }}
                       @elseif($peserta->siswa)

@@ -6,7 +6,7 @@
         <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
             <div class="p-6 text-gray-900 dark:text-gray-100">
                 <div class="flex justify-between items-center mb-6">
-                    <h1 class="text-2xl font-bold">Surat Nodin</h1>
+                    <h1 class="text-2xl font-bold">Surat Nota Dinas</h1>
                 </div>
 
                 @if(session('success'))
@@ -19,18 +19,19 @@
                     <table class="min-w-full table-auto">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th class="px-4 py-2 text-left">Nomor</th>
-                                <th class="px-4 py-2 text-left">Perihal</th>
-                                <th class="px-4 py-2 text-left">Tanggal</th>
+                                <!-- <th class="px-4 py-2 text-left">Peserta</th>
+                                <th class="px-4 py-2 text-left">Perihal</th> -->
+                                <th class="px-4 py-2 text-left">Kegiatan</th>
                                 <th class="px-4 py-2 text-left">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
                             @forelse($suratNodins as $suratNodin)
                             <tr>
-                                <td class="px-4 py-2">{{ $suratNodin->nomor ?: '-' }}</td>
-                                <td class="px-4 py-2">{{ $suratNodin->hal ?: '-' }}</td>
-                                <td class="px-4 py-2">{{ $suratNodin->tanggal ? \Carbon\Carbon::parse($suratNodin->tanggal)->format('d-m-Y') : '-' }}</td>
+                                <!-- <td class="px-4 py-2">{{ $suratNodin->nomor ?: '-' }}</td>
+                                <td class="px-4 py-2">{{ $suratNodin->hal ?: '-' }}</td> -->
+                                <td class="px-4 py-2">{{ $suratNodin->dasar_surat ?: '-' }}</td>
+                                <!-- <td class="px-4 py-2">{{ $suratNodin->tanggal ? \Carbon\Carbon::parse($suratNodin->tanggal)->format('d-m-Y') : '-' }}</td> -->
                                 <td class="px-4 py-2">
                                         <div class="flex items-center gap-3">
                                             <a href="{{ route('surat-nodins.print', $suratNodin) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">
