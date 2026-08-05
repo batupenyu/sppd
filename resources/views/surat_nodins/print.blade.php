@@ -264,7 +264,7 @@
                     @if($peserta->pegawai)
                       {{ $peserta->pegawai->nama }}
                     @elseif($peserta->siswa)
-                      {{ $peserta->siswa->nama }}
+                      {{ ucwords(strtolower($peserta->siswa->nama)) }}
                     @else
                       -
                     @endif
@@ -285,7 +285,7 @@
                             ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
                             : '-';
                     @endphp
-                    <td style="text-align: {{ $pangkatGolongan === 'IX' ? 'center' : 'left' }};">
+                    <td style="text-align: {{ $peserta->siswa ? 'center' : ($pangkatGolongan === 'IX' ? 'center' : 'left') }};">
                       @if($peserta->pegawai)
                         {{ $pangkatGolongan }}
                       @elseif($peserta->siswa)
