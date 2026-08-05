@@ -11,10 +11,13 @@
 ?>
 <tr class="peserta-row border-t">
     <td class="px-2 py-2">
-        <select name="peserta[{{ $index }}][pegawai_id]" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <select name="peserta[{{ $index }}][pegawai_id][]" multiple class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100 pegawai-select2">
             <option value="">-- Pilih Pegawai --</option>
+            @php
+                $selectedPegawaiIds = is_array($item['pegawai_id'] ?? null) ? ($item['pegawai_id'] ?? []) : (($item['pegawai_id'] ?? '') ? [$item['pegawai_id']] : []);
+            @endphp
             @foreach($asns as $asn)
-                <option value="{{ $asn->id }}" {{ ($item['pegawai_id'] ?? '') == $asn->id ? 'selected' : '' }}>
+                <option value="{{ $asn->id }}" {{ in_array($asn->id, $selectedPegawaiIds) ? 'selected' : '' }}>
                     {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
                 </option>
             @endforeach

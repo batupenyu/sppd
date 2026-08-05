@@ -131,6 +131,9 @@
         </tbody>
     </table>
 
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function () {
         const list = document.querySelector('.peserta-list');
@@ -140,6 +143,18 @@
         function nextIndex() {
             return list.querySelectorAll('tr.peserta-row').length;
         }
+
+        function initPegawaiSelect2(select) {
+            if (typeof $ !== 'undefined') {
+                $(select).select2({
+                    placeholder: '-- Pilih Pegawai --',
+                    allowClear: true,
+                    width: '100%'
+                });
+            }
+        }
+
+        list.querySelectorAll('.pegawai-select2').forEach(initPegawaiSelect2);
 
         btnTambah.addEventListener('click', function () {
             const clone = templateRow.cloneNode(true);
@@ -154,13 +169,23 @@
                 if (el.tagName === 'TEXTAREA') {
                     el.value = '';
                 }
+                if (el.classList.contains('pegawai-select2')) {
+                    el.value = '';
+                }
             });
             list.appendChild(clone);
+            clone.querySelectorAll('.pegawai-select2').forEach(initPegawaiSelect2);
         });
 
         list.addEventListener('click', function (e) {
             if (e.target.closest('.hapus-peserta')) {
-                e.target.closest('tr.peserta-row').remove();
+                const row = e.target.closest('tr.peserta-row');
+                row.querySelectorAll('.pegawai-select2').forEach(function(select) {
+                    if (typeof $ !== 'undefined') {
+                        $(select).select2('destroy');
+                    }
+                });
+                row.remove();
             }
         });
     });

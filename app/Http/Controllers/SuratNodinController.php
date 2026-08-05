@@ -200,7 +200,8 @@ class SuratNodinController extends Controller
             'tanggal_ditetapkan' => 'nullable|date',
             'kop_surat' => 'nullable|string|max:255',
             'peserta' => 'nullable|array',
-            'peserta.*.pegawai_id' => 'nullable|exists:asns,id',
+            'peserta.*.pegawai_id' => 'nullable|array',
+            'peserta.*.pegawai_id.*' => 'exists:asns,id',
             'peserta.*.siswa_id' => 'nullable|exists:data_siswa,id',
             'peserta.*.tgl_awal_kegiatan' => 'nullable|date',
             'peserta.*.tgl_akhir_kegiatan' => 'nullable|date',
@@ -225,17 +226,39 @@ class SuratNodinController extends Controller
         }
 
         foreach ($peserta as $item) {
-            if (empty($item['pegawai_id']) && empty($item['siswa_id'])) {
+            $pegawaiIds = $item['pegawai_id'] ?? [];
+            if (! is_array($pegawaiIds)) {
+                $pegawaiIds = $pegawaiIds ? [$pegawaiIds] : [];
+            }
+
+            if (empty($pegawaiIds) && empty($item['siswa_id'])) {
                 continue;
             }
 
-            $suratNodin->pesertaSuratUsulans()->create([
-                'pegawai_id' => $item['pegawai_id'] ?: null,
-                'siswa_id' => $item['siswa_id'] ?: null,
-                'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
-                'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
-                'tempat_kegiatan' => isset($item['tempat_kegiatan']) && $item['tempat_kegiatan'] !== '' ? $item['tempat_kegiatan'] : null,
-            ]);
+            $records = [];
+            if (! empty($pegawaiIds)) {
+                foreach ($pegawaiIds as $pegawaiId) {
+                    $records[] = [
+                        'pegawai_id' => $pegawaiId ?: null,
+                        'siswa_id' => $item['siswa_id'] ?: null,
+                        'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
+                        'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
+                        'tempat_kegiatan' => isset($item['tempat_kegiatan']) && $item['tempat_kegiatan'] !== '' ? $item['tempat_kegiatan'] : null,
+                    ];
+                }
+            } else {
+                $records[] = [
+                    'pegawai_id' => null,
+                    'siswa_id' => $item['siswa_id'] ?: null,
+                    'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
+                    'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
+                    'tempat_kegiatan' => isset($item['tempat_kegiatan']) && $item['tempat_kegiatan'] !== '' ? $item['tempat_kegiatan'] : null,
+                ];
+            }
+
+            foreach ($records as $record) {
+                $suratNodin->pesertaSuratUsulans()->create($record);
+            }
         }
     }
 
