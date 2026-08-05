@@ -37,7 +37,7 @@
         <input type="date" name="peserta[{{ $index }}][tgl_akhir_kegiatan]" value="{{ $item['tgl_akhir_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </td>
     <td class="px-2 py-2">
-        <input type="text" name="peserta[{{ $index }}][tempat_kegiatan]" value="{{ $item['tempat_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <textarea name="peserta[{{ $index }}][tempat_kegiatan]" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ $item['tempat_kegiatan'] ?? '' }}</textarea>
     </td>
     <td class="px-2 py-2 text-center">
         <button type="button" class="hapus-peserta text-red-600 hover:text-red-800" title="Hapus">Hapus</button>

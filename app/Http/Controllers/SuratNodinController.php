@@ -204,7 +204,7 @@ class SuratNodinController extends Controller
             'peserta.*.siswa_id' => 'nullable|exists:data_siswa,id',
             'peserta.*.tgl_awal_kegiatan' => 'nullable|date',
             'peserta.*.tgl_akhir_kegiatan' => 'nullable|date',
-            'peserta.*.tempat_kegiatan' => 'nullable|string|max:255',
+            'peserta.*.tempat_kegiatan' => 'nullable|string',
         ]);
 
         $validated['penandatangan_plt'] = $request->boolean('penandatangan_plt');
@@ -234,7 +234,7 @@ class SuratNodinController extends Controller
                 'siswa_id' => $item['siswa_id'] ?: null,
                 'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
                 'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
-                'tempat_kegiatan' => $item['tempat_kegiatan'] ?: null,
+                'tempat_kegiatan' => isset($item['tempat_kegiatan']) && $item['tempat_kegiatan'] !== '' ? $item['tempat_kegiatan'] : null,
             ]);
         }
     }

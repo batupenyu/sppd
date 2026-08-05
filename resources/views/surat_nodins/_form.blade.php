@@ -144,11 +144,14 @@
         btnTambah.addEventListener('click', function () {
             const clone = templateRow.cloneNode(true);
             const index = nextIndex();
-            clone.querySelectorAll('input, select').forEach(function(el) {
+            clone.querySelectorAll('input, select, textarea').forEach(function(el) {
                 if (el.name) {
                     el.name = el.name.replace('__INDEX__', index);
                 }
                 if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'date')) {
+                    el.value = '';
+                }
+                if (el.tagName === 'TEXTAREA') {
                     el.value = '';
                 }
             });

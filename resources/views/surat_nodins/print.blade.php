@@ -318,10 +318,10 @@
                         } elseif ($awal) {
                             $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
                         } else {
-                            $tanggalText = '-';
+                            $tanggalText = '';
                         }
                     @endphp
-                    {{ $tanggalText }} di {{ $tempat ?: '-' }}
+                    {{ $tanggalText }} {{ $tempat ?: '-' }}
                   </td>
                   <?php endif; ?>
                 </tr>
