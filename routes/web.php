@@ -17,6 +17,7 @@ use App\Http\Controllers\SuratKp4OldController;
 use App\Http\Controllers\SuratMewakiliController;
 use App\Http\Controllers\SuratNodinController;
 use App\Http\Controllers\SuratPanggilanSiswaController;
+use App\Http\Controllers\SuratPenarikanSiswaController;
 use App\Http\Controllers\SuratPengantarController;
 use App\Http\Controllers\SuratPernyataanController;
 use App\Http\Controllers\SuratRekomendasiController;
@@ -153,3 +154,7 @@ Route::post('surat-nodins/{surat_nodin}/photos', [SuratNodinController::class, '
 Route::get('surat-nodins/{surat_nodin}/photos/{photo}/edit', [SuratNodinController::class, 'editPhoto'])->name('surat-nodins.photos.edit');
 Route::put('surat-nodins/{surat_nodin}/photos/{photo}', [SuratNodinController::class, 'updatePhoto'])->name('surat-nodins.photos.update');
 Route::delete('surat-nodins/{surat_nodin}/photos/{photo}', [SuratNodinController::class, 'destroyPhoto'])->name('surat-nodins.photos.destroy');
+Route::resource('surat-penarikan-siswas', SuratPenarikanSiswaController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-penarikan-siswas/{surat_penarikan_siswa}', [SuratPenarikanSiswaController::class, 'destroy'])->name('surat-penarikan-siswas.destroy');
+Route::get('surat-penarikan-siswas/{surat_penarikan_siswa}/print', [SuratPenarikanSiswaController::class, 'print'])->name('surat-penarikan-siswas.print');
