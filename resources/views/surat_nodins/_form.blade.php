@@ -106,15 +106,29 @@
                             @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
                         @endforeach
                     @elseif(isset($suratNodin) && $suratNodin->pesertaSuratUsulans->count() > 0)
-                        @foreach($suratNodin->pesertaSuratUsulans as $peserta)
+                        @php
+                            $groupedPeserta = [];
+                            foreach ($suratNodin->pesertaSuratUsulans as $peserta) {
+                                $key = ($peserta->tgl_awal_kegiatan ?? '') . '|' . ($peserta->tgl_akhir_kegiatan ?? '') . '|' . ($peserta->tempat_kegiatan ?? '') . '|' . ($peserta->siswa_id ?? '');
+                                if (!isset($groupedPeserta[$key])) {
+                                    $groupedPeserta[$key] = [
+                                        'pegawai_ids' => [],
+                                        'siswa_id' => $peserta->siswa_id ?? '',
+                                        'tgl_awal' => $peserta->tgl_awal_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan)->format('Y-m-d') : '',
+                                        'tgl_akhir' => $peserta->tgl_akhir_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan)->format('Y-m-d') : '',
+                                        'tempat_kegiatan' => $peserta->tempat_kegiatan ?? '',
+                                    ];
+                                }
+                                if ($peserta->pegawai_id) {
+                                    $groupedPeserta[$key]['pegawai_ids'][] = $peserta->pegawai_id;
+                                }
+                            }
+                        @endphp
+                        @foreach($groupedPeserta as $group)
                             @php
-                                $pegawaiId = $peserta->pegawai_id ?? '';
-                                $siswaId = $peserta->siswa_id ?? '';
-                                $tglAwal = $peserta->tgl_awal_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan)->format('Y-m-d') : '';
-                                $tglAkhir = $peserta->tgl_akhir_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan)->format('Y-m-d') : '';
-                                $tempatKegiatan = $peserta->tempat_kegiatan ?? '';
+                                $pegawaiIds = array_values(array_unique($group['pegawai_ids']));
                             @endphp
-                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiId, 'siswa_id' => $siswaId, 'tgl_awal_kegiatan' => $tglAwal, 'tgl_akhir_kegiatan' => $tglAkhir, 'tempat_kegiatan' => $tempatKegiatan], 'asns' => $asns, 'siswas' => $siswas])
+                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiIds, 'siswa_id' => $group['siswa_id'], 'tgl_awal_kegiatan' => $group['tgl_awal'], 'tgl_akhir_kegiatan' => $group['tgl_akhir'], 'tempat_kegiatan' => $group['tempat_kegiatan']], 'asns' => $asns, 'siswas' => $siswas])
                         @endforeach
                     @endif
                     @if($pesertaIndex == 0)
