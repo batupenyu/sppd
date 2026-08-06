@@ -10,7 +10,7 @@
 
     <div>
         <label class="block font-medium mb-1">Nomor</label>
-        <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '....................................') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '................................................................') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div>
