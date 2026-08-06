@@ -25,8 +25,8 @@
   }
   .kop {
     text-align: center;
-    border-bottom: 3px double #000;
-    padding-bottom: 10px;
+    /* border-bottom: 3px double #000; */
+    /* padding-bottom: 10px; */
     margin-bottom: 24px;
   }
   .kop .kop-label {
@@ -36,6 +36,13 @@
     border: 1px dashed #bbb;
     display: inline-block;
     padding: 4px 12px;
+  }
+  .kop .kop-image {
+    display: block;
+    max-width: 100%;
+    max-height: 120px;
+    margin: 0 auto 8px;
+    object-fit: contain;
   }
   .doc-title {
     text-align: center;
@@ -160,10 +167,15 @@
 
 <!-- ================= DOKUMEN 1: SURAT PERMOHONAN SEKOLAH ================= -->
 <div class="page">
-  <div class="kop"><span class="kop-label">KOP SURAT SEKOLAH</span></div>
-
-  <table class="meta-table">
-    <tr><td colspan="3" style="text-align:right;">{{ $s->nama_kota_sekolah ?? '...................' }}, {{ $fmt($s->tanggal_surat) }}</td></tr>
+  <div class="kop">
+    @if($kopSuratSekolahBase64)
+      <img src="{{ $kopSuratSekolahBase64 }}" alt="Kop Surat Sekolah" class="kop-image">
+    @endif
+    <!-- <span class="kop-label">KOP SURAT SEKOLAH</span> -->
+  </div>
+  <div style="text-align: right;">{{ $s->nama_kota_sekolah ?? '...................' }}, {{ $fmt($s->tanggal_surat) }}</div>
+  <table  class="meta-table">
+    <tr><td colspan="6" style="text-align:right;"></td></tr>
     <tr>
       <td class="label">Nomor</td><td class="colon">:</td>
       <td>{{ $s->nomor_surat ?: '...................' }}</td>
@@ -218,7 +230,7 @@
   </p>
 
   <div class="signature-block">
-    <div class="place-date">{{ $s->nama_kota_sekolah ?? '...................' }}, {{ $fmt($s->tanggal_surat) }}</div>
+    <!-- <div class="place-date">{{ $s->nama_kota_sekolah ?? '...................' }}, {{ $fmt($s->tanggal_surat) }}</div> -->
     <div>Kepala {{ $s->nama_sekolah_asal ?: '...................' }},</div>
     <div class="signature-space"></div>
     <div class="stamp-note">(Stempel Resmi Sekolah)</div>
@@ -229,7 +241,12 @@
 
 <!-- ================= DOKUMEN 2: SURAT REKOMENDASI CABDIN ================= -->
 <div class="page">
-  <div class="kop"><span class="kop-label">KOP CABANG DINAS PENDIDIKAN</span></div>
+  <div class="kop">
+    @if($kopSuratCabdinBase64)
+      <img src="{{ $kopSuratCabdinBase64 }}" alt="Kop Surat Cabdin" class="kop-image">
+    @endif
+    <!-- <span class="kop-label">KOP CABANG DINAS PENDIDIKAN</span> -->
+  </div>
 
   <div class="doc-title">Surat Rekomendasi</div>
   <div class="doc-number">Nomor: {{ $s->nomor_surat_cabdin ?: '...................' }}</div>
@@ -268,7 +285,7 @@
 
   <div class="signature-block">
     <div class="place-date">{{ $s->nama_kota_cabdin ?? '...................' }}, {{ $fmt($s->tanggal_ditetapkan) }}</div>
-    <div>Kepala Cabang Dinas Pendidikan Wilayah<br>{{ $s->nama_wilayah_cabdinas ?: '...................' }},</div>
+    <div>Kepala Cabang Dinas Wilayah {{ $s->nama_wilayah_cabdinas ?: '...................' }},</div>
     <div class="signature-space"></div>
     <div class="stamp-note">(Stempel Resmi Cabdin)</div>
     <div class="signature-name">{{ $penandatangan->nama ?: '...................' }}</div>

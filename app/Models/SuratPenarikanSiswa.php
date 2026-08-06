@@ -31,6 +31,8 @@ class SuratPenarikanSiswa extends Model
         'tanggal_ditetapkan',
         'pegawai_id',
         'penandatangan_id',
+        'kop_surat_sekolah',
+        'kop_surat_cabdin',
     ];
 
     protected $casts = [

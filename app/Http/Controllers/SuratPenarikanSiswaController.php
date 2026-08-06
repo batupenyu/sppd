@@ -25,10 +25,11 @@ class SuratPenarikanSiswaController extends Controller
     public function create(): View
     {
         $asns = Asn::orderBy('nama')->get();
+        $logos = LogoSetting::orderBy('name')->get();
 
         $defaultPenandatanganId = Asn::defaultPenandatanganId();
 
-        return view('surat_penarikan_siswas.create', compact('asns', 'defaultPenandatanganId'));
+        return view('surat_penarikan_siswas.create', compact('asns', 'logos', 'defaultPenandatanganId'));
     }
 
     public function store(Request $request): RedirectResponse
@@ -44,11 +45,12 @@ class SuratPenarikanSiswaController extends Controller
     public function edit(SuratPenarikanSiswa $suratPenarikanSiswa): View
     {
         $asns = Asn::orderBy('nama')->get();
+        $logos = LogoSetting::orderBy('name')->get();
         $suratPenarikanSiswa->load('penandatangan', 'pegawai');
 
         $defaultPenandatanganId = Asn::defaultPenandatanganId();
 
-        return view('surat_penarikan_siswas.edit', compact('asns', 'suratPenarikanSiswa', 'defaultPenandatanganId'));
+        return view('surat_penarikan_siswas.edit', compact('asns', 'logos', 'suratPenarikanSiswa', 'defaultPenandatanganId'));
     }
 
     public function update(Request $request, SuratPenarikanSiswa $suratPenarikanSiswa): RedirectResponse
@@ -73,7 +75,23 @@ class SuratPenarikanSiswaController extends Controller
     {
         $suratPenarikanSiswa->load('penandatangan', 'pegawai');
 
-        return view('surat_penarikan_siswas.print', compact('suratPenarikanSiswa'));
+        $kopSuratSekolahBase64 = null;
+        if ($suratPenarikanSiswa->kop_surat_sekolah) {
+            $logo = LogoSetting::where('name', $suratPenarikanSiswa->kop_surat_sekolah)->first();
+            if ($logo) {
+                $kopSuratSekolahBase64 = 'data:' . ($logo->mime ?: 'image/png') . ';base64,' . base64_encode($logo->image);
+            }
+        }
+
+        $kopSuratCabdinBase64 = null;
+        if ($suratPenarikanSiswa->kop_surat_cabdin) {
+            $logo = LogoSetting::where('name', $suratPenarikanSiswa->kop_surat_cabdin)->first();
+            if ($logo) {
+                $kopSuratCabdinBase64 = 'data:' . ($logo->mime ?: 'image/png') . ';base64,' . base64_encode($logo->image);
+            }
+        }
+
+        return view('surat_penarikan_siswas.print', compact('suratPenarikanSiswa', 'kopSuratSekolahBase64', 'kopSuratCabdinBase64'));
     }
 
     private function validateData(Request $request): array
@@ -100,6 +118,8 @@ class SuratPenarikanSiswaController extends Controller
             'tanggal_ditetapkan' => 'nullable|date',
             'pegawai_id' => 'nullable|exists:asns,id',
             'penandatangan_id' => 'nullable|exists:asns,id',
+            'kop_surat_sekolah' => 'nullable|string|max:255',
+            'kop_surat_cabdin' => 'nullable|string|max:255',
         ]);
     }
 

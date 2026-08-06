@@ -62,6 +62,18 @@
             <label class="block font-medium mb-1">Tempat, Tanggal Lahir</label>
             <input type="text" name="tempat_tanggal_lahir" value="{{ old('tempat_tanggal_lahir', $s->tempat_tanggal_lahir ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
         </div>
+
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Kop Surat Sekolah</label>
+            <select name="kop_surat_sekolah" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                <option value="">-- Pilih Kop Surat Sekolah --</option>
+                @foreach($logos as $logo)
+                    <option value="{{ $logo->name }}" {{ old('kop_surat_sekolah', $s->kop_surat_sekolah ?? '') == $logo->name ? 'selected' : '' }}>
+                        {{ $logo->name ?: 'Tanpa Nama' }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
     </div>
 
     {{-- ============ TAB: ORANG TUA / WALI ============ --}}
@@ -145,6 +157,18 @@
                 @foreach($asns as $asn)
                     <option value="{{ $asn->id }}" {{ old('penandatangan_id', $s?->penandatangan_id) == $asn->id ? 'selected' : '' }}>
                         {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Kop Surat Cabang Dinas</label>
+            <select name="kop_surat_cabdin" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                <option value="">-- Pilih Kop Surat Cabdin --</option>
+                @foreach($logos as $logo)
+                    <option value="{{ $logo->name }}" {{ old('kop_surat_cabdin', $s->kop_surat_cabdin ?? '') == $logo->name ? 'selected' : '' }}>
+                        {{ $logo->name ?: 'Tanpa Nama' }}
                     </option>
                 @endforeach
             </select>
