@@ -205,7 +205,8 @@ class SuratNodinController extends Controller
             'peserta.*.siswa_id' => 'nullable|exists:data_siswa,id',
             'peserta.*.tgl_awal_kegiatan' => 'nullable|date',
             'peserta.*.tgl_akhir_kegiatan' => 'nullable|date',
-            'peserta.*.tempat_kegiatan' => 'nullable|string',
+            'peserta.*.tempat_kegiatan' => 'nullable|array',
+            'peserta.*.tempat_kegiatan.*' => 'nullable|string|max:255',
         ]);
 
         $validated['penandatangan_plt'] = $request->boolean('penandatangan_plt');
@@ -235,25 +236,42 @@ class SuratNodinController extends Controller
                 continue;
             }
 
+            $tempatKegiatanList = $item['tempat_kegiatan'] ?? [''];
+            if (! is_array($tempatKegiatanList)) {
+                $tempatKegiatanList = [$tempatKegiatanList];
+            }
+            $tempatKegiatanList = array_values(array_filter(array_map(function ($v) {
+                return is_string($v) ? trim($v) : $v;
+            }, $tempatKegiatanList), function ($v) {
+                return $v !== null && $v !== '';
+            }));
+            if (empty($tempatKegiatanList)) {
+                $tempatKegiatanList = [''];
+            }
+
             $records = [];
             if (! empty($pegawaiIds)) {
                 foreach ($pegawaiIds as $pegawaiId) {
+                    foreach ($tempatKegiatanList as $tempat) {
+                        $records[] = [
+                            'pegawai_id' => $pegawaiId ?: null,
+                            'siswa_id' => $item['siswa_id'] ?: null,
+                            'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
+                            'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
+                            'tempat_kegiatan' => $tempat ?: null,
+                        ];
+                    }
+                }
+            } else {
+                foreach ($tempatKegiatanList as $tempat) {
                     $records[] = [
-                        'pegawai_id' => $pegawaiId ?: null,
+                        'pegawai_id' => null,
                         'siswa_id' => $item['siswa_id'] ?: null,
                         'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
                         'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
-                        'tempat_kegiatan' => isset($item['tempat_kegiatan']) && $item['tempat_kegiatan'] !== '' ? $item['tempat_kegiatan'] : null,
+                        'tempat_kegiatan' => $tempat ?: null,
                     ];
                 }
-            } else {
-                $records[] = [
-                    'pegawai_id' => null,
-                    'siswa_id' => $item['siswa_id'] ?: null,
-                    'tgl_awal_kegiatan' => $item['tgl_awal_kegiatan'] ?: null,
-                    'tgl_akhir_kegiatan' => $item['tgl_akhir_kegiatan'] ?: null,
-                    'tempat_kegiatan' => isset($item['tempat_kegiatan']) && $item['tempat_kegiatan'] !== '' ? $item['tempat_kegiatan'] : null,
-                ];
             }
 
             foreach ($records as $record) {

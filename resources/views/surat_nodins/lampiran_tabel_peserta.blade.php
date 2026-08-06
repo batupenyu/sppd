@@ -168,25 +168,20 @@
                     $awal = ($p->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_awal_kegiatan->format('Y-m-d') : ($p->tgl_awal_kegiatan ?? '');
                     $akhir = ($p->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_akhir_kegiatan->format('Y-m-d') : ($p->tgl_akhir_kegiatan ?? '');
                     $tempat = $p->tempat_kegiatan ?? '';
-                    return $awal . '|' . $akhir . '|' . $tempat;
+                    $pesertaId = $p->pegawai_id ?? $p->siswa_id ?? '';
+                    return $pesertaId . '|' . $awal . '|' . $akhir . '|' . $tempat;
                 })->values();
                 $groups = [];
                 $current = null;
                 foreach ($sorted as $p) {
-                    $awal = ($p->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_awal_kegiatan->format('Y-m-d') : ($p->tgl_awal_kegiatan ?? '');
-                    $akhir = ($p->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_akhir_kegiatan->format('Y-m-d') : ($p->tgl_akhir_kegiatan ?? '');
-                    $tempat = $p->tempat_kegiatan ?? '';
-                    $key = $awal . '|' . $akhir . '|' . $tempat;
-                    if ($current !== null && $current['key'] === $key) {
+                    $pesertaId = $p->pegawai_id ?? $p->siswa_id ?? '';
+                    if ($current !== null && $current['key'] === $pesertaId) {
                         $current['items'][] = $p;
                     } else {
                         if ($current !== null) { $groups[] = $current; }
                         $current = [
-                            'key' => $key,
+                            'key' => $pesertaId,
                             'items' => [$p],
-                            'tgl_awal' => $awal,
-                            'tgl_akhir' => $akhir,
-                            'tempat' => $tempat,
                         ];
                     }
                 }
@@ -196,9 +191,12 @@
             @forelse($groups as $group)
                 @php
                     $rowspan = count($group['items']);
-                    $awal = $group['tgl_awal'] ? \Carbon\Carbon::parse($group['tgl_awal']) : null;
-                    $akhir = $group['tgl_akhir'] ? \Carbon\Carbon::parse($group['tgl_akhir']) : null;
-                    $tempat = $group['tempat'] ?: '-';
+                @endphp
+                @foreach($group['items'] as $itemIndex => $peserta)
+                @php
+                    $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan->format('Y-m-d')) : null;
+                    $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan->format('Y-m-d')) : null;
+                    $tempat = $peserta->tempat_kegiatan ?? '';
                     if ($awal && $akhir && $awal->isSameDay($akhir)) {
                         $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
                     } elseif ($awal && $akhir && $awal->format('n') === $akhir->format('n') && $awal->format('Y') === $akhir->format('Y')) {
@@ -210,12 +208,12 @@
                     } else {
                         $tanggalText = '-';
                     }
-                    $tanggalCell = $tanggalText . '  ' . $tempat;
+                    $tanggalCell = $tanggalText . '  ' . ($tempat ?: '-');
                 @endphp
-                @foreach($group['items'] as $itemIndex => $peserta)
                 <tr>
                     <td class="text-center">{{ ++$no }}</td>
-                    <td>
+                    @if($itemIndex == 0)
+                    <td rowspan="{{ $rowspan }}">
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->nama }}
                         @elseif($peserta->siswa)
@@ -224,7 +222,7 @@
                             -
                         @endif
                     </td>
-                    <td>
+                    <td rowspan="{{ $rowspan }}">
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->nip ?: '-' }}
                         @elseif($peserta->siswa)
@@ -233,7 +231,7 @@
                             -
                         @endif
                     </td>
-                    <td>
+                    <td rowspan="{{ $rowspan }}">
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->pangkat_golongan ?: '-' }}
                         @elseif($peserta->siswa)
@@ -242,7 +240,7 @@
                             -
                         @endif
                     </td>
-                    <td>
+                    <td rowspan="{{ $rowspan }}">
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->jabatan ?: '-' }}
                         @elseif($peserta->siswa)
@@ -251,9 +249,8 @@
                             -
                         @endif
                     </td>
-                    @if($itemIndex == 0)
-                    <td rowspan="{{ $rowspan }}">{{ $tanggalCell }}</td>
                     @endif
+                    <td>{{ $tanggalCell }}</td>
                 </tr>
                 @endforeach
             @empty

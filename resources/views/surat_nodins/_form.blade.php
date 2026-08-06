@@ -176,7 +176,7 @@
 
     <table style="display:none;">
         <tbody id="peserta-template">
-            @include('surat_nodins._peserta_row', ['index' => '__INDEX__', 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ''], 'asns' => $asns, 'siswas' => $siswas])
+            @include('surat_nodins._peserta_row', ['index' => '__INDEX__', 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ['']], 'asns' => $asns, 'siswas' => $siswas])
         </tbody>
     </table>
 
@@ -235,6 +235,22 @@
                     }
                 });
                 row.remove();
+            }
+
+            if (e.target.closest('.hapus-tempat')) {
+                const item = e.target.closest('.tempat-item');
+                const list = item.closest('.tempat-kegiatan-list');
+                if (list.querySelectorAll('.tempat-item').length > 1) {
+                    item.remove();
+                }
+            }
+
+            if (e.target.closest('.tambah-tempat')) {
+                const list = e.target.closest('td').querySelector('.tempat-kegiatan-list');
+                const clone = list.querySelector('.tempat-item').cloneNode(true);
+                const input = clone.querySelector('input');
+                input.value = '';
+                list.appendChild(clone);
             }
         });
     });

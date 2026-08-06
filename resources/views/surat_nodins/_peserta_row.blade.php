@@ -8,6 +8,15 @@
     ];
     $asns = $asns ?? [];
     $siswas = $siswas ?? [];
+
+    $tempatList = $item['tempat_kegiatan'] ?? '';
+    if (!is_array($tempatList)) {
+        $tempatList = $tempatList !== '' ? explode("\n", $tempatList) : [''];
+    }
+    $tempatList = array_values(array_filter(array_map('trim', $tempatList), function($v) { return $v !== ''; }));
+    if (empty($tempatList)) {
+        $tempatList = [''];
+    }
 ?>
 <tr class="peserta-row border-t">
     <td class="px-2 py-2">
@@ -40,7 +49,15 @@
         <input type="date" name="peserta[{{ $index }}][tgl_akhir_kegiatan]" value="{{ $item['tgl_akhir_kegiatan'] ?? '' }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </td>
     <td class="px-2 py-2">
-        <textarea name="peserta[{{ $index }}][tempat_kegiatan]" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ $item['tempat_kegiatan'] ?? '' }}</textarea>
+        <div class="tempat-kegiatan-list space-y-1">
+            @foreach($tempatList as $tempat)
+                <div class="tempat-item flex gap-1">
+                    <input type="text" name="peserta[{{ $index }}][tempat_kegiatan][]" value="{{ $tempat }}" class="flex-1 border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                    <button type="button" class="hapus-tempat text-red-600 hover:text-red-800 text-sm" title="Hapus">Hapus</button>
+                </div>
+            @endforeach
+        </div>
+        <button type="button" class="tambah-tempat bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold py-1 px-2 rounded mt-1">+ Tambah Tempat</button>
     </td>
     <td class="px-2 py-2 text-center">
         <button type="button" class="hapus-peserta text-red-600 hover:text-red-800" title="Hapus">Hapus</button>
