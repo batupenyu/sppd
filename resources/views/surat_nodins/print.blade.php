@@ -6,7 +6,7 @@
     <style>
       @page {
         size: A4;
-        margin: 1cm 1cm ;
+        margin: 1cm 1cm;
       }
       body {
         background-color: #525659;
@@ -307,23 +307,23 @@
                       -
                     @endif
                   </td>
-                  <td rowspan="<?php echo e($rowspan); ?>">
-                    @php
-                        $pangkat = $peserta->pegawai->pangkat ?? null;
-                        $golongan = $peserta->pegawai->golongan ?? null;
-                        $pangkatGolongan = $pangkat || $golongan
-                            ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
-                            : '-';
-                    @endphp
-                    <td style="text-align: {{ $peserta->siswa || $pangkatGolongan === 'IX' || $pangkatGolongan === '-' ? 'center' : 'left' }};">
-                      @if($peserta->pegawai)
-                        {{ $pangkatGolongan }}
-                      @elseif($peserta->siswa)
-                        {{ $peserta->siswa->kelas ?: '-' }}
-                      @else
-                        -
-                      @endif
-                    </td>
+                  
+                  @php
+                      $pangkat = $peserta->pegawai->pangkat ?? null;
+                      $golongan = $peserta->pegawai->golongan ?? null;
+                      $pangkatGolongan = $pangkat || $golongan
+                          ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
+                          : '-';
+                  @endphp
+                  
+                  <td rowspan="<?php echo e($rowspan); ?>" style="text-align: {{ $peserta->siswa || $pangkatGolongan === 'IX' || $pangkatGolongan === '-' ? 'center' : 'left' }};">
+                    @if($peserta->pegawai)
+                      {{ $pangkatGolongan }}
+                    @elseif($peserta->siswa)
+                      {{ $peserta->siswa->kelas ?: '-' }}
+                    @else
+                      -
+                    @endif
                   </td>
                   <td rowspan="<?php echo e($rowspan); ?>">
                     @if($peserta->pegawai)

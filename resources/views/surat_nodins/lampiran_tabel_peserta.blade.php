@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 10px;
-            font-size: 9pt;
+            font-size: 8.5pt;
         }
         @page {
             size: A4 portrait;
