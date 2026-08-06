@@ -3,89 +3,120 @@
     $pesertaIndex = 0;
 @endphp
 
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <div class="md:col-span-2">
-        <h2 class="text-lg font-semibold mb-4 border-b pb-2">Data Umum</h2>
-    </div>
+<div id="form-tabs">
+    {{-- ============ NAVBAR TAB ============ --}}
+    <div class="sticky top-0 z-20 -mx-6 px-6 py-2 mb-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur border-b dark:border-gray-700">
+        <nav class="flex flex-wrap gap-1 text-sm">
+            <button type="button" data-tab="data-umum" onclick="switchTab('data-umum')"
+                class="tab-btn px-3 py-1.5 rounded-full font-medium transition bg-blue-600 text-white">Data Umum</button>
 
-    <div>
-        <label class="block font-medium mb-1">Nomor</label>
-        <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '................................................................') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
+            <button type="button" data-tab="isi-surat" onclick="switchTab('isi-surat')"
+                class="tab-btn px-3 py-1.5 rounded-full font-medium transition text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Isi Surat</button>
 
-    <div>
-        <label class="block font-medium mb-1">Sifat</label>
-        <input type="text" name="sifat" value="{{ old('sifat', $suratNodin->sifat ?? 'Penting') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
+            <button type="button" data-tab="peserta" onclick="switchTab('peserta')"
+                class="tab-btn px-3 py-1.5 rounded-full font-medium transition text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Peserta</button>
 
-    <div>
-        <label class="block font-medium mb-1">Lampiran</label>
-        <input type="text" name="lampiran" value="{{ old('lampiran', $suratNodin->lampiran ?? '-') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
+            <button type="button" data-tab="penandatangan" onclick="switchTab('penandatangan')"
+                class="tab-btn px-3 py-1.5 rounded-full font-medium transition text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Penandatangan</button>
 
-    <div>
-        <label class="block font-medium mb-1">Hal</label>
-        <input type="text" name="hal" value="{{ old('hal', $suratNodin->hal ?? 'Permohonan Izin Perjalanan Dinas') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            <button type="button" data-tab="penetapan" onclick="switchTab('penetapan')"
+                class="tab-btn px-3 py-1.5 rounded-full font-medium transition text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Penetapan</button>
+        </nav>
     </div>
+    {{-- ============ END NAVBAR ============ --}}
 
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Yth.</label>
-        <input type="text" name="kepada" value="{{ old('kepada', $suratNodin->kepada ?? 'Yth. Gubernur Kepulauan Bangka Belitung') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
+    {{-- ============ TAB: DATA UMUM ============ --}}
+    <div id="tab-data-umum" class="tab-content grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+            <h2 class="text-lg font-semibold mb-4 border-b pb-2">Data Umum</h2>
+        </div>
 
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Dari</label>
-        <select name="dari" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-            <option value="">-- Pilih Dari --</option>
-            <option value="Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung' ? 'selected' : '' }}>Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung</option>
-            <option value="Kepala SMK Negeri 1 Koba" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala SMK Negeri 1 Koba' ? 'selected' : '' }}>Kepala SMK Negeri 1 Koba</option>
-        </select>
-        <div class="mt-2">
-            <label class="inline-flex items-center">
-                <input type="checkbox" name="dari_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_plt', $suratNodin->dari_plt ?? false) ? 'checked' : '' }}>
-                <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
-            </label>
-            <label class="inline-flex items-center ml-4">
-                <input type="checkbox" name="dari_an" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_an', $suratNodin->dari_an ?? false) ? 'checked' : '' }}>
-                <span class="ml-2 text-sm text-gray-600">a.n (Atas Nama)</span>
-            </label>
+        <div>
+            <label class="block font-medium mb-1">Nomor</label>
+            <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '................................................................') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Sifat</label>
+            <input type="text" name="sifat" value="{{ old('sifat', $suratNodin->sifat ?? 'Penting') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Lampiran</label>
+            <input type="text" name="lampiran" value="{{ old('lampiran', $suratNodin->lampiran ?? '-') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Hal</label>
+            <input type="text" name="hal" value="{{ old('hal', $suratNodin->hal ?? 'Permohonan Izin Perjalanan Dinas') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Yth.</label>
+            <input type="text" name="kepada" value="{{ old('kepada', $suratNodin->kepada ?? 'Yth. Gubernur Kepulauan Bangka Belitung') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Dari</label>
+            <select name="dari" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                <option value="">-- Pilih Dari --</option>
+                <option value="Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung' ? 'selected' : '' }}>Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung</option>
+                <option value="Kepala SMK Negeri 1 Koba" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala SMK Negeri 1 Koba' ? 'selected' : '' }}>Kepala SMK Negeri 1 Koba</option>
+            </select>
+            <div class="mt-2">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" name="dari_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_plt', $suratNodin->dari_plt ?? false) ? 'checked' : '' }}>
+                    <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
+                </label>
+                <label class="inline-flex items-center ml-4">
+                    <input type="checkbox" name="dari_an" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_an', $suratNodin->dari_an ?? false) ? 'checked' : '' }}>
+                    <span class="ml-2 text-sm text-gray-600">a.n (Atas Nama)</span>
+                </label>
+            </div>
+        </div>
+
+        <div>
+            <label class="block font-medium mb-1">Tanggal</label>
+            <input type="date" name="tanggal" value="{{ old('tanggal', optional($suratNodin->tanggal ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
         </div>
     </div>
+    {{-- ============ END TAB: DATA UMUM ============ --}}
 
-    <div>
-        <label class="block font-medium mb-1">Tanggal</label>
-        <input type="date" name="tanggal" value="{{ old('tanggal', optional($suratNodin->tanggal ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
+    {{-- ============ TAB: ISI SURAT ============ --}}
+    <div id="tab-isi-surat" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+            <h2 class="text-lg font-semibold mb-4 border-b pb-2">Isi Surat</h2>
+        </div>
 
-    <div class="md:col-span-2">
-        <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Isi Surat</h2>
-    </div>
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Dasar Surat</label>
+            <textarea name="dasar_surat" rows="4" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('dasar_surat', $suratNodin->dasar_surat ?? '') }}</textarea>
+        </div>
 
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Dasar Surat</label>
-        <textarea name="dasar_surat" rows="4" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('dasar_surat', $suratNodin->dasar_surat ?? '') }}</textarea>
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Isi Surat</label>
+            <textarea name="isi_surat" rows="4" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('isi_surat', $suratNodin->isi_surat ?? '') }}</textarea>
+        </div>
     </div>
+    {{-- ============ END TAB: ISI SURAT ============ --}}
 
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Isi Surat</label>
-        <textarea name="isi_surat" rows="4" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('isi_surat', $suratNodin->isi_surat ?? '') }}</textarea>
-    </div>
+    {{-- ============ TAB: PESERTA ============ --}}
+    <div id="tab-peserta" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+            <h2 class="text-lg font-semibold mb-4 border-b pb-2">Peserta</h2>
+        </div>
 
-    <div class="md:col-span-2">
-        <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Peserta</h2>
-    </div>
-
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Kop Surat</label>
-        <select name="kop_surat" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-            <option value="">-- Pilih Kop Surat --</option>
-            @foreach($logos as $logo)
-                <option value="{{ $logo->name }}" {{ old('kop_surat', $suratNodin->kop_surat ?? '') == $logo->name ? 'selected' : '' }}>
-                    {{ $logo->name ?: 'Tanpa Nama' }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Kop Surat</label>
+            <select name="kop_surat" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                <option value="">-- Pilih Kop Surat --</option>
+                @foreach($logos as $logo)
+                    <option value="{{ $logo->name }}" {{ old('kop_surat', $suratNodin->kop_surat ?? '') == $logo->name ? 'selected' : '' }}>
+                        {{ $logo->name ?: 'Tanpa Nama' }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
     <div class="md:col-span-2">
         <div class="flex justify-between items-center mb-2">
@@ -208,57 +239,92 @@
         });
     });
     </script>
-
-    <div class="md:col-span-2">
-        <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Penandatangan</h2>
     </div>
+    {{-- ============ END TAB: PESERTA ============ --}}
 
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Pilih Penandatangan</label>
-        <select name="penandatangan_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-            <option value="">-- Pilih Penandatangan --</option>
-            @foreach($asns as $asn)
-                <option value="{{ $asn->id }}" {{ old('penandatangan_id', $suratNodin->penandatangan_id ?? $defaultPenandatanganId) == $asn->id ? 'selected' : '' }}>
-                    {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
-                </option>
-            @endforeach
-        </select>
-        <div class="mt-2">
-            <label class="inline-flex items-center">
-                <input type="checkbox" name="penandatangan_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_plt', $suratNodin->penandatangan_plt ?? false) ? 'checked' : '' }}>
-                <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
-            </label>
-            <label class="inline-flex items-center ml-4">
-                <input type="checkbox" name="penandatangan_an" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_an', $suratNodin->penandatangan_an ?? false) ? 'checked' : '' }}>
-                <span class="ml-2 text-sm text-gray-600">a.n (Atas Nama)</span>
-            </label>
+    {{-- ============ TAB: PENANDATANGAN ============ --}}
+    <div id="tab-penandatangan" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+            <h2 class="text-lg font-semibold mb-4 border-b pb-2">Penandatangan</h2>
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Pilih Penandatangan</label>
+            <select name="penandatangan_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                <option value="">-- Pilih Penandatangan --</option>
+                @foreach($asns as $asn)
+                    <option value="{{ $asn->id }}" {{ old('penandatangan_id', $suratNodin->penandatangan_id ?? $defaultPenandatanganId) == $asn->id ? 'selected' : '' }}>
+                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                    </option>
+                @endforeach
+            </select>
+            <div class="mt-2">
+                <label class="inline-flex items-center">
+                    <input type="checkbox" name="penandatangan_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_plt', $suratNodin->penandatangan_plt ?? false) ? 'checked' : '' }}>
+                    <span class="ml-2 text-sm text-gray-600">Plt (Pelaksana Tugas)</span>
+                </label>
+                <label class="inline-flex items-center ml-4">
+                    <input type="checkbox" name="penandatangan_an" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('penandatangan_an', $suratNodin->penandatangan_an ?? false) ? 'checked' : '' }}>
+                    <span class="ml-2 text-sm text-gray-600">a.n (Atas Nama)</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="md:col-span-2">
+            <label class="block font-medium mb-1">Pilih Pegawai Yang Diberi Tugas</label>
+            <select name="pegawai_tugas_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+                <option value="">-- Pilih Pegawai Tugas --</option>
+                @foreach($asns as $asn)
+                    <option value="{{ $asn->id }}" {{ old('pegawai_tugas_id', $suratNodin->pegawai_tugas_id ?? '') == $asn->id ? 'selected' : '' }}>
+                        {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
+                    </option>
+                @endforeach
+            </select>
         </div>
     </div>
+    {{-- ============ END TAB: PENANDATANGAN ============ --}}
 
-    <div class="md:col-span-2">
-        <label class="block font-medium mb-1">Pilih Pegawai Yang Diberi Tugas</label>
-        <select name="pegawai_tugas_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-            <option value="">-- Pilih Pegawai Tugas --</option>
-            @foreach($asns as $asn)
-                <option value="{{ $asn->id }}" {{ old('pegawai_tugas_id', $suratNodin->pegawai_tugas_id ?? '') == $asn->id ? 'selected' : '' }}>
-                    {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
-                </option>
-            @endforeach
-        </select>
-    </div>
+    {{-- ============ TAB: PENETAPAN ============ --}}
+    <div id="tab-penetapan" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="md:col-span-2">
+            <h2 class="text-lg font-semibold mb-4 border-b pb-2">Penetapan</h2>
+        </div>
 
-    <div class="md:col-span-2">
-        <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">Penetapan</h2>
+        <div>
+            <label class="block font-medium mb-1">Tempat Ditetapkan</label>
+            <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $suratNodin->tempat_ditetapkan ?? 'Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        </div>
+        <div>
+            <label class="block font-medium mb-1">Tanggal Ditetapkan</label>
+            <input type="date" name="tanggal_ditetapkan" value="{{ old('tanggal_ditetapkan', optional($suratNodin->tanggal_ditetapkan ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        </div>
     </div>
-
-    <div>
-        <label class="block font-medium mb-1">Tempat Ditetapkan</label>
-        <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $suratNodin->tempat_ditetapkan ?? 'Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
-    <div>
-        <label class="block font-medium mb-1">Tanggal Ditetapkan</label>
-        <input type="date" name="tanggal_ditetapkan" value="{{ old('tanggal_ditetapkan', optional($suratNodin->tanggal_ditetapkan ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-    </div>
+    {{-- ============ END TAB: PENETAPAN ============ --}}
 </div>
+
+<script>
+function switchTab(tabId) {
+    const contents = document.querySelectorAll('.tab-content');
+    contents.forEach(function(el) {
+        el.classList.add('hidden');
+    });
+
+    const target = document.getElementById('tab-' + tabId);
+    if (target) {
+        target.classList.remove('hidden');
+    }
+
+    const buttons = document.querySelectorAll('.tab-btn');
+    buttons.forEach(function(btn) {
+        if (btn.dataset.tab === tabId) {
+            btn.classList.remove('text-gray-600', 'dark:text-gray-300', 'hover:bg-gray-100', 'dark:hover:bg-gray-700');
+            btn.classList.add('bg-blue-600', 'text-white');
+        } else {
+            btn.classList.remove('bg-blue-600', 'text-white');
+            btn.classList.add('text-gray-600', 'dark:text-gray-300', 'hover:bg-gray-100', 'dark:hover:bg-gray-700');
+        }
+    });
+}
+</script>
 
 
