@@ -25,7 +25,7 @@
                                 <th class="px-4 py-2 text-left">Preview</th>
                                 <th class="px-4 py-2 text-left">Nama</th>
                                 <th class="px-4 py-2 text-left">Tipe</th>
-                                <th class="px-4 py-2 text-left">ID</th>
+                                <!-- <th class="px-4 py-2 text-left">ID</th> -->
                                 <th class="px-4 py-2 text-left">Aksi</th>
                             </tr>
                         </thead>
@@ -41,7 +41,7 @@
                                 </td>
                                 <td class="px-4 py-2">{{ $logo->name }}</td>
                                 <td class="px-4 py-2">{{ $logo->mime ?: '-' }}</td>
-                                <td class="px-4 py-2">{{ $logo->id }}</td>
+                                <!-- <td class="px-4 py-2">{{ $logo->id }}</td> -->
                                 <td class="px-4 py-2">
                                     <div class="flex items-center gap-3">
                                         <a href="{{ route('logos.edit', $logo) }}" class="text-yellow-600 hover:text-yellow-800" title="Edit" aria-label="Edit">

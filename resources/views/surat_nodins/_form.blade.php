@@ -10,7 +10,7 @@
 
     <div>
         <label class="block font-medium mb-1">Nomor</label>
-        <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '............/............/............') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="nomor" value="{{ old('nomor', $suratNodin->nomor ?? '....................................') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div>
@@ -35,7 +35,11 @@
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Dari</label>
-        <input type="text" name="dari" value="{{ old('dari', $suratNodin->dari ?? 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <select name="dari" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            <option value="">-- Pilih Dari --</option>
+            <option value="Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung' ? 'selected' : '' }}>Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung</option>
+            <option value="Kepala SMK Negeri 1 Koba" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala SMK Negeri 1 Koba' ? 'selected' : '' }}>Kepala SMK Negeri 1 Koba</option>
+        </select>
         <div class="mt-2">
             <label class="inline-flex items-center">
                 <input type="checkbox" name="dari_plt" value="1" class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500" {{ old('dari_plt', $suratNodin->dari_plt ?? false) ? 'checked' : '' }}>

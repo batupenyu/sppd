@@ -59,14 +59,14 @@
         width: 100%;
         border-collapse: collapse;
         margin-bottom: 20px;
-        font-size: 11px;
+        font-size: 11pt;
         page-break-inside: auto;
       }
       .peserta-table th,
       .peserta-table td {
         border: 1px solid #000;
         padding: 6px;
-        font-size: 10px;
+        font-size: 11pt;
         text-align: left;
       }
       .peserta-table th {
