@@ -19,7 +19,7 @@ class SuratNodinController extends Controller
     {
         $suratNodins = SuratNodin::with(['penandatangan'])
             ->latest()
-            ->paginate(10);
+            ->paginate(5);
 
         return view('surat_nodins.index', compact('suratNodins'));
     }
