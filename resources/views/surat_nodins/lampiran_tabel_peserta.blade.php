@@ -8,16 +8,16 @@
         body {
             font-family: Arial, sans-serif;
             margin: 10px;
-            font-size: 10pt;
+            font-size: 9pt; /* Diubah menjadi 11pt */
         }
         @page {
-            size: A4 landscape;
+            size: A4 portrait;
             margin: 1cm 1cm 1cm 1cm;
         }
         .header-info {
             margin-bottom: 20px;
             line-height: 1.0;
-            padding-left: 500px;
+            padding-left: 300px;
             font-style: italic;
             page-break-after: avoid;
         }
@@ -45,6 +45,7 @@
             text-transform: uppercase;
             margin-bottom: 20px;
             page-break-after: avoid;
+            font-size: 10px; /* Judul disesuaikan agar tetap proporsional */
         }
         table {
             width: 100%;
@@ -63,7 +64,7 @@
         }
         th, td {
             border: 1px solid black;
-            padding: 8px;
+            padding: 6px 8px; /* Padding sedikit disesuaikan untuk font 8px */
             text-align: left;
             vertical-align: top;
         }
@@ -80,18 +81,18 @@
             float: right;
             width: 50%;
             text-align: left;
-            font-size: 11pt;
+            font-size: 10pt; /* Bagian tanda tangan disesuaikan proporsinya */
             page-break-inside: avoid;
             page-break-after: avoid;
         }
         .signature-title {
             font-weight: bold;
             margin-bottom: 10px;
-            font-size: 11pt;
+            font-size: 10pt;
         }
         .signature-name {
             font-weight: bold;
-            font-size: 11pt;
+            font-size: 10pt;
         }
         .clearfix::after {
             content: "";
@@ -101,16 +102,16 @@
         .signature-unit {
             padding-left: 26px;
             display: block;
-            font-size: 11pt;
+            font-size: 10pt;
         }
         .signature-body {
             font-weight: bold;
-            font-size: 11pt;
+            font-size: 10pt;
         }
         .signature-nip {
             font-weight: bold;
             margin-top: 5px;
-            font-size: 11pt;
+            font-size: 10pt;
         }
         .no-print {
             margin-top: 20px;
@@ -209,7 +210,7 @@
                     } else {
                         $tanggalText = '-';
                     }
-                    $tanggalCell = $tanggalText . ' di ' . $tempat;
+                    $tanggalCell = $tanggalText . '  ' . $tempat;
                 @endphp
                 @foreach($group['items'] as $itemIndex => $peserta)
                 <tr>
@@ -274,7 +275,6 @@
                     $unitKerjaAtasan = $atasan->unit_kerja ?? '';
                     $nama = $atasan->nama ?? '';
                     $pangkat = $atasan->pangkat_golongan ?? '';
-                    $golongan = '';
                     $nip = $atasan->nip ?? '';
 
                     $jabatanTugas = $pegawaiTugas->jabatan ?? '';

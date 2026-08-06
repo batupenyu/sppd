@@ -62,6 +62,15 @@
         font-size: 11pt;
         page-break-inside: auto;
       }
+      .peserta-table thead {
+        display: table-header-group;
+      }
+      .peserta-table tbody {
+        display: table-row-group;
+      }
+      .peserta-table tr {
+        page-break-inside: avoid;
+      }
       .peserta-table th,
       .peserta-table td {
         border: 1px solid #000;
@@ -140,7 +149,8 @@
           box-shadow: none;
           margin: 0;
           padding-top: 0;
-          page-break-after: always;
+          page-break-after: auto;
+          page-break-inside: auto;
         }
         .no-print {
           display: none !important;
@@ -217,6 +227,12 @@
     </div>
     @endif
 
+    @php
+        $pesertaCount = $suratNodin->pesertaSuratUsulans->count();
+        $showPesertaTable = $pesertaCount <= 15;
+    @endphp
+
+    @if($showPesertaTable)
     <table class="peserta-table">
       <thead>
         <tr>
@@ -337,6 +353,11 @@
 
       </tbody>
     </table>
+    @else
+    <!-- <div class="content">
+      <p><em>Catatan: Daftar peserta terlampir secara terpisah pada lampiran.</em></p>
+    </div> -->
+    @endif
 
     <div class="content">
       <p>Demikian surat permohonan ini kami sampaikan atas perhatian Bapak, Kami ucapkan terima kasih.</p>
