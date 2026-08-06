@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 10px;
-            font-size: 9pt; /* Diubah menjadi 11pt */
+            font-size: 9pt;
         }
         @page {
             size: A4 portrait;
@@ -45,7 +45,7 @@
             text-transform: uppercase;
             margin-bottom: 20px;
             page-break-after: avoid;
-            font-size: 10px; /* Judul disesuaikan agar tetap proporsional */
+            font-size: 10px;
         }
         table {
             width: 100%;
@@ -64,7 +64,7 @@
         }
         th, td {
             border: 1px solid black;
-            padding: 6px 8px; /* Padding sedikit disesuaikan untuk font 8px */
+            padding: 6px 8px;
             text-align: left;
             vertical-align: top;
         }
@@ -76,12 +76,23 @@
         .text-center {
             text-align: center;
         }
+        /* Style untuk list bullet pada tempat kegiatan */
+        .kegiatan-list {
+            margin: 0;
+            padding-left: 15px;
+        }
+        .kegiatan-list li {
+            margin-bottom: 6px;
+        }
+        .kegiatan-list li:last-child {
+            margin-bottom: 0;
+        }
         .signature-container {
             margin-top: 10px;
             float: right;
             width: 50%;
             text-align: left;
-            font-size: 10pt; /* Bagian tanda tangan disesuaikan proporsinya */
+            font-size: 10pt;
             page-break-inside: avoid;
             page-break-after: avoid;
         }
@@ -90,28 +101,10 @@
             margin-bottom: 10px;
             font-size: 10pt;
         }
-        .signature-name {
-            font-weight: bold;
-            font-size: 10pt;
-        }
         .clearfix::after {
             content: "";
             clear: both;
             display: table;
-        }
-        .signature-unit {
-            padding-left: 26px;
-            display: block;
-            font-size: 10pt;
-        }
-        .signature-body {
-            font-weight: bold;
-            font-size: 10pt;
-        }
-        .signature-nip {
-            font-weight: bold;
-            margin-top: 5px;
-            font-size: 10pt;
         }
         .no-print {
             margin-top: 20px;
@@ -158,62 +151,57 @@
                 <th style="width: 18%;">NIP/NIS</th>
                 <th style="width: 15%;">Pangkat / Gol</th>
                 <th style="width: 15%;">Jabatan</th>
-                <th style="width: 25%;">Tanggal/Tempat <br> Kegiatan</th>
+                <th style="width: 25%;">Tanggal / Tempat <br> Kegiatan</th>
             </tr>
         </thead>
         <tbody>
             @php
                 $pesertaList = $suratNodin->pesertaSuratUsulans;
-                $sorted = $pesertaList->sortBy(function ($p) {
-                    $awal = ($p->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_awal_kegiatan->format('Y-m-d') : ($p->tgl_awal_kegiatan ?? '');
-                    $akhir = ($p->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $p->tgl_akhir_kegiatan->format('Y-m-d') : ($p->tgl_akhir_kegiatan ?? '');
-                    $tempat = $p->tempat_kegiatan ?? '';
-                    $pesertaId = $p->pegawai_id ?? $p->siswa_id ?? '';
-                    return $pesertaId . '|' . $awal . '|' . $akhir . '|' . $tempat;
+
+                // Pastikan data peserta unik (tidak ada duplikasi baris peserta)
+                $uniquePeserta = $pesertaList->unique(function ($p) {
+                    return $p->pegawai_id ?? $p->siswa_id ?? $p->id;
                 })->values();
-                $groups = [];
-                $current = null;
-                foreach ($sorted as $p) {
-                    $pesertaId = $p->pegawai_id ?? $p->siswa_id ?? '';
-                    if ($current !== null && $current['key'] === $pesertaId) {
-                        $current['items'][] = $p;
-                    } else {
-                        if ($current !== null) { $groups[] = $current; }
-                        $current = [
-                            'key' => $pesertaId,
-                            'items' => [$p],
-                        ];
-                    }
-                }
-                if ($current !== null) { $groups[] = $current; }
-                $no = 0;
-            @endphp
-            @forelse($groups as $group)
-                @php
-                    $rowspan = count($group['items']);
-                @endphp
-                @foreach($group['items'] as $itemIndex => $peserta)
-                @php
-                    $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan->format('Y-m-d')) : null;
-                    $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan->format('Y-m-d')) : null;
-                    $tempat = $peserta->tempat_kegiatan ?? '';
+
+                $totalRowspan = $uniquePeserta->count();
+
+                // Ambil daftar unik tempat/kegiatan diformat dalam bentuk array teks bersih tanpa tanda minus
+                $uniqueKegiatan = $pesertaList->map(function($p) {
+                    $awal = ($p->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($p->tgl_awal_kegiatan->format('Y-m-d')) : null;
+                    $akhir = ($p->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($p->tgl_akhir_kegiatan->format('Y-m-d')) : null;
+                    $tempat = $p->tempat_kegiatan ?? '';
+
                     if ($awal && $akhir && $awal->isSameDay($akhir)) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
+                        $tglText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
                     } elseif ($awal && $akhir && $awal->format('n') === $akhir->format('n') && $awal->format('Y') === $akhir->format('Y')) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
+                        $tglText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
                     } elseif ($awal && $akhir) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
+                        $tglText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
                     } elseif ($awal) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
+                        $tglText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
                     } else {
-                        $tanggalText = '-';
+                        $tglText = '';
                     }
-                    $tanggalCell = $tanggalText . '  ' . ($tempat ?: '-');
+
+                    if ($tglText && $tempat) {
+                        return $tglText . '<br>' . $tempat;
+                    } elseif ($tglText) {
+                        return $tglText;
+                    } else {
+                        return $tempat;
+                    }
+                })->filter(function($val) {
+                    return !empty(trim(strip_tags($val)));
+                })->unique();
+            @endphp
+
+            @forelse($uniquePeserta as $index => $peserta)
+                @php
+                    $no = $index + 1;
                 @endphp
                 <tr>
-                    <td class="text-center">{{ ++$no }}</td>
-                    @if($itemIndex == 0)
-                    <td rowspan="{{ $rowspan }}">
+                    <td class="text-center">{{ $no }}</td>
+                    <td>
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->nama }}
                         @elseif($peserta->siswa)
@@ -222,7 +210,7 @@
                             -
                         @endif
                     </td>
-                    <td rowspan="{{ $rowspan }}">
+                    <td>
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->nip ?: '-' }}
                         @elseif($peserta->siswa)
@@ -231,7 +219,7 @@
                             -
                         @endif
                     </td>
-                    <td rowspan="{{ $rowspan }}">
+                    <td>
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->pangkat_golongan ?: '-' }}
                         @elseif($peserta->siswa)
@@ -240,7 +228,7 @@
                             -
                         @endif
                     </td>
-                    <td rowspan="{{ $rowspan }}">
+                    <td>
                         @if($peserta->pegawai)
                             {{ $peserta->pegawai->jabatan ?: '-' }}
                         @elseif($peserta->siswa)
@@ -249,10 +237,18 @@
                             -
                         @endif
                     </td>
+
+                    {{-- Kolom Tempat Kegiatan di-rowspan menggunakan tag <ul> <li> (bullet) tanpa tanda "-" --}}
+                    @if($index == 0)
+                        <td rowspan="{{ $totalRowspan }}">
+                            <ul class="kegiatan-list">
+                                @foreach($uniqueKegiatan as $kegiatan)
+                                    <li>{!! $kegiatan !!}</li>
+                                @endforeach
+                            </ul>
+                        </td>
                     @endif
-                    <td>{{ $tanggalCell }}</td>
                 </tr>
-                @endforeach
             @empty
             <tr>
                 <td colspan="6" class="text-center">Tidak ada data peserta.</td>
@@ -321,7 +317,6 @@
                 <br>{{ $indent ? $indentChar . 'NIP. ' . $nip : 'NIP. ' . $nip }}
             </div>
         </div>
-      </div>
     </div>
 
     <div class="no-print">
