@@ -41,78 +41,80 @@
                     <a href="{{ route('logos.index') }}" class="flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('logos.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
                         Logo
                     </a>
-                    @php($isSuratActive = request()->is('surat-tugas*','drh-satyalancana*','sptjms*','spmts*','surat-cutis*','laporan-cutis*','surat-dispensasis*','surat-keterangans*','surat-kp4s*','surat-kp4-olds*','surat-panggilan-siswas*','surat-penarikan-siswas*','surat-pengantars*','surat-rekomendasis*','surat-resmis*','surat-santunans*','surat-pernyataans*','surat-undangans*','surat-nodins*','laporan-nodins*','surat-mewakili*'))
-                    <button type="button" id="surat-toggle" class="w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ $isSuratActive ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                        <span>Surat &amp; Dokumen</span>
-                        <svg id="surat-chevron" class="w-4 h-4 transition-transform {{ $isSuratActive ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
-                        </svg>
-                    </button>
-                    <div id="surat-submenu" class="ml-3 space-y-1 {{ $isSuratActive ? '' : 'hidden' }}">
-                        <a href="{{ route('surat-tugas.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-tugas.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Tugas
-                        </a>
-                        <a href="{{ route('drh-satyalancana.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('drh-satyalancana.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            DRH Satyalancana
-                        </a>
-                        <a href="{{ route('sptjms.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('sptjms.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            SPTJM
-                        </a>
-                        <a href="{{ route('spmts.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('spmts.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            SPMT
-                        </a>
-                        <a href="{{ route('surat-cutis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-cutis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Cuti
-                        </a>
-                        <a href="{{ route('laporan-cutis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('laporan-cutis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Laporan Cuti
-                        </a>
-                        <a href="{{ route('surat-dispensasis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-dispensasis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Dispensasi
-                        </a>
-                        <a href="{{ route('surat-keterangans.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-keterangans.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Keterangan
-                        </a>
-                        <!-- <a href="{{ route('surat-kp4s.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-kp4s.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat KP4 New
-                        </a> -->
-                        <a href="{{ route('surat-kp4-olds.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-kp4-olds.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat KP4
-                        </a>
-                        <a href="{{ route('surat-panggilan-siswas.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-panggilan-siswas.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Panggilan Siswa
-                        </a>
-                        <a href="{{ route('surat-penarikan-siswas.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-penarikan-siswas.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Penarikan Siswa
-                        </a>
-                        <a href="{{ route('surat-pengantars.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-pengantars.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Pengantar
-                        </a>
-                        <a href="{{ route('surat-rekomendasis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-rekomendasis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Rekomendasi
-                        </a>
-                        <a href="{{ route('surat-resmis.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-resmis.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Resmi
-                        </a>
-                        <a href="{{ route('surat-santunans.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-santunans.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Santunan
-                        </a>
-<a href="{{ route('surat-pernyataans.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-pernyataans.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-    Surat Pernyataan
-</a>
-                        <a href="{{ route('surat-undangans.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-undangans.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Undangan
-                        </a>
-                        <a href="{{ route('surat-nodins.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-nodins.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Nodin
-                        </a>
-                        <a href="{{ route('surat-mewakili.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('surat-mewakili.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Surat Mewakili
-                        </a>
-                        <a href="{{ route('laporan-nodins.index') }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs('laporan-nodins.*') ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
-                            Laporan Nodin
-                        </a>
-                    </div>
+
+                    @php
+                        $categories = [
+                            [
+                                'label' => 'Perjalanan Dinas & Tugas',
+                                'routes' => ['surat-tugas.*', 'drh-satyalancana.*'],
+                                'items' => [
+                                    ['label' => 'Surat Tugas', 'route' => 'surat-tugas.index', 'routeName' => 'surat-tugas.*'],
+                                    ['label' => 'DRH Satyalancana', 'route' => 'drh-satyalancana.index', 'routeName' => 'drh-satyalancana.*'],
+                                ],
+                            ],
+                            [
+                                'label' => 'Cuti & Dispensasi',
+                                'routes' => ['surat-cutis.*', 'laporan-cutis.*', 'surat-dispensasis.*'],
+                                'items' => [
+                                    ['label' => 'Surat Cuti', 'route' => 'surat-cutis.index', 'routeName' => 'surat-cutis.*'],
+                                    ['label' => 'Laporan Cuti', 'route' => 'laporan-cutis.index', 'routeName' => 'laporan-cutis.*'],
+                                    ['label' => 'Surat Dispensasi', 'route' => 'surat-dispensasis.index', 'routeName' => 'surat-dispensasis.*'],
+                                ],
+                            ],
+                            [
+                                'label' => 'Peserta Didik',
+                                'routes' => ['surat-keterangans.*', 'surat-kp4-olds.*', 'surat-panggilan-siswas.*', 'surat-penarikan-siswas.*'],
+                                'items' => [
+                                    ['label' => 'Surat Keterangan', 'route' => 'surat-keterangans.index', 'routeName' => 'surat-keterangans.*'],
+                                    ['label' => 'Surat KP4', 'route' => 'surat-kp4-olds.index', 'routeName' => 'surat-kp4-olds.*'],
+                                    ['label' => 'Surat Panggilan Siswa', 'route' => 'surat-panggilan-siswas.index', 'routeName' => 'surat-panggilan-siswas.*'],
+                                    ['label' => 'Surat Penarikan Siswa', 'route' => 'surat-penarikan-siswas.index', 'routeName' => 'surat-penarikan-siswas.*'],
+                                ],
+                            ],
+                            [
+                                'label' => 'Surat Khusus & Umum',
+                                'routes' => ['surat-pengantars.*', 'surat-rekomendasis.*', 'surat-resmis.*', 'surat-undangans.*', 'surat-pernyataans.*', 'surat-santunans.*', 'surat-mewakili.*'],
+                                'items' => [
+                                    ['label' => 'Surat Pengantar', 'route' => 'surat-pengantars.index', 'routeName' => 'surat-pengantars.*'],
+                                    ['label' => 'Surat Rekomendasi', 'route' => 'surat-rekomendasis.index', 'routeName' => 'surat-rekomendasis.*'],
+                                    ['label' => 'Surat Resmi', 'route' => 'surat-resmis.index', 'routeName' => 'surat-resmis.*'],
+                                    ['label' => 'Surat Undangan', 'route' => 'surat-undangans.index', 'routeName' => 'surat-undangans.*'],
+                                    ['label' => 'Surat Pernyataan', 'route' => 'surat-pernyataans.index', 'routeName' => 'surat-pernyataans.*'],
+                                    ['label' => 'Surat Santunan', 'route' => 'surat-santunans.index', 'routeName' => 'surat-santunans.*'],
+                                    ['label' => 'Surat Mewakili', 'route' => 'surat-mewakili.index', 'routeName' => 'surat-mewakili.*'],
+                                ],
+                            ],
+                            [
+                                'label' => 'Laporan & Nota Dinas',
+                                'routes' => ['sptjms.*', 'spmts.*', 'surat-nodins.*', 'laporan-nodins.*'],
+                                'items' => [
+                                    ['label' => 'SPTJM', 'route' => 'sptjms.index', 'routeName' => 'sptjms.*'],
+                                    ['label' => 'SPMT', 'route' => 'spmts.index', 'routeName' => 'spmts.*'],
+                                    ['label' => 'Surat Nodin', 'route' => 'surat-nodins.index', 'routeName' => 'surat-nodins.*'],
+                                    ['label' => 'Laporan Nodin', 'route' => 'laporan-nodins.index', 'routeName' => 'laporan-nodins.*'],
+                                ],
+                            ],
+                        ];
+                    @endphp
+
+                    @foreach($categories as $category)
+                        @php($isCategoryActive = collect($category['routes'])->contains(fn($r) => request()->routeIs($r)))
+                        <div class="mb-1">
+                            <button type="button" class="category-toggle w-full flex items-center justify-between px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ $isCategoryActive ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                                <span>{{ $category['label'] }}</span>
+                                <svg class="category-chevron w-4 h-4 transition-transform {{ $isCategoryActive ? 'rotate-180' : '' }}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </button>
+                            <div class="category-submenu ml-3 space-y-1 {{ $isCategoryActive ? '' : 'hidden' }}">
+                                @foreach($category['items'] as $item)
+                                    <a href="{{ route($item['route']) }}" class="block px-3 py-2 text-sm font-medium rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 {{ request()->routeIs($item['routeName']) ? 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white' : '' }}">
+                                        {{ $item['label'] }}
+                                    </a>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endforeach
                 </nav>
             </aside>
 
@@ -163,15 +165,15 @@
                 if (e.key === 'Escape') closeSidebar();
             });
 
-            const suratToggle = document.getElementById('surat-toggle');
-            const suratSubmenu = document.getElementById('surat-submenu');
-            const suratChevron = document.getElementById('surat-chevron');
-            if (suratToggle) {
-                suratToggle.addEventListener('click', () => {
-                    suratSubmenu.classList.toggle('hidden');
-                    suratChevron.classList.toggle('rotate-180');
+            const categoryToggles = document.querySelectorAll('.category-toggle');
+            categoryToggles.forEach((toggle) => {
+                toggle.addEventListener('click', () => {
+                    const submenu = toggle.nextElementSibling;
+                    const chevron = toggle.querySelector('.category-chevron');
+                    submenu.classList.toggle('hidden');
+                    chevron.classList.toggle('rotate-180');
                 });
-            }
+            });
         </script>
     </body>
 </html>

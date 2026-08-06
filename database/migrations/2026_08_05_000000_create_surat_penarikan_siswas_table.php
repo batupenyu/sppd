@@ -25,14 +25,10 @@ return new class extends Migration
             $table->text('alasan')->nullable();
             $table->string('nama_kota_sekolah')->nullable();
             $table->date('tanggal_surat')->nullable();
-            $table->string('nama_kepala_sekolah')->nullable();
-            $table->string('nip_kepala_sekolah')->nullable();
             $table->string('nama_wilayah_cabdinas')->nullable();
             $table->string('nama_kota_cabdin')->nullable();
             $table->string('nomor_surat_cabdin')->nullable();
             $table->date('tanggal_ditetapkan')->nullable();
-            $table->string('nama_kepala_cabdinas')->nullable();
-            $table->string('nip_kepala_cabdinas')->nullable();
             $table->foreignId('pegawai_id')->nullable()->constrained('asns')->onDelete('set null');
             $table->foreignId('penandatangan_id')->nullable()->constrained('asns')->onDelete('set null');
             $table->timestamps();

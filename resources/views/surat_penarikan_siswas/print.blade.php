@@ -64,7 +64,7 @@
     border-collapse: collapse;
   }
   .data-table td {
-    padding: 3px 6px;
+    padding: 2px 0px;
     vertical-align: top;
   }
   .data-table td.label {
@@ -100,14 +100,14 @@
   .sign-columns {
     display: flex;
     justify-content: space-between;
-    margin-top: 40px;
+    margin-top: 10px;
   }
   .sign-columns .col {
     width: 45%;
     text-align: center;
   }
   .sign-columns .signature-space {
-    height: 80px;
+    height: 60px;
   }
   .divider {
     text-align: center;
@@ -222,8 +222,8 @@
     <div>Kepala {{ $s->nama_sekolah_asal ?: '...................' }},</div>
     <div class="signature-space"></div>
     <div class="stamp-note">(Stempel Resmi Sekolah)</div>
-    <div class="signature-name">{{ $s->nama_kepala_sekolah ?: '...................' }}</div>
-    <div>NIP. {{ $s->nip_kepala_sekolah ?: '...................' }}</div>
+    <div class="signature-name">{{ $pegawai->nama ?: '...................' }}</div>
+    <div>NIP. {{ $pegawai->nip ?: '...................' }}</div>
   </div>
 </div>
 
@@ -271,15 +271,17 @@
     <div>Kepala Cabang Dinas Pendidikan Wilayah<br>{{ $s->nama_wilayah_cabdinas ?: '...................' }},</div>
     <div class="signature-space"></div>
     <div class="stamp-note">(Stempel Resmi Cabdin)</div>
-    <div class="signature-name">{{ $s->nama_kepala_cabdinas ?: '...................' }}</div>
-    <div>NIP. {{ $s->nip_kepala_cabdinas ?: '...................' }}</div>
+    <div class="signature-name">{{ $penandatangan->nama ?: '...................' }}</div>
+    <div>NIP. {{ $penandatangan->nip ?: '...................' }}</div>
   </div>
 </div>
 
 <!-- ================= DOKUMEN 3: SURAT PERNYATAAN ORANG TUA & SISWA ================= -->
 <div class="page">
-  <div class="doc-title">Surat Pernyataan</div>
-  <div class="doc-number" style="font-weight:bold;">Kesanggupan Melanjutkan Pendidikan</div>
+  <div class="doc-title">Surat Pernyataan <br>
+  Kesanggupan Melanjutkan Pendidikan
+  </div>
+  <div class="doc-number" style="font-weight:bold;"></div>
 
   <p style="margin-top:20px;">Yang bertanda tangan di bawah ini:</p>
 
@@ -322,18 +324,20 @@
   </p>
 
   <div style="text-align:right; margin-top:20px;">
-    {{ $s->nama_kota_sekolah ?? '...................' }}, {{ $fmt($s->tanggal_surat) }}
-  </div>
-
-  <div style="text-align:center; font-weight:bold; margin-top:10px;">Mengetahui/Menyetujui,</div>
-
-  <div class="sign-columns">
-    <div class="col">
-      <div>Siswa yang Menyatakan</div>
-      <div class="signature-space"></div>
-      <div class="signature-name">{{ $s->nama_siswa ?: '...................' }}</div>
     </div>
-    <div class="col">
+    
+    <div style="text-align:center; font-weight:bold; margin-top:5px;">Mengetahui/Menyetujui,</div>
+    
+    <div class="sign-columns">
+      <div class="col">
+        <br>
+        <div>Siswa yang Menyatakan</div>
+        <br>
+        <div class="signature-space"></div>
+        <div class="signature-name">{{ $s->nama_siswa ?: '...................' }}</div>
+      </div>
+      <div class="col">
+        {{ $s->nama_kota_sekolah ?? '...................' }}, {{ $fmt($s->tanggal_surat) }}
       <div>Orang Tua / Wali</div>
       <div class="signature-space"></div>
       <div class="stamp-note">(Tempel Meterai Rp10.000 &amp; Tanda Tangan)</div>
