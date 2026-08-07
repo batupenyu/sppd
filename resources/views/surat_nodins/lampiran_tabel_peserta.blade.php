@@ -161,7 +161,7 @@
 
                 // Pastikan data peserta unik (tidak ada duplikasi baris peserta)
                 $uniquePeserta = $pesertaList->unique(function ($p) {
-                    return $p->pegawai_id ?? $p->siswa_id ?? $p->id;
+                    return ($p->pegawai_id ?? '') . '|' . ($p->siswa_id ?? '') . '|' . ($p->tgl_awal_kegiatan ?? '') . '|' . ($p->tgl_akhir_kegiatan ?? '') . '|' . ($p->tempat_kegiatan ?? '');
                 })->values();
 
                 $totalRowspan = $uniquePeserta->count();

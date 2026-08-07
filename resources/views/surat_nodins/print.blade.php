@@ -314,16 +314,15 @@
                 @endif
               </td>
               
-              @php
-                  $pangkat = $peserta->pegawai->pangkat ?? null;
-                  $golongan = $peserta->pegawai->golongan ?? null;
-                  $pangkatGolongan = $pangkat || $golongan
-                      ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
-                      : '-';
-              @endphp
-              
-              <td style="text-align: {{ $peserta->siswa || $pangkatGolongan === 'IX' || $pangkatGolongan === '-' ? 'center' : 'left' }};">
+              <td style="text-align: {{ $peserta->siswa ? 'center' : 'left' }};">
                 @if($peserta->pegawai)
+                  @php
+                      $pangkat = $peserta->pegawai->pangkat;
+                      $golongan = $peserta->pegawai->golongan;
+                      $pangkatGolongan = $pangkat || $golongan
+                          ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
+                          : '-';
+                  @endphp
                   {{ $pangkatGolongan }}
                 @elseif($peserta->siswa)
                   {{ $peserta->siswa->kelas ?: '-' }}
