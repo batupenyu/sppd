@@ -235,22 +235,58 @@
         </thead>
         <tbody>
           @php
-              // 1. Urutkan berdasarkan tanggal awal, tanggal akhir, dan tempat kegiatan
+              // 0. Peserta ke-2 dst yang tidak mengisi tgl_awal_kegiatan, tgl_akhir_kegiatan,
+              //    dan/atau tempat_kegiatan (kosong) mewarisi nilai tsb dari peserta
+              //    sebelumnya (urutan input asli) per-field secara independen,
+              //    supaya nanti bisa digabung (rowspan) dengan baris di atasnya.
+              $normalizeDate = function ($val) {
+                  if ($val instanceof \Carbon\CarbonInterface) {
+                      return $val->format('Y-m-d');
+                  }
+                  return $val ? (string) $val : '';
+              };
+
+              $lastAwal = '';
+              $lastAkhir = '';
+              $lastTempat = '';
+              $pesertaList = $pesertaList->values()->map(function ($peserta, $idx) use (&$lastAwal, &$lastAkhir, &$lastTempat, $normalizeDate) {
+                  $awalAsli = $normalizeDate($peserta->tgl_awal_kegiatan ?? '');
+                  $akhirAsli = $normalizeDate($peserta->tgl_akhir_kegiatan ?? '');
+                  $tempatAsli = trim((string) ($peserta->tempat_kegiatan ?? ''));
+
+                  if ($awalAsli === '' && $idx > 0) {
+                      $peserta->tgl_awal_efektif = $lastAwal;
+                  } else {
+                      $peserta->tgl_awal_efektif = $awalAsli;
+                      $lastAwal = $awalAsli;
+                  }
+
+                  if ($akhirAsli === '' && $idx > 0) {
+                      $peserta->tgl_akhir_efektif = $lastAkhir;
+                  } else {
+                      $peserta->tgl_akhir_efektif = $akhirAsli;
+                      $lastAkhir = $akhirAsli;
+                  }
+
+                  if ($tempatAsli === '' && $idx > 0) {
+                      $peserta->tempat_efektif = $lastTempat;
+                  } else {
+                      $peserta->tempat_efektif = $tempatAsli;
+                      $lastTempat = $tempatAsli;
+                  }
+
+                  return $peserta;
+              });
+
+              // 1. Urutkan berdasarkan tanggal awal, tanggal akhir, dan tempat efektif agar mengelompok
               $sorted = $pesertaList->sortBy(function ($peserta) {
-                  $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_awal_kegiatan->format('Y-m-d') : ($peserta->tgl_awal_kegiatan ?? '');
-                  $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_akhir_kegiatan->format('Y-m-d') : ($peserta->tgl_akhir_kegiatan ?? '');
-                  $tempat = $peserta->tempat_kegiatan ?? '';
-                  return $awal . '|' . $akhir . '|' . $tempat;
+                  return $peserta->tgl_awal_efektif . '|' . $peserta->tgl_akhir_efektif . '|' . $peserta->tempat_efektif;
               })->values();
 
-              // 2. Hitung jumlah baris (rowspan) untuk setiap kombinasi tanggal dan tempat
+              // 2. Hitung jumlah baris (rowspan) untuk setiap kombinasi tanggal dan tempat efektif
               $counts = [];
               foreach ($sorted as $peserta) {
-                  $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_awal_kegiatan->format('Y-m-d') : ($peserta->tgl_awal_kegiatan ?? '');
-                  $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_akhir_kegiatan->format('Y-m-d') : ($peserta->tgl_akhir_kegiatan ?? '');
-                  $tempat = $peserta->tempat_kegiatan ?? '';
-                  $key = $awal . '|' . $akhir . '|' . $tempat;
-                  
+                  $key = $peserta->tgl_awal_efektif . '|' . $peserta->tgl_akhir_efektif . '|' . $peserta->tempat_efektif;
                   $counts[$key] = ($counts[$key] ?? 0) + 1;
               }
 
@@ -259,13 +295,11 @@
 
           @foreach($sorted as $index => $peserta)
               @php
-                  $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan->format('Y-m-d')) : (!empty($peserta->tgl_awal_kegiatan) ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan) : null);
-                  $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan->format('Y-m-d')) : (!empty($peserta->tgl_akhir_kegiatan) ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan) : null);
-                  $tempat = $peserta->tempat_kegiatan ?? '';
-                  
-                  $keyValAwal = $awal ? $awal->format('Y-m-d') : '';
-                  $keyValAkhir = $akhir ? $akhir->format('Y-m-d') : '';
-                  $key = $keyValAwal . '|' . $keyValAkhir . '|' . $tempat;
+                  $awal = $peserta->tgl_awal_efektif !== '' ? \Carbon\Carbon::parse($peserta->tgl_awal_efektif) : null;
+                  $akhir = $peserta->tgl_akhir_efektif !== '' ? \Carbon\Carbon::parse($peserta->tgl_akhir_efektif) : null;
+                  $tempat = $peserta->tempat_efektif ?? '';
+
+                  $key = $peserta->tgl_awal_efektif . '|' . $peserta->tgl_akhir_efektif . '|' . $tempat;
 
                   if ($awal && $akhir && $awal->isSameDay($akhir)) {
                       $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
@@ -325,7 +359,11 @@
                   @endif
                 </td>
 
-                {{-- Kolom tanggal & tempat dengan rowspan --}}
+                {{-- Kolom tanggal & tempat dengan rowspan.
+                     Peserta yg tgl_awal_kegiatan/tgl_akhir_kegiatan/tempat_kegiatan-nya
+                     kosong sudah diberi nilai efektif warisan (dari peserta sebelumnya)
+                     di atas, sehingga key-nya sama dgn peserta sebelumnya dan otomatis
+                     ikut tergabung dalam rowspan yg sama. --}}
                 @if(!in_array($key, $renderedKeys))
                     <td rowspan="{{ $counts[$key] }}">
                       {{ $tanggalText }}{{ $tanggalText && $tempat ? ' di ' : '' }}{{ $tempat ?: '-' }}
