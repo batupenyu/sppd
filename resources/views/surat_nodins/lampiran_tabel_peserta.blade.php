@@ -8,7 +8,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 10px;
-            font-size: 8.5pt;
+            font-size: 8pt;
         }
         @page {
             size: A4 portrait;
@@ -17,7 +17,7 @@
         .header-info {
             margin-bottom: 20px;
             line-height: 1.0;
-            padding-left: 300px;
+            padding-left: 250px;
             font-style: italic;
             page-break-after: avoid;
         }
@@ -50,7 +50,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
             page-break-inside: auto;
         }
         table tr {
@@ -82,7 +82,8 @@
             padding-left: 15px;
         }
         .kegiatan-list li {
-            margin-bottom: 6px;
+            margin-bottom: 2px;
+            font-size: 6pt; /* Sesuaikan ukuran huruf di sini */
         }
         .kegiatan-list li:last-child {
             margin-bottom: 0;
