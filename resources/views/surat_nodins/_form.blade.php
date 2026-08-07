@@ -18,8 +18,6 @@
 
             <button type="button" data-tab="penandatangan" onclick="switchTab('penandatangan')"
                 class="tab-btn px-3 py-1.5 rounded-full font-medium transition text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Penandatangan</button>
-
-
         </nav>
     </div>
     {{-- ============ END NAVBAR ============ --}}
@@ -117,161 +115,170 @@
             </select>
         </div>
 
-    <div class="md:col-span-2">
-        <div class="flex justify-between items-center mb-2">
-            <h2 class="text-lg font-semibold border-b pb-2">Daftar Peserta</h2>
-            <button type="button" id="tambah-peserta" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded">+ Tambah Peserta</button>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full table-auto border">
-                <thead class="bg-gray-50 dark:bg-gray-700">
-                    <tr>
-                        <th class="px-2 py-2 text-left">Pegawai</th>
-                        <th class="px-2 py-2 text-left">Siswa</th>
-                        <th class="px-2 py-2 text-left">Tgl Awal Kegiatan</th>
-                        <th class="px-2 py-2 text-left">Tgl Akhir Kegiatan</th>
-                        <th class="px-2 py-2 text-left">Tempat Kegiatan</th>
-                        <th class="px-2 py-2 text-left"></th>
-                    </tr>
-                </thead>
-                <tbody class="peserta-list">
-                    @if(old('peserta') && is_array(old('peserta')))
-                        @foreach(old('peserta') as $item)
-                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => $item, 'asns' => $asns, 'siswas' => $siswas])
-                        @endforeach
-                    @elseif(isset($suratNodin) && $suratNodin->pesertaSuratUsulans->count() > 0)
-                        @php
-                            $groupedPeserta = [];
-                            foreach ($suratNodin->pesertaSuratUsulans as $peserta) {
-                                $key = ($peserta->tgl_awal_kegiatan ?? '') . '|' . ($peserta->tgl_akhir_kegiatan ?? '') . '|' . ($peserta->tempat_kegiatan ?? '') . '|' . ($peserta->siswa_id ?? '');
-                                if (!isset($groupedPeserta[$key])) {
-                                    $groupedPeserta[$key] = [
-                                        'pegawai_ids' => [],
-                                        'siswa_id' => $peserta->siswa_id ?? '',
-                                        'tgl_awal' => $peserta->tgl_awal_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan)->format('Y-m-d') : '',
-                                        'tgl_akhir' => $peserta->tgl_akhir_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan)->format('Y-m-d') : '',
-                                        'tempat_kegiatan' => $peserta->tempat_kegiatan ?? '',
-                                    ];
-                                }
-                                if ($peserta->pegawai_id) {
-                                    $groupedPeserta[$key]['pegawai_ids'][] = $peserta->pegawai_id;
-                                }
-                            }
-                        @endphp
-                        @foreach($groupedPeserta as $group)
+        <div class="md:col-span-2">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-lg font-semibold border-b pb-2">Daftar Peserta</h2>
+                <button type="button" id="tambah-peserta" class="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-1 px-3 rounded">+ Tambah Peserta</button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full table-auto border">
+                    <thead class="bg-gray-50 dark:bg-gray-700">
+                        <tr>
+                            <th class="px-2 py-2 text-left">Pegawai</th>
+                            <th class="px-2 py-2 text-left">Siswa</th>
+                            <th class="px-2 py-2 text-left">Tgl Awal Kegiatan</th>
+                            <th class="px-2 py-2 text-left">Tgl Akhir Kegiatan</th>
+                            <th class="px-2 py-2 text-left">Tempat Kegiatan</th>
+                            <th class="px-2 py-2 text-left"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="peserta-list">
+                        @if(isset($suratNodin) && $suratNodin->pesertaSuratUsulans->count() > 0)
                             @php
-                                $pegawaiIds = array_values(array_unique($group['pegawai_ids']));
+                                $groupedPeserta = [];
+                                foreach ($suratNodin->pesertaSuratUsulans as $peserta) {
+                                    // Key dikelompokkan berdasarkan pegawai, siswa, dan tanggal saja (tempat tidak ikut jadi key utama)
+                                    $pegawaiKey = $peserta->pegawai_id ?? 'no-pegawai';
+                                    $key = $pegawaiKey . '|' . ($peserta->siswa_id ?? '') . '|' . ($peserta->tgl_awal_kegiatan ?? '') . '|' . ($peserta->tgl_akhir_kegiatan ?? '');
+                                    
+                                    if (!isset($groupedPeserta[$key])) {
+                                        $groupedPeserta[$key] = [
+                                            'pegawai_ids' => $peserta->pegawai_id ? [$peserta->pegawai_id] : [],
+                                            'siswa_id' => $peserta->siswa_id ?? '',
+                                            'tgl_awal' => $peserta->tgl_awal_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan)->format('Y-m-d') : '',
+                                            'tgl_akhir' => $peserta->tgl_akhir_kegiatan ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan)->format('Y-m-d') : '',
+                                            'tempat_kegiatan' => [],
+                                        ];
+                                    } else {
+                                        if ($peserta->pegawai_id && !in_array($peserta->pegawai_id, $groupedPeserta[$key]['pegawai_ids'])) {
+                                            $groupedPeserta[$key]['pegawai_ids'][] = $peserta->pegawai_id;
+                                        }
+                                    }
+                                    
+                                    // Masukkan setiap tempat kegiatan ke dalam array penampung
+                                    if ($peserta->tempat_kegiatan && !in_array($peserta->tempat_kegiatan, $groupedPeserta[$key]['tempat_kegiatan'])) {
+                                        $groupedPeserta[$key]['tempat_kegiatan'][] = $peserta->tempat_kegiatan;
+                                    }
+                                }
+
+                                // Pastikan minimal ada 1 kotak kosong jika array tempat kosong
+                                foreach ($groupedPeserta as &$group) {
+                                    if (empty($group['tempat_kegiatan'])) {
+                                        $group['tempat_kegiatan'] = [''];
+                                    }
+                                }
+                                unset($group);
                             @endphp
-                            @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiIds, 'siswa_id' => $group['siswa_id'], 'tgl_awal_kegiatan' => $group['tgl_awal'], 'tgl_akhir_kegiatan' => $group['tgl_akhir'], 'tempat_kegiatan' => $group['tempat_kegiatan']], 'asns' => $asns, 'siswas' => $siswas])
-                        @endforeach
-                    @endif
-                    @if($pesertaIndex == 0)
-                        @include('surat_nodins._peserta_row', ['index' => 0, 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ''], 'asns' => $asns, 'siswas' => $siswas])
-                    @endif
-                </tbody>
-            </table>
+                            @foreach($groupedPeserta as $group)
+                                @php
+                                    $pegawaiIds = array_values(array_unique($group['pegawai_ids']));
+                                @endphp
+                                @include('surat_nodins._peserta_row', ['index' => $pesertaIndex++, 'item' => ['pegawai_id' => $pegawaiIds, 'siswa_id' => $group['siswa_id'], 'tgl_awal_kegiatan' => $group['tgl_awal'], 'tgl_akhir_kegiatan' => $group['tgl_akhir'], 'tempat_kegiatan' => $group['tempat_kegiatan']], 'asns' => $asns, 'siswas' => $siswas])
+                            @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </div>
         </div>
-    </div>
 
-    <table style="display:none;">
-        <tbody id="peserta-template">
-            @include('surat_nodins._peserta_row', ['index' => '__INDEX__', 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tanggal_kegiatan' => '', 'tempat_kegiatan' => ['']], 'asns' => $asns, 'siswas' => $siswas])
-        </tbody>
-    </table>
+        <table style="display:none;">
+            <tbody id="peserta-template">
+                @include('surat_nodins._peserta_row', ['index' => '__INDEX__', 'item' => ['pegawai_id' => '', 'siswa_id' => '', 'tgl_awal_kegiatan' => '', 'tgl_akhir_kegiatan' => '', 'tempat_kegiatan' => ['']], 'asns' => $asns, 'siswas' => $siswas])
+            </tbody>
+        </table>
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const list = document.querySelector('.peserta-list');
-        const templateRow = document.querySelector('#peserta-template tr');
-        const btnTambah = document.getElementById('tambah-peserta');
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const list = document.querySelector('.peserta-list');
+            const templateRow = document.querySelector('#peserta-template tr');
+            const btnTambah = document.getElementById('tambah-peserta');
 
-        // Logika Auto-fill Kop Surat berdasarkan Dari
-        const selectDari = document.getElementById('select-dari');
-        const selectKop = document.getElementById('select-kop');
+            // Logika Auto-fill Kop Surat berdasarkan Dari
+            const selectDari = document.getElementById('select-dari');
+            const selectKop = document.getElementById('select-kop');
 
-        if (selectDari && selectKop) {
-            selectDari.addEventListener('change', function() {
-                const val = this.value;
-                
-                if (val === 'Kepala SMK Negeri 1 Koba') {
-                    selectKop.value = 'kop_smk';
-                } else if (val === 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung') {
-                    selectKop.value = 'kop_dinas';
-                } else {
-                    selectKop.value = ''; 
-                }
-            });
-        }
-
-        function nextIndex() {
-            return list.querySelectorAll('tr.peserta-row').length;
-        }
-
-        function initPegawaiSelect2(select) {
-            if (typeof $ !== 'undefined') {
-                $(select).select2({
-                    placeholder: '-- Pilih Pegawai --',
-                    allowClear: true,
-                    width: '100%'
-                });
-            }
-        }
-
-        list.querySelectorAll('.pegawai-select2').forEach(initPegawaiSelect2);
-
-        btnTambah.addEventListener('click', function () {
-            const clone = templateRow.cloneNode(true);
-            const index = nextIndex();
-            clone.querySelectorAll('input, select, textarea').forEach(function(el) {
-                if (el.name) {
-                    el.name = el.name.replace('__INDEX__', index);
-                }
-                if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'date')) {
-                    el.value = '';
-                }
-                if (el.tagName === 'TEXTAREA') {
-                    el.value = '';
-                }
-                if (el.classList.contains('pegawai-select2')) {
-                    el.value = '';
-                }
-            });
-            list.appendChild(clone);
-            clone.querySelectorAll('.pegawai-select2').forEach(initPegawaiSelect2);
-        });
-
-        list.addEventListener('click', function (e) {
-            if (e.target.closest('.hapus-peserta')) {
-                const row = e.target.closest('tr.peserta-row');
-                row.querySelectorAll('.pegawai-select2').forEach(function(select) {
-                    if (typeof $ !== 'undefined') {
-                        $(select).select2('destroy');
+            if (selectDari && selectKop) {
+                selectDari.addEventListener('change', function() {
+                    const val = this.value;
+                    if (val === 'Kepala SMK Negeri 1 Koba') {
+                        selectKop.value = 'kop_smk';
+                    } else if (val === 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung') {
+                        selectKop.value = 'kop_dinas';
+                    } else {
+                        selectKop.value = ''; 
                     }
                 });
-                row.remove();
             }
 
-            if (e.target.closest('.hapus-tempat')) {
-                const item = e.target.closest('.tempat-item');
-                const list = item.closest('.tempat-kegiatan-list');
-                if (list.querySelectorAll('.tempat-item').length > 1) {
-                    item.remove();
+            function nextIndex() {
+                return list.querySelectorAll('tr.peserta-row').length;
+            }
+
+            function initPegawaiSelect2(select) {
+                if (typeof $ !== 'undefined') {
+                    $(select).select2({
+                        placeholder: '-- Pilih Pegawai --',
+                        allowClear: true,
+                        width: '100%'
+                    });
                 }
             }
 
-            if (e.target.closest('.tambah-tempat')) {
-                const list = e.target.closest('td').querySelector('.tempat-kegiatan-list');
-                const clone = list.querySelector('.tempat-item').cloneNode(true);
-                const input = clone.querySelector('input');
-                input.value = '';
+            list.querySelectorAll('.pegawai-select2').forEach(initPegawaiSelect2);
+
+            btnTambah.addEventListener('click', function () {
+                const clone = templateRow.cloneNode(true);
+                const index = nextIndex();
+                clone.querySelectorAll('input, select, textarea').forEach(function(el) {
+                    if (el.name) {
+                        el.name = el.name.replace(/peserta\[.*?\]/, 'peserta[' + index + ']');
+                    }
+                    if (el.tagName === 'INPUT' && (el.type === 'text' || el.type === 'date')) {
+                        el.value = '';
+                    }
+                    if (el.tagName === 'TEXTAREA') {
+                        el.value = '';
+                    }
+                    if (el.classList.contains('pegawai-select2')) {
+                        el.value = '';
+                    }
+                });
                 list.appendChild(clone);
-            }
+                clone.querySelectorAll('.pegawai-select2').forEach(initPegawaiSelect2);
+            });
+
+            list.addEventListener('click', function (e) {
+                if (e.target.closest('.hapus-peserta')) {
+                    const row = e.target.closest('tr.peserta-row');
+                    row.querySelectorAll('.pegawai-select2').forEach(function(select) {
+                        if (typeof $ !== 'undefined') {
+                            $(select).select2('destroy');
+                        }
+                    });
+                    row.remove();
+                }
+
+                if (e.target.closest('.hapus-tempat')) {
+                    const item = e.target.closest('.tempat-item');
+                    const tempatList = item.closest('.tempat-kegiatan-list');
+                    if (tempatList.querySelectorAll('.tempat-item').length > 1) {
+                        item.remove();
+                    }
+                }
+
+                if (e.target.closest('.tambah-tempat')) {
+                    const tempatList = e.target.closest('td').querySelector('.tempat-kegiatan-list');
+                    const clone = tempatList.querySelector('.tempat-item').cloneNode(true);
+                    const textarea = clone.querySelector('textarea');
+                    textarea.value = '';
+                    tempatList.appendChild(clone);
+                }
+            });
         });
-    });
-    </script>
+        </script>
     </div>
     {{-- ============ END TAB: PESERTA ============ --}}
 
@@ -286,7 +293,7 @@
             <select name="penandatangan_id" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                 <option value="">-- Pilih Penandatangan --</option>
                 @foreach($asns as $asn)
-                    <option value="{{ $asn->id }}" {{ old('penandatangan_id', $suratNodin->penandatangan_id ?? $defaultPenandatanganId) == $asn->id ? 'selected' : '' }}>
+                    <option value="{{ $asn->id }}" {{ old('penandatangan_id', $suratNodin->penandatangan_id ?? $defaultPenandatanganId ?? '') == $asn->id ? 'selected' : '' }}>
                         {{ $asn->nama }} {{ $asn->nip ? '(' . $asn->nip . ')' : '' }}
                     </option>
                 @endforeach
@@ -316,7 +323,6 @@
         </div>
     </div>
     {{-- ============ END TAB: PENANDATANGAN ============ --}}
-
 
 </div>
 
