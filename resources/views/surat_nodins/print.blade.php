@@ -77,6 +77,7 @@
         padding: 6px;
         font-size: 11pt;
         text-align: left;
+        vertical-align: middle;
       }
       .peserta-table th {
         font-weight: bold;
@@ -184,7 +185,7 @@
       <tr>
         <td>Dari</td>
         <td>:</td>
-          <td>@php $dari = $suratNodin->dari; $prefix = ''; if (($suratNodin->dari_plt ?? false)) $prefix .= 'Plt. '; if (($suratNodin->dari_an ?? false)) $prefix .= 'a.n. '; echo $prefix . ($dari ?: '-'); @endphp</td>
+        <td>@php $dari = $suratNodin->dari; $prefix = ''; if (($suratNodin->dari_plt ?? false)) $prefix .= 'Plt. '; if (($suratNodin->dari_an ?? false)) $prefix .= 'a.n. '; echo $prefix . ($dari ?: '-'); @endphp</td>
       </tr>
       <tr>
         <td>Tanggal</td>
@@ -241,135 +242,123 @@
           <th style="width: 18%;">NIP/NIS</th>
           <th style="width: 15%;">Pangkat / Gol</th>
           <th style="width: 15%;">Jabatan</th>
-          <th style="width: 12%;">Tanggal/Tempat Kegiatan</th>
+          <th style="width: 25%;">Tanggal/Tempat Kegiatan</th>
         </tr>
       </thead>
       <tbody>
         <?php
             $pesertaList = $suratNodin->pesertaSuratUsulans;
+            
+            // 1. Urutkan berdasarkan tanggal awal, tanggal akhir, dan tempat kegiatan agar mengelompok
             $sorted = $pesertaList->sortBy(function ($peserta) {
                 $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_awal_kegiatan->format('Y-m-d') : ($peserta->tgl_awal_kegiatan ?? '');
                 $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_akhir_kegiatan->format('Y-m-d') : ($peserta->tgl_akhir_kegiatan ?? '');
                 $tempat = $peserta->tempat_kegiatan ?? '';
-                $pesertaId = $peserta->pegawai_id ?? $peserta->siswa_id ?? '';
-                return $pesertaId . '|' . $awal . '|' . $akhir . '|' . $tempat;
+                return $awal . '|' . $akhir . '|' . $tempat;
             })->values();
-            $groups = [];
+
+            // 2. Hitung jumlah baris (rowspan) untuk setiap kombinasi tanggal dan tempat
+            $counts = [];
             foreach ($sorted as $peserta) {
-                $pesertaId = $peserta->pegawai_id ?? $peserta->siswa_id ?? '';
-                if (!isset($groups[$pesertaId])) {
-                    $groups[$pesertaId] = [
-                        'items' => [],
-                    ];
-                }
-                $groups[$pesertaId]['items'][] = $peserta;
+                $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_awal_kegiatan->format('Y-m-d') : ($peserta->tgl_awal_kegiatan ?? '');
+                $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? $peserta->tgl_akhir_kegiatan->format('Y-m-d') : ($peserta->tgl_akhir_kegiatan ?? '');
+                $tempat = $peserta->tempat_kegiatan ?? '';
+                $key = $awal . '|' . $akhir . '|' . $tempat;
+                
+                $counts[$key] = ($counts[$key] ?? 0) + 1;
             }
-            $no = 0;
+
+            $renderedKeys = [];
         ?>
 
-        @foreach($groups as $group)
-            <?php $rowspan = count($group['items']); ?>
-            @foreach($group['items'] as $index => $peserta)
-                <?php
-                    $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan->format('Y-m-d')) : null;
-                    $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan->format('Y-m-d')) : null;
-                    $tempat = $peserta->tempat_kegiatan ?? '';
-                    if ($awal && $akhir && $awal->isSameDay($akhir)) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
-                    } elseif ($awal && $akhir && $awal->format('n') === $akhir->format('n') && $awal->format('Y') === $akhir->format('Y')) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
-                    } elseif ($awal && $akhir) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
-                    } elseif ($awal) {
-                        $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
-                    } else {
-                        $tanggalText = '';
-                    }
-                ?>
-                <tr>
-                  <td style="text-align: center;"><?php echo e($no + $index + 1); ?>.</td>
-                  <?php if($index == 0): ?>
-                  <td rowspan="<?php echo e($rowspan); ?>">
-                    @if($peserta->pegawai)
-                      {{ $peserta->pegawai->nama }}
-                    @elseif($peserta->siswa)
-                      {{ ucwords(strtolower($peserta->siswa->nama)) }}
-                    @else
-                      -
-                    @endif
-                  </td>
-                  <td rowspan="<?php echo e($rowspan); ?>">
-                    @if($peserta->pegawai)
-                      {{ $peserta->pegawai->nip ?: '-' }}
-                    @elseif($peserta->siswa)
-                      {{ $peserta->siswa->nis ?: '-' }}
-                    @else
-                      -
-                    @endif
-                  </td>
-                  
-                  @php
-                      $pangkat = $peserta->pegawai->pangkat ?? null;
-                      $golongan = $peserta->pegawai->golongan ?? null;
-                      $pangkatGolongan = $pangkat || $golongan
-                          ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
-                          : '-';
-                  @endphp
-                  
-                  <td rowspan="<?php echo e($rowspan); ?>" style="text-align: {{ $peserta->siswa || $pangkatGolongan === 'IX' || $pangkatGolongan === '-' ? 'center' : 'left' }};">
-                    @if($peserta->pegawai)
-                      {{ $pangkatGolongan }}
-                    @elseif($peserta->siswa)
-                      {{ $peserta->siswa->kelas ?: '-' }}
-                    @else
-                      -
-                    @endif
-                  </td>
-                  <td rowspan="<?php echo e($rowspan); ?>">
-                    @if($peserta->pegawai)
-                      {{ $peserta->pegawai->jabatan ?: '-' }}
-                    @elseif($peserta->siswa)
-                      Siswa
-                    @else
-                      -
-                    @endif
-                  </td>
-                  <?php endif; ?>
-                  <td>
-                    @php
-                        $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan->format('Y-m-d')) : null;
-                        $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan->format('Y-m-d')) : null;
-                        $tempat = $peserta->tempat_kegiatan ?? '';
-                        if ($awal && $akhir && $awal->isSameDay($akhir)) {
-                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
-                        } elseif ($awal && $akhir && $awal->format('n') === $akhir->format('n') && $awal->format('Y') === $akhir->format('Y')) {
-                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
-                        } elseif ($awal && $akhir) {
-                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
-                        } elseif ($awal) {
-                            $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
-                        } else {
-                            $tanggalText = '';
-                        }
-                    @endphp
+        @foreach($sorted as $index => $peserta)
+            <?php
+                $awal = ($peserta->tgl_awal_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_awal_kegiatan->format('Y-m-d')) : null;
+                $akhir = ($peserta->tgl_akhir_kegiatan ?? '') instanceof \Carbon\CarbonInterface ? \Carbon\Carbon::parse($peserta->tgl_akhir_kegiatan->format('Y-m-d')) : null;
+                $tempat = $peserta->tempat_kegiatan ?? '';
+                
+                $keyValAwal = $awal ? $awal->format('Y-m-d') : '';
+                $keyValAkhir = $akhir ? $akhir->format('Y-m-d') : '';
+                $key = $keyValAwal . '|' . $keyValAkhir . '|' . $tempat;
+
+                if ($awal && $akhir && $awal->isSameDay($akhir)) {
+                    $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
+                } elseif ($awal && $akhir && $awal->format('n') === $akhir->format('n') && $awal->format('Y') === $akhir->format('Y')) {
+                    $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
+                } elseif ($awal && $akhir) {
+                    $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y') . ' s.d. ' . \App\Http\Controllers\SuratNodinController::formatTanggal($akhir, '%d %B %Y');
+                } elseif ($awal) {
+                    $tanggalText = \App\Http\Controllers\SuratNodinController::formatTanggal($awal, '%d %B %Y');
+                } else {
+                    $tanggalText = '';
+                }
+            ?>
+            <tr>
+              <td style="text-align: center;"><?php echo e($index + 1); ?>.</td>
+              <td>
+                @if($peserta->pegawai)
+                  {{ $peserta->pegawai->nama }}
+                @elseif($peserta->siswa)
+                  {{ ucwords(strtolower($peserta->siswa->nama)) }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($peserta->pegawai)
+                  {{ $peserta->pegawai->nip ?: '-' }}
+                @elseif($peserta->siswa)
+                  {{ $peserta->siswa->nis ?: '-' }}
+                @else
+                  -
+                @endif
+              </td>
+              
+              @php
+                  $pangkat = $peserta->pegawai->pangkat ?? null;
+                  $golongan = $peserta->pegawai->golongan ?? null;
+                  $pangkatGolongan = $pangkat || $golongan
+                      ? trim(($pangkat ?: '') . ($golongan ? ', ' . $golongan : ''), ', ')
+                      : '-';
+              @endphp
+              
+              <td style="text-align: {{ $peserta->siswa || $pangkatGolongan === 'IX' || $pangkatGolongan === '-' ? 'center' : 'left' }};">
+                @if($peserta->pegawai)
+                  {{ $pangkatGolongan }}
+                @elseif($peserta->siswa)
+                  {{ $peserta->siswa->kelas ?: '-' }}
+                @else
+                  -
+                @endif
+              </td>
+              <td>
+                @if($peserta->pegawai)
+                  {{ $peserta->pegawai->jabatan ?: '-' }}
+                @elseif($peserta->siswa)
+                  Siswa
+                @else
+                  -
+                @endif
+              </td>
+
+              {{-- Hanya kolom tanggal & tempat yang di-rowspan --}}
+              @if(!in_array($key, $renderedKeys))
+                  <td rowspan="{{ $counts[$key] }}">
                     {{ $tanggalText }} {{ $tempat ?: '-' }}
                   </td>
-                </tr>
-            @endforeach
-            <?php $no += $rowspan; ?>
+                  <?php $renderedKeys[] = $key; ?>
+              @endif
+            </tr>
         @endforeach
+
         @if($suratNodin->pesertaSuratUsulans->isEmpty())
         <tr>
-          <td colspan="6" class="text-center">Tidak ada data peserta.</td>
+          <td colspan="6" style="text-align: center;">Tidak ada data peserta.</td>
         </tr>
         @endif
 
       </tbody>
     </table>
-    @else
-    <!-- <div class="content">
-      <p><em>Catatan: Daftar peserta terlampir secara terpisah pada lampiran.</em></p>
-    </div> -->
     @endif
 
     <div class="content">
@@ -386,8 +375,7 @@
                 $jabatanAtasan = $atasan->jabatan ?? '';
                 $unitKerjaAtasan = $atasan->unit_kerja ?? '';
                 $nama = $atasan->nama ?? '';
-                    $pangkat = $atasan->pangkat_golongan ?? '';
-                    $golongan = '';
+                $pangkat = $atasan->pangkat_golongan ?? '';
                 $nip = $atasan->nip ?? '';
 
                 $jabatanTugas = $pegawaiTugas->jabatan ?? '';
@@ -441,9 +429,9 @@
     </div>
 
     <div class="no-print" style="text-align:center; margin-top:20px;padding-left:15px">
-    <a href="{{ route('surat-nodins.lampiran-tabel-peserta', $suratNodin) }}" target="_blank" style="display:inline-block; margin-right:0.5rem; background:#16a34a; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; font-weight:bold;">Lampiran Tabel Peserta</a>
-    <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
-    <a href="{{ route('surat-nodins.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
-</div>
+      <a href="{{ route('surat-nodins.lampiran-tabel-peserta', $suratNodin) }}" target="_blank" style="display:inline-block; margin-right:0.5rem; background:#16a34a; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; font-weight:bold;">Lampiran Tabel Peserta</a>
+      <button onclick="window.print()" style="background:#2563eb; color:#fff; border:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem; cursor:pointer;">Cetak</button>
+      <a href="{{ route('surat-nodins.index') }}" style="display:inline-block; margin-left:0.5rem; background:#6b7280; color:#fff; text-decoration:none; padding:0.6rem 1.4rem; border-radius:4px; font-size:0.95rem;">Kembali</a>
+    </div>
   </body>
 </html>
