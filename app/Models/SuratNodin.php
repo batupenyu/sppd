@@ -26,14 +26,11 @@ class SuratNodin extends Model
         'penandatangan_plt',
         'penandatangan_an',
         'pegawai_tugas_id',
-        'tempat_ditetapkan',
-        'tanggal_ditetapkan',
         'kop_surat',
     ];
 
     protected $casts = [
         'tanggal' => 'date',
-        'tanggal_ditetapkan' => 'date',
     ];
 
     public function penandatangan(): BelongsTo

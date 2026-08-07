@@ -19,8 +19,7 @@
             <button type="button" data-tab="penandatangan" onclick="switchTab('penandatangan')"
                 class="tab-btn px-3 py-1.5 rounded-full font-medium transition text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Penandatangan</button>
 
-            <button type="button" data-tab="penetapan" onclick="switchTab('penetapan')"
-                class="tab-btn px-3 py-1.5 rounded-full font-medium transition text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">Penetapan</button>
+
         </nav>
     </div>
     {{-- ============ END NAVBAR ============ --}}
@@ -43,7 +42,7 @@
 
         <div>
             <label class="block font-medium mb-1">Lampiran</label>
-            <input type="text" name="lampiran" value="{{ old('lampiran', $suratNodin->lampiran ?? '-') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            <input type="text" name="lampiran" value="{{ old('lampiran', $suratNodin->lampiran ?? '1 (satu) berkas') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
         </div>
 
         <div>
@@ -58,7 +57,7 @@
 
         <div class="md:col-span-2">
             <label class="block font-medium mb-1">Dari</label>
-            <select name="dari" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            <select name="dari" id="select-dari" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                 <option value="">-- Pilih Dari --</option>
                 <option value="Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung' ? 'selected' : '' }}>Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung</option>
                 <option value="Kepala SMK Negeri 1 Koba" {{ old('dari', $suratNodin->dari ?? '') == 'Kepala SMK Negeri 1 Koba' ? 'selected' : '' }}>Kepala SMK Negeri 1 Koba</option>
@@ -108,7 +107,7 @@
 
         <div class="md:col-span-2">
             <label class="block font-medium mb-1">Kop Surat</label>
-            <select name="kop_surat" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+            <select name="kop_surat" id="select-kop" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
                 <option value="">-- Pilih Kop Surat --</option>
                 @foreach($logos as $logo)
                     <option value="{{ $logo->name }}" {{ old('kop_surat', $suratNodin->kop_surat ?? '') == $logo->name ? 'selected' : '' }}>
@@ -188,6 +187,24 @@
         const list = document.querySelector('.peserta-list');
         const templateRow = document.querySelector('#peserta-template tr');
         const btnTambah = document.getElementById('tambah-peserta');
+
+        // Logika Auto-fill Kop Surat berdasarkan Dari
+        const selectDari = document.getElementById('select-dari');
+        const selectKop = document.getElementById('select-kop');
+
+        if (selectDari && selectKop) {
+            selectDari.addEventListener('change', function() {
+                const val = this.value;
+                
+                if (val === 'Kepala SMK Negeri 1 Koba') {
+                    selectKop.value = 'kop_smk';
+                } else if (val === 'Kepala Dinas Pendidikan Provinsi Kepulauan Bangka Belitung') {
+                    selectKop.value = 'kop_dinas';
+                } else {
+                    selectKop.value = ''; 
+                }
+            });
+        }
 
         function nextIndex() {
             return list.querySelectorAll('tr.peserta-row').length;
@@ -300,22 +317,7 @@
     </div>
     {{-- ============ END TAB: PENANDATANGAN ============ --}}
 
-    {{-- ============ TAB: PENETAPAN ============ --}}
-    <div id="tab-penetapan" class="tab-content hidden grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="md:col-span-2">
-            <h2 class="text-lg font-semibold mb-4 border-b pb-2">Penetapan</h2>
-        </div>
 
-        <div>
-            <label class="block font-medium mb-1">Tempat Ditetapkan</label>
-            <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $suratNodin->tempat_ditetapkan ?? 'Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-        </div>
-        <div>
-            <label class="block font-medium mb-1">Tanggal Ditetapkan</label>
-            <input type="date" name="tanggal_ditetapkan" value="{{ old('tanggal_ditetapkan', optional($suratNodin->tanggal_ditetapkan ?? null)->format('Y-m-d')) }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
-        </div>
-    </div>
-    {{-- ============ END TAB: PENETAPAN ============ --}}
 </div>
 
 <script>
@@ -342,5 +344,3 @@ function switchTab(tabId) {
     });
 }
 </script>
-
-

@@ -196,8 +196,6 @@ class SuratNodinController extends Controller
             'penandatangan_plt' => 'nullable|boolean',
             'penandatangan_an' => 'nullable|boolean',
             'pegawai_tugas_id' => 'nullable|exists:asns,id',
-            'tempat_ditetapkan' => 'nullable|string|max:255',
-            'tanggal_ditetapkan' => 'nullable|date',
             'kop_surat' => 'nullable|string|max:255',
             'peserta' => 'nullable|array',
             'peserta.*.pegawai_id' => 'nullable|array',
