@@ -219,7 +219,7 @@
 
   <div class="signature">
     <div class="line">
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ $suratTugas->dikeluarkan_di ?: 'Nama Tempat' }}, {{ $tanggalDikeluarkan ?: 'Tanggal' }}
+      {{ $suratTugas->dikeluarkan_di ?: 'Nama Tempat' }}, {{ $tanggalDikeluarkan ?: 'Tanggal' }}
     </div>
     <!-- <div class="spacer"></div> -->
     <div class="line">
