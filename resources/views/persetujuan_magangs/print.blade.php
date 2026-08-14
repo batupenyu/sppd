@@ -6,39 +6,64 @@
     <title>Surat Persetujuan Mahasiswa Magang</title>
     <style>
         body {
-            font-family: "Times New Roman", Times, serif;
+            font-family: Arial, sans-serif;
             font-size: 12pt;
-            line-height: 1.5;
-            color: #000;
-            background-color: #fff;
+            line-height: 1.3;
             margin: 0;
             padding: 0;
+            background-color: #fff;
+            color: #000;
         }
+
+        .page {
+            max-width: 210mm;
+            margin: 1cm auto 0 auto; /* jarak 1cm dari tepi atas kertas */
+            padding: 0 2cm 2cm 2cm; /* padding kiri/kanan/bawah saja */
+        }
+
         .container {
             width: 210mm;
             min-height: 297mm;
-            padding: 20mm 20mm 20mm 25mm;
+            padding: 0 2cm 2cm 2cm; /* HAPUS padding-top: 1cm di sini */
             box-sizing: border-box;
             margin: 0 auto;
         }
+
+        .kop-surat {
+            width: 100%;
+            margin: 0 auto 20px auto; /* tidak ada margin atas */
+            text-align: center;
+            font-weight: bold;
+            font-size: 14pt;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .kop-surat img {
+            max-height: 100px;
+            margin-bottom: 5px;
+        }
+
         .tanggal-atas {
             text-align: right;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
         .meta-surat {
             width: 100%;
-            margin-bottom: 25px;
+            margin-bottom: 10px;
         }
         .meta-surat td {
             vertical-align: top;
-            padding-bottom: 5px;
+            padding-bottom: 0px;
         }
         .tujuan-surat {
             margin-bottom: 30px;
         }
         .isi-surat {
             text-align: justify;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            text-indent: 35px;
         }
         .identitas-smk {
             margin: 15px 0 15px 30px;
@@ -60,13 +85,13 @@
             background-color: #f2f2f2;
         }
         .tanda-tangan {
-            margin-top: 50px;
+            margin-top: 20px;
             float: right;
             text-align: left;
             width: 300px;
         }
         .ruang-ttd {
-            height: 80px;
+            height: 70px;
         }
 
         @media print {
@@ -76,7 +101,7 @@
             .container {
                 width: auto;
                 height: auto;
-                padding: 0;
+                padding: 1cm 2cm 2cm 2cm;
                 margin: 0;
             }
         }
@@ -88,6 +113,12 @@
             $fmt = fn ($d) => $d ? \App\Http\Controllers\PersetujuanMagangController::formatTanggal($d, '%d %B %Y') : '...................';
             $penandatangan = $persetujuanMagang->penandatangan;
         @endphp
+
+        <div class="kop-surat">
+            @if($kopSuratBase64)
+            <img src="{{ $kopSuratBase64 }}" style="max-height: 120px; margin-bottom: 0px; width:95%" />
+            @endif
+        </div>
 
         <div class="tanggal-atas">
             {{ $persetujuanMagang->tempat_ditetapkan ?: '[Kota SMK]' }}, {{ $fmt($persetujuanMagang->tanggal_ditetapkan) }}
@@ -107,7 +138,7 @@
             <tr>
                 <td>Lampiran</td>
                 <td>:</td>
-                <td>{{ $persetujuanMagang->lampiran ?: '- / 1 Berkas' }}</td>
+                <td>{{ $persetujuanMagang->lampiran ?: '1 (satu) Berkas' }}</td>
             </tr>
             <tr>
                 <td>Perihal</td>
@@ -119,12 +150,10 @@
         <div class="tujuan-surat">
             Kepada Yth.<br>
             <strong>{{ $persetujuanMagang->tujuan_surat ?: 'Pimpinan / Ketua Program Studi ...' }}</strong><br>
-            Universitas / Perguruan Tinggi ...<br>
-            di Tempat
+            di <br> Tempat
         </div>
 
         <div class="isi-surat">
-            Dengan hormat,<br><br>
             Menindaklanjuti surat permohonan izin magang dari Saudara nomor <strong>{{ $persetujuanMagang->nomor_surat_kampus ?: '[Nomor Surat dari Kampus]' }}</strong> tanggal <strong>{{ $fmt($persetujuanMagang->tanggal_surat_kampus) }}</strong>, maka dengan ini unit/lembaga kami:
         </div>
 
@@ -179,7 +208,7 @@
         </table>
 
         <div class="isi-surat">
-            Adapun pelaksanaan magang akan dimulai pada tanggal <strong>{{ $fmt($persetujuanMagang->tanggal_mulai) }}</strong> sampai dengan <strong>{{ $fmt($persetujuanMagang->tanggal_selesai) }}</strong>. Selama kegiatan berlangsung, para mahasiswa yang bersangkutan wajib mematuhi seluruh tata tertib dan peraturan kerja yang berlaku di lingkungan SMK kami.
+            Adapun pelaksanaan magang akan dimulai pada tanggal <strong>{{ $fmt($persetujuanMagang->tanggal_mulai) }}</strong> sampai dengan <strong>{{ $fmt($persetujuanMagang->tanggal_selesai) }}</strong>, selama kegiatan berlangsung, para mahasiswa yang bersangkutan wajib mematuhi seluruh tata tertib dan peraturan kerja yang berlaku di lingkungan {{ $persetujuanMagang->nama_instansi ?: 'SMK Negeri / Swasta ...' }}.
         </div>
 
         <div class="isi-surat">
@@ -187,9 +216,10 @@
         </div>
 
         <div class="tanda-tangan">
-            Kepala / Ketua Unit Hubungan Industri,<br>
+            {{$penandatangan->jabatan ?? ''}},<br>
             <div class="ruang-ttd"></div>
             <strong><u>{{ $penandatangan->nama ?? '[Nama Penandatangan, Gelar]' }}</u></strong><br>
+            {{ $penandatangan->tugas_tambahan ?: ($penandatangan->pangkat ?: '') }}<br>
             NIP. {{ $penandatangan->nip ?? '[Nomor Induk Pegawai]' }}
         </div>
 

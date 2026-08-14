@@ -81,9 +81,9 @@
                 </tr>
             </thead>
             <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
-                @php
+                <?php
                     $mahasiswas = old('mahasiswas', ($pm && $pm->mahasiswas) ? $pm->mahasiswas : [['nama' => '', 'nim' => '', 'program_studi' => '']]);
-                @endphp
+                ?>
                 @foreach($mahasiswas as $index => $mahasiswa)
                 <tr class="mahasiswa-row">
                     <td class="px-4 py-2">{{ $index + 1 }}</td>
