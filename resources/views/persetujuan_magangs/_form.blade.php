@@ -21,7 +21,7 @@
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Perihal</label>
-        <input type="text" name="perihal" value="{{ old('perihal', $pm->perihal ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="perihal" value="{{ old('perihal', $pm->perihal ?? 'Permohonan Magang') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
 
     <div class="md:col-span-2">
@@ -48,11 +48,11 @@
 
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Nama Instansi / Unit</label>
-        <input type="text" name="nama_instansi" value="{{ old('nama_instansi', $pm->nama_instansi ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="nama_instansi" value="{{ old('nama_instansi', $pm->nama_instansi ?? 'SMK Negeri 1 Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
     <div class="md:col-span-2">
         <label class="block font-medium mb-1">Alamat Instansi</label>
-        <textarea name="alamat_instansi" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('alamat_instansi', $pm->alamat_instansi ?? '') }}</textarea>
+        <textarea name="alamat_instansi" rows="2" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">{{ old('alamat_instansi', $pm->alamat_instansi ?? 'Jalan Raya Koba Km. 42, Desa Penyak, Kab. Bangka Tengah') }}</textarea>
     </div>
 
     <div>
@@ -128,7 +128,7 @@
 
     <div>
         <label class="block font-medium mb-1">Tempat Ditetapkan</label>
-        <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $pm->tempat_ditetapkan ?? '') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
+        <input type="text" name="tempat_ditetapkan" value="{{ old('tempat_ditetapkan', $pm->tempat_ditetapkan ?? 'Koba') }}" class="w-full border rounded px-3 py-2 dark:bg-gray-700 dark:text-gray-100">
     </div>
     <div>
         <label class="block font-medium mb-1">Tanggal Ditetapkan</label>
