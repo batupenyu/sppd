@@ -11,6 +11,7 @@ use App\Http\Controllers\SpmtController;
 use App\Http\Controllers\SptjmController;
 use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratDispensasiController;
+use App\Http\Controllers\PersetujuanMagangController;
 use App\Http\Controllers\SuratAktifMengajarController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratKp4Controller;
@@ -104,6 +105,11 @@ Route::resource('surat-aktif-mengajars', SuratAktifMengajarController::class)
     ->parameter('surat-aktif-mengajars', 'surat_aktif_mengajar');
 Route::delete('surat-aktif-mengajars/{surat_aktif_mengajar}', [SuratAktifMengajarController::class, 'destroy'])->name('surat-aktif-mengajars.destroy');
 Route::get('surat-aktif-mengajars/{surat_aktif_mengajar}/print', [SuratAktifMengajarController::class, 'print'])->name('surat-aktif-mengajars.print');
+Route::resource('persetujuan-magangs', PersetujuanMagangController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update'])
+    ->parameter('persetujuan-magangs', 'persetujuan_magang');
+Route::delete('persetujuan-magangs/{persetujuan_magang}', [PersetujuanMagangController::class, 'destroy'])->name('persetujuan-magangs.destroy');
+Route::get('persetujuan-magangs/{persetujuan_magang}/print', [PersetujuanMagangController::class, 'print'])->name('persetujuan-magangs.print');
 Route::resource('surat-kp4s', SuratKp4Controller::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-kp4s/{surat_kp4}', [SuratKp4Controller::class, 'destroy'])->name('surat-kp4s.destroy');
