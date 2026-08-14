@@ -11,6 +11,7 @@ use App\Http\Controllers\SpmtController;
 use App\Http\Controllers\SptjmController;
 use App\Http\Controllers\SuratCutiController;
 use App\Http\Controllers\SuratDispensasiController;
+use App\Http\Controllers\SuratAktifMengajarController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratKp4Controller;
 use App\Http\Controllers\SuratKp4OldController;
@@ -98,6 +99,11 @@ Route::resource('surat-keterangans', SuratKeteranganController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-keterangans/{surat_keterangan}', [SuratKeteranganController::class, 'destroy'])->name('surat-keterangans.destroy');
 Route::get('surat-keterangans/{surat_keterangan}/print', [SuratKeteranganController::class, 'print'])->name('surat-keterangans.print');
+Route::resource('surat-aktif-mengajars', SuratAktifMengajarController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update'])
+    ->parameter('surat-aktif-mengajars', 'surat_aktif_mengajar');
+Route::delete('surat-aktif-mengajars/{surat_aktif_mengajar}', [SuratAktifMengajarController::class, 'destroy'])->name('surat-aktif-mengajars.destroy');
+Route::get('surat-aktif-mengajars/{surat_aktif_mengajar}/print', [SuratAktifMengajarController::class, 'print'])->name('surat-aktif-mengajars.print');
 Route::resource('surat-kp4s', SuratKp4Controller::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-kp4s/{surat_kp4}', [SuratKp4Controller::class, 'destroy'])->name('surat-kp4s.destroy');
