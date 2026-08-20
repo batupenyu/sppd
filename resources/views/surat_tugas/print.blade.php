@@ -86,7 +86,7 @@
     <tr>
       <td class="label" style="vertical-align: top; padding-top: 3px;">Dasar</td>
       <td class="colon" style="vertical-align: top; padding-top: 3px;">:</td>
-      <td>
+      <td style="vertical-align: top; padding-top: 3px; text-align: justify;">
         @php
           $dasarItems = array_filter(array_map('trim', explode("\n", $suratTugas->dasar ?: '')), fn ($l) => $l !== '');
         @endphp
