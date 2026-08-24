@@ -11,6 +11,7 @@ use App\Http\Controllers\SpdController;
 use App\Http\Controllers\SpmtController;
 use App\Http\Controllers\SptjmController;
 use App\Http\Controllers\SuratCutiController;
+use App\Http\Controllers\FormCutiController;
 use App\Http\Controllers\SuratDispensasiController;
 use App\Http\Controllers\PersetujuanMagangController;
 use App\Http\Controllers\SuratAktifMengajarController;
@@ -89,6 +90,10 @@ Route::resource('surat-cutis', SuratCutiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-cutis/{surat_cuti}', [SuratCutiController::class, 'destroy'])->name('surat-cutis.destroy');
 Route::get('surat-cutis/{surat_cuti}/print', [SuratCutiController::class, 'print'])->name('surat-cutis.print');
+Route::resource('form-cutis', FormCutiController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('form-cutis/{form_cuti}', [FormCutiController::class, 'destroy'])->name('form-cutis.destroy');
+Route::get('form-cutis/{form_cuti}/print', [FormCutiController::class, 'print'])->name('form-cutis.print');
 Route::resource('laporan-cutis', LaporanCutiController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('laporan-cutis/{laporan_cuti}', [LaporanCutiController::class, 'destroy'])->name('laporan-cutis.destroy');

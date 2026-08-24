@@ -55,9 +55,10 @@
                             ],
                             [
                                 'label' => 'Cuti & Dispensasi',
-                                'routes' => ['surat-cutis.*', 'laporan-cutis.*', 'surat-dispensasis.*'],
+                                'routes' => ['surat-cutis.*', 'form-cutis.*', 'laporan-cutis.*', 'surat-dispensasis.*'],
                                 'items' => [
                                     ['label' => 'Surat Cuti', 'route' => 'surat-cutis.index', 'routeName' => 'surat-cutis.*'],
+                                    ['label' => 'Form Cuti', 'route' => 'form-cutis.index', 'routeName' => 'form-cutis.*'],
                                     ['label' => 'Laporan Cuti', 'route' => 'laporan-cutis.index', 'routeName' => 'laporan-cutis.*'],
                                     ['label' => 'Surat Dispensasi', 'route' => 'surat-dispensasis.index', 'routeName' => 'surat-dispensasis.*'],
                                 ],
