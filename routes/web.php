@@ -26,6 +26,7 @@ use App\Http\Controllers\SuratRekomendasiController;
 use App\Http\Controllers\SuratResmiController;
 use App\Http\Controllers\SuratSantunanController;
 use App\Http\Controllers\SuratTugasController;
+use App\Http\Controllers\SuratTugasPklController;
 use App\Http\Controllers\SuratUndanganController;
 use Illuminate\Support\Facades\Route;
 
@@ -65,6 +66,11 @@ Route::resource('drh-satyalancana', DrhSatyalancanaController::class)
     ->parameter('drh-satyalancana', 'drh');
 Route::delete('drh-satyalancana/{drh}', [DrhSatyalancanaController::class, 'destroy'])->name('drh-satyalancana.destroy');
 Route::get('drh-satyalancana/{drh}/print', [DrhSatyalancanaController::class, 'print'])->name('drh-satyalancana.print');
+Route::resource('surat-tugas-pkls', SuratTugasPklController::class)
+    ->except(['show', 'destroy'])
+    ->parameter('surat-tugas-pkls', 'surat_tugas_pkl');
+Route::delete('surat-tugas-pkls/{surat_tugas_pkl}', [SuratTugasPklController::class, 'destroy'])->name('surat-tugas-pkl.destroy');
+Route::get('surat-tugas-pkls/{surat_tugas_pkl}/print', [SuratTugasPklController::class, 'print'])->name('surat-tugas-pkl.print');
 Route::resource('surat-tugas', SuratTugasController::class)
     ->except(['show', 'destroy'])
     ->parameter('surat-tugas', 'surat_tugas');

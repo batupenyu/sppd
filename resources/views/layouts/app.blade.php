@@ -46,9 +46,10 @@
                         $categories = [
                             [
                                 'label' => 'Perjalanan Dinas & Tugas',
-                                'routes' => ['surat-tugas.*', 'drh-satyalancana.*'],
+                                'routes' => ['surat-tugas.*', 'surat-tugas-pkls.*', 'drh-satyalancana.*'],
                                 'items' => [
                                     ['label' => 'Surat Tugas', 'route' => 'surat-tugas.index', 'routeName' => 'surat-tugas.*'],
+                                    ['label' => 'Surat Tugas PKL', 'route' => 'surat-tugas-pkls.index', 'routeName' => 'surat-tugas-pkls.*'],
                                     ['label' => 'DRH Satyalancana', 'route' => 'drh-satyalancana.index', 'routeName' => 'drh-satyalancana.*'],
                                 ],
                             ],
