@@ -90,7 +90,7 @@
     </tr>
     <tr>
       <td class="lbl">Jabatan</td>
-      <td class="val">{{ $p->tugas_tambahan ?? ($p->jabatan ?? '-') }}</td>
+      <td class="val">{{ $p->jabatan ?? ($p->jabatan ?? '-') }}</td>
       <td class="lbl">Masa Kerja</td>
       <td class="val">{{ $masaKerja }}</td>
     </tr>
@@ -266,7 +266,7 @@
     </tr>
     <tr>
       <td colspan="3" rowspan="4">&nbsp;</td>
-      <td class="center">Kepala Cabang Dinas Pendidikan Wilayah I<br>Dinas Pendidikan Prov. Kep. Bangka Belitung</td>
+      <td class="center">{{ ucwords(strtolower($kepalaCabang->tugas_tambahan ?? ($kepalaCabang->jabatan ?? 'Kepala Sekolah'))) }} <br> Provinsi Kepulauan Bangka Belitung</td>
     </tr>
     <tr>
       <td class="sign-space">&nbsp;</td>
