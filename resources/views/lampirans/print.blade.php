@@ -55,7 +55,7 @@
         }
 
         .indent {
-            padding-left: 2em; /* Menjorok ke dalam sejajar teks "Kepala..." */
+            padding-left: 1.8em; /* Menjorok ke dalam sejajar teks "Kepala..." */
         }
         .indent p {
             margin: 0;
@@ -68,16 +68,16 @@
         <i>
         <table>
             <tr style="border: none;">
-                <td style="border: none; padding: 2px;">{{ ($lampiran->judul ?: 'Lampiran') }}</td>
-                <td style="border: none; padding: 2px;">: {{ $lampiran->keterangan ?: 'Surat Kepala SMK Negeri 1 Koba' }}</td>
+                <td style="border: none; padding: 0px;">{{ ($lampiran->judul ?: 'Lampiran') }}</td>
+                <td style="border: none; padding: 0px;">: {{ $lampiran->keterangan ?: 'Surat Kepala SMK Negeri 1 Koba' }}</td>
             </tr>
             <tr style="border: none;">
-                <td style="border: none; padding: 2px;">Nomor</td>
-                <td style="border: none; padding: 2px;">: {{ $lampiran->nomor ?: '.........................' }}</td>
+                <td style="border: none; padding: 0px;">Nomor</td>
+                <td style="border: none; padding: 0px;">: {{ $lampiran->nomor ?: '.........................' }}</td>
             </tr>
             <tr style="border: none;">
-                <td style="border: none; padding: 2px;">Tanggal</td>
-                <td style="border: none; padding: 2px;">: {{ $lampiran->tanggal ? \App\Http\Controllers\LampiranController::formatTanggal($lampiran->tanggal, '%d %B %Y') : \Carbon\Carbon::now()->format('d F Y') }}</td>
+                <td style="border: none; padding: 0px;">Tanggal</td>
+                <td style="border: none; padding: 0px;">: {{ $lampiran->tanggal ? \App\Http\Controllers\LampiranController::formatTanggal($lampiran->tanggal, '%d %B %Y') : \Carbon\Carbon::now()->format('d F Y') }}</td>
             </tr>
         </table>
         </i>
@@ -131,7 +131,7 @@
             $prefix = $isAn ? 'a.n. ' : '';
         @endphp
         @if($isAn)
-            <p>an.&nbsp;&nbsp;Kepala SMK Negeri 1 Koba <br>
+            <p>an. Kepala SMK Negeri 1 Koba <br>
                 <span class="indent">
                 {{ $penandatangan->jabatan ?? '' }}</span></p>
             <div class="indent">
