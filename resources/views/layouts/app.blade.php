@@ -89,12 +89,13 @@
                             ],
                             [
                                 'label' => 'Laporan & Nota Dinas',
-                                'routes' => ['sptjms.*', 'spmts.*', 'surat-nodins.*', 'laporan-nodins.*'],
+                                'routes' => ['sptjms.*', 'spmts.*', 'surat-nodins.*', 'laporan-nodins.*', 'lampirans.*'],
                                 'items' => [
                                     ['label' => 'SPTJM', 'route' => 'sptjms.index', 'routeName' => 'sptjms.*'],
                                     ['label' => 'SPMT', 'route' => 'spmts.index', 'routeName' => 'spmts.*'],
                                     ['label' => 'Surat Nodin', 'route' => 'surat-nodins.index', 'routeName' => 'surat-nodins.*'],
                                     ['label' => 'Laporan Nodin', 'route' => 'laporan-nodins.index', 'routeName' => 'laporan-nodins.*'],
+                                    ['label' => 'Lampiran', 'route' => 'lampirans.index', 'routeName' => 'lampirans.*'],
                                 ],
                             ],
                         ];

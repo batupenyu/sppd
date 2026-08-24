@@ -3,6 +3,7 @@
 use App\Http\Controllers\AsnController;
 use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\DrhSatyalancanaController;
+use App\Http\Controllers\LampiranController;
 use App\Http\Controllers\LaporanCutiController;
 use App\Http\Controllers\LaporanNodinController;
 use App\Http\Controllers\LogoController;
@@ -71,6 +72,10 @@ Route::resource('surat-tugas-pkls', SuratTugasPklController::class)
     ->parameter('surat-tugas-pkls', 'surat_tugas_pkl');
 Route::delete('surat-tugas-pkls/{surat_tugas_pkl}', [SuratTugasPklController::class, 'destroy'])->name('surat-tugas-pkl.destroy');
 Route::get('surat-tugas-pkls/{surat_tugas_pkl}/print', [SuratTugasPklController::class, 'print'])->name('surat-tugas-pkl.print');
+Route::resource('lampirans', LampiranController::class)
+    ->except(['show']);
+Route::delete('lampirans/{lampiran}', [LampiranController::class, 'destroy'])->name('lampirans.destroy');
+Route::get('lampirans/{lampiran}/print', [LampiranController::class, 'print'])->name('lampirans.print');
 Route::resource('surat-tugas', SuratTugasController::class)
     ->except(['show', 'destroy'])
     ->parameter('surat-tugas', 'surat_tugas');
