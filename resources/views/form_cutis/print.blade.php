@@ -108,21 +108,21 @@
     <tr><td colspan="4" class="section-title">II. JENIS CUTI YANG DIAMBIL</td></tr>
     <tr>
       <td class="lbl2">1. Cuti Tahunan</td>
-      <td class="val2">{{ $jenisCuti === 'Cuti Tahunan' ? 'Ya' : '-' }}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Tahunan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
       <td class="lbl2">2. Cuti Besar</td>
-      <td class="val2">{{ $jenisCuti === 'Cuti Besar' ? 'Ya' : '-' }}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Besar' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td class="lbl2">3. Cuti Sakit</td>
-      <td class="val2">{{ $jenisCuti === 'Cuti Sakit' ? 'Ya' : '-' }}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Sakit' ? '<strong>&#10003;</strong>' : '-' !!}</td>
       <td class="lbl2">4. Cuti Melahirkan</td>
-      <td class="val2">{{ $jenisCuti === 'Cuti Melahirkan' ? 'Ya' : '-' }}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Melahirkan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td class="lbl2">5. Cuti Karena Alasan Penting</td>
-      <td class="val2">{{ $jenisCuti === 'Cuti Karena Alasan Penting' ? 'Ya' : '-' }}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Karena Alasan Penting' ? '<strong>&#10003;</strong>' : '-' !!}</td>
       <td class="lbl2">6. Cuti di Luar Tanggungan</td>
-      <td class="val2">{{ $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? 'Ya' : '-' }}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
   </table>
 </div>
@@ -156,37 +156,37 @@
     <tr><td colspan="5" class="section-title">V. CATATAN CUTI</td></tr>
     <tr>
       <td colspan="2" class="center">1. CUTI TAHUNAN</td>
-      <td class="center">{{ $jenisCuti === 'Cuti Tahunan' ? 'Ya' : '-' }}</td>
+      <td class="center">{!! $jenisCuti === 'Cuti Tahunan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
       <td class="r-lbl">2. CUTI BESAR</td>
-      <td class="r-val">{{ $jenisCuti === 'Cuti Besar' ? 'Ya' : '-' }}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Besar' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td style="width:12%;">Tahun</td>
       <td style="width:12%;">Sisa</td>
       <td style="width:16%;">Keterangan</td>
       <td class="r-lbl">3. CUTI SAKIT</td>
-      <td class="r-val">{{ $jenisCuti === 'Cuti Sakit' ? 'Ya' : '-' }}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Sakit' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N-2</td>
       <td>&nbsp;</td>
       <td>Sisa:</td>
       <td class="r-lbl">4. CUTI MELAHIRKAN</td>
-      <td class="r-val">{{ $jenisCuti === 'Cuti Melahirkan' ? 'Ya' : '-' }}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Melahirkan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N-1</td>
       <td>&nbsp;</td>
       <td>Sisa:</td>
       <td class="r-lbl">5. CUTI KARENA ALASAN PENTING</td>
-      <td class="r-val">{{ $jenisCuti === 'Cuti Karena Alasan Penting' ? 'Ya' : '-' }}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Karena Alasan Penting' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N</td>
       <td>&nbsp;</td>
       <td>Sisa:</td>
       <td class="r-lbl">6. CUTI DILUAR TANGGUNGAN NEGARA</td>
-      <td class="r-val">{{ $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? 'Ya' : '-' }}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>&#10003;</strong>' : '-' !!}</td>
     </tr>
   </table>
 </div>
@@ -229,16 +229,16 @@
       <td style="width:40%;">TIDAK DISETUJUI****</td>
     </tr>
     <tr class="center bold" style="height: 30px;">
-      <td style="width:20%;"></td>
-      <td style="width:20%;"></td>
-      <td style="width:20%;"></td>
-      <td style="width:40%;"></td>
+      <td style="width:20%;"><input type="checkbox"></td>
+      <td style="width:20%;"><input type="checkbox"></td>
+      <td style="width:20%;"><input type="checkbox"></td>
+      <td style="width:40%;"><input type="checkbox"></td>
     </tr>
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
       <td class="center" style="border-bottom: none">
-        {{ $kepalaSekolah->tugas_tambahan ?? ($kepalaSekolah->jabatan ?? 'Kepala Sekolah') }} <br>
-        {{ $kepalaSekolah->unit_kerja ?? ($kepalaSekolah->unit_kerja ?? 'Dinas Pendidikan Provinsi Kepulauan Bangka Belitung') }}
+        {{ ($formCuti->plt_plh ? $formCuti->plt_plh . ' ' : '') . ucwords(strtolower(($kepalaSekolah->tugas_tambahan ?? ($kepalaSekolah->jabatan ?? 'Kepala Sekolah')))) }} <br>
+        {{ ucwords(strtolower($kepalaSekolah->unit_kerja ?? ($kepalaSekolah->unit_kerja ?? 'Dinas Pendidikan Provinsi Kepulauan Bangka Belitung')))}}
       </td>
     </tr>
     <tr>
@@ -267,15 +267,15 @@
       <td style="width:40%;">TIDAK DISETUJUI****</td>
     </tr>
     <tr class="center bold" style="height: 30px;">
-      <td style="width:20%;"></td>
-      <td style="width:20%;"></td>
-      <td style="width:20%;"></td>
-      <td style="width:40%;"></td>
+      <td style="width:20%;"><input type="checkbox"></td>
+      <td style="width:20%;"><input type="checkbox"></td>
+      <td style="width:20%;"><input type="checkbox"></td>
+      <td style="width:40%;"><input type="checkbox"></td>
     </tr>
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
       {{-- <td class="center">{{ ucwords(strtolower($kepalaCabang->tugas_tambahan ?? ($kepalaCabang->jabatan ?? 'Kepala Sekolah'))) }} <br> Provinsi Kepulauan Bangka Belitung</td> --}}
-      <td class="center" style="border-top: none;border-bottom: none;">{{($kepalaCabang->tugas_tambahan ?? ($kepalaCabang->jabatan ?? 'Kepala Sekolah'))}} <br> Provinsi Kepulauan Bangka Belitung</td>
+      <td class="center" style="border-top: none;border-bottom: none;">{{ ($formCuti->plt_plh_kepala_cabang ? $formCuti->plt_plh_kepala_cabang . ' ' : '') . ($kepalaCabang->tugas_tambahan ?? ($kepalaCabang->jabatan ?? 'Kepala Sekolah')) }} <br> Provinsi Kepulauan Bangka Belitung</td>
     </tr>
     <tr>
       <td class="sign-space" style="border-top: none; border-bottom: none">&nbsp;</td>

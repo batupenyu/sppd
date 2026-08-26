@@ -21,6 +21,8 @@ class FormCuti extends Model
         'kepala_cabang_id',
         'alamat_cuti',
         'telepon',
+        'plt_plh',
+        'plt_plh_kepala_cabang',
     ];
 
     protected $casts = [

@@ -113,6 +113,20 @@
                         </div>
 
                         <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Plt / Plh</label>
+                            <div class="flex gap-4">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="plt_plh" value="Plt" class="rounded border-gray-300" {{ old('plt_plh', $formCuti->plt_plh ?? '') == 'Plt' ? 'checked' : '' }}>
+                                    <span class="ml-2">Plt</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="plt_plh" value="Plh" class="rounded border-gray-300" {{ old('plt_plh', $formCuti->plt_plh ?? '') == 'Plh' ? 'checked' : '' }}>
+                                    <span class="ml-2">Plh</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="md:col-span-2">
                             <h2 class="text-lg font-semibold mb-4 border-b pb-2 mt-4">VIII. Keputusan Pejabat Yang Berwenang Memberikan Cuti</h2>
                         </div>
 
@@ -126,6 +140,20 @@
                                     </option>
                                 @endforeach
                             </select>
+                        </div>
+
+                        <div class="md:col-span-2">
+                            <label class="block font-medium mb-1">Plt / Plh</label>
+                            <div class="flex gap-4">
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="plt_plh_kepala_cabang" value="Plt" class="rounded border-gray-300" {{ old('plt_plh_kepala_cabang', $formCuti->plt_plh_kepala_cabang ?? '') == 'Plt' ? 'checked' : '' }}>
+                                    <span class="ml-2">Plt</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="checkbox" name="plt_plh_kepala_cabang" value="Plh" class="rounded border-gray-300" {{ old('plt_plh_kepala_cabang', $formCuti->plt_plh_kepala_cabang ?? '') == 'Plh' ? 'checked' : '' }}>
+                                    <span class="ml-2">Plh</span>
+                                </label>
+                            </div>
                         </div>
                     </div>
 

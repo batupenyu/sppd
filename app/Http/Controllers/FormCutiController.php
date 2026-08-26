@@ -39,6 +39,8 @@ class FormCutiController extends Controller
             'kepala_cabang_id' => 'nullable|exists:asns,id',
             'alamat_cuti' => 'nullable|string',
             'telepon' => 'nullable|string|max:255',
+            'plt_plh' => 'nullable|string|in:Plt,Plh',
+            'plt_plh_kepala_cabang' => 'nullable|string|in:Plt,Plh',
         ]);
 
         $validated['jumlah_hari'] = $this->calculateLeaveDays(
@@ -73,6 +75,8 @@ class FormCutiController extends Controller
             'kepala_cabang_id' => 'nullable|exists:asns,id',
             'alamat_cuti' => 'nullable|string',
             'telepon' => 'nullable|string|max:255',
+            'plt_plh' => 'nullable|string|in:Plt,Plh',
+            'plt_plh_kepala_cabang' => 'nullable|string|in:Plt,Plh',
         ]);
 
         $validated['jumlah_hari'] = $this->calculateLeaveDays(
