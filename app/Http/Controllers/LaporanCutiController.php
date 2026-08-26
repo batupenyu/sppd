@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Asn;
+use App\Models\HariLibur;
 use App\Models\LaporanCuti;
 use App\Models\LogoSetting;
 use App\Models\SuratCuti;
@@ -147,9 +148,25 @@ class LaporanCutiController extends Controller
             return 0;
         }
 
-        $start = Carbon::parse($mulai);
-        $end = Carbon::parse($selesai);
+        $start = Carbon::parse($mulai)->startOfDay();
+        $end = Carbon::parse($selesai)->startOfDay();
 
-        return abs($start->diffInDays($end)) + 1;
+        if ($end->lt($start)) {
+            [$start, $end] = [$end, $start];
+        }
+
+        $holidays = HariLibur::whereBetween('tanggal', [$start->toDateString(), $end->toDateString()])
+            ->pluck('tanggal')
+            ->toArray();
+
+        $days = 0;
+        for ($date = $start->copy(); $date->lte($end); $date->addDay()) {
+            if ($date->isWeekend() || in_array($date->toDateString(), $holidays)) {
+                continue;
+            }
+            $days++;
+        }
+
+        return $days;
     }
 }

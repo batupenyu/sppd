@@ -30,6 +30,7 @@ use App\Http\Controllers\SuratSantunanController;
 use App\Http\Controllers\SuratTugasController;
 use App\Http\Controllers\SuratTugasPklController;
 use App\Http\Controllers\SuratUndanganController;
+use App\Http\Controllers\HariLiburController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -186,3 +187,5 @@ Route::resource('surat-penarikan-siswas', SuratPenarikanSiswaController::class)
     ->only(['index', 'create', 'store', 'edit', 'update']);
 Route::delete('surat-penarikan-siswas/{surat_penarikan_siswa}', [SuratPenarikanSiswaController::class, 'destroy'])->name('surat-penarikan-siswas.destroy');
 Route::get('surat-penarikan-siswas/{surat_penarikan_siswa}/print', [SuratPenarikanSiswaController::class, 'print'])->name('surat-penarikan-siswas.print');
+Route::resource('hari-liburs', HariLiburController::class)
+    ->except(['show']);

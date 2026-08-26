@@ -163,7 +163,7 @@
                 <tr>
                     <td class="label-col">Jabatan</td>
                     <td class="colon-col">:</td>
-                    <td class="value-col">{{ $laporanCuti->asn->jabatan ?? ($laporanCuti->asn->tugas_tambahan ?? ($laporanCuti->asn->jenis_ptk ?? '-')) }}</td>
+                    <td class="value-col">{{ $laporanCuti->asn->jabatan ?? ($laporanCuti->asn->jabatan ?? ($laporanCuti->asn->jenis_ptk ?? '-')) }}</td>
                 </tr>
                 <tr>
                     <td class="label-col">Unit Kerja</td>

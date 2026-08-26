@@ -157,7 +157,7 @@
             <tr>
                 <td class="label-col valign-top">Jabatan</td>
                 <td class="colon-col valign-top">:</td>
-                <td class="value-col valign-top">{{ $p->tugas_tambahan ?? ($p->jabatan ?? '-') }}</td>
+                <td class="value-col valign-top">{{ $p->jabatan ?? ($p->jabatan ?? '-') }}</td>
             </tr>
             <tr>
                 <td class="label-col valign-top">Unit Kerja</td>
