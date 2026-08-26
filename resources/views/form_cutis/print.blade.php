@@ -76,7 +76,7 @@
     $jenisCuti = $formCuti->jenis_cuti;
     $formattedMulai = $formCuti->tanggal_mulai_cuti ? \App\Http\Controllers\FormCutiController::formatTanggal($formCuti->tanggal_mulai_cuti, '%d/%m/%Y') : '';
     $formattedSelesai = $formCuti->tanggal_selesai_cuti ? \App\Http\Controllers\FormCutiController::formatTanggal($formCuti->tanggal_selesai_cuti, '%d/%m/%Y') : '';
-    $masaKerja = \Carbon\Carbon::parse($p->tmt_pengangkatan ?? now())->diff(\Carbon\Carbon::now())->format('%y Tahun %m Bulan');
+    $masaKerja = \Carbon\Carbon::parse($p?->tmt_pengangkatan ?? now())->diff(\Carbon\Carbon::now())->format('%y Tahun %m Bulan');
 @endphp
 
 <!-- I. DATA PEGAWAI -->
@@ -85,19 +85,19 @@
     <tr><td colspan="4" class="section-title">I. DATA PEGAWAI</td></tr>
     <tr>
       <td class="lbl">Nama</td>
-      <td class="val">{{ $p->nama ?? '-' }}</td>
+      <td class="val">{{ $p?->nama ?? '-' }}</td>
       <td class="lbl">NIP / GOL</td>
-      <td class="val">{{ $p->nip ?? '-' }} / {{ $p->pangkat_golongan ?? '-' }}</td>
+      <td class="val">{{ $p?->nip ?? '-' }} / {{ $p?->pangkat_golongan ?? '-' }}</td>
     </tr>
     <tr>
       <td class="lbl">Jabatan</td>
-      <td class="val">{{ $p->jabatan ?? ($p->jabatan ?? '-') }}</td>
+      <td class="val">{{ $p?->jabatan ?? ($p?->jabatan ?? '-') }}</td>
       <td class="lbl">Masa Kerja</td>
       <td class="val">{{ $masaKerja }}</td>
     </tr>
     <tr>
       <td class="lbl">Unit Kerja</td>
-      <td colspan="3">{{ $p->unit_kerja ?? '-' }}</td>
+      <td colspan="3">{{ $p?->unit_kerja ?? '-' }}</td>
     </tr>
   </table>
 </div>
@@ -196,23 +196,23 @@
   <table>
     <tr><td colspan="2" class="section-title">VI. ALAMAT SELAMA MENJALANKAN CUTI</td></tr>
     <tr>
-      <td rowspan="3" style="width:60%; vertical-align: top; padding-top:10px;">{{ $formCuti->alamat_cuti ?: ($p->alamat_jalan ?: 'Kabupaten Bangka Tengah') }}</td>
-      <td style="text-align: center">TELP. &nbsp;&nbsp; {{ $formCuti->telepon ?: ($p->hp ?: '-') }}</td>
+      <td rowspan="3" style="width:60%; vertical-align: top; padding-top:10px;">{{ $formCuti->alamat_cuti ?: ($p?->alamat_jalan ?: 'Kabupaten Bangka Tengah') }}</td>
+      <td style="text-align: center">TELP. &nbsp;&nbsp; {{ $formCuti->telepon ?: ($p?->hp ?: '-') }}</td>
     </tr>
     <tr>
       <td style="padding:0; border-top: none; border-bottom: none">
         <table class="t6-inner">
           <tr><td class="center">Hormat Saya</td></tr>
           <tr><td class="sign-space">&nbsp;</td></tr>
-          <tr><td class="center bold" style="border-bottom: none">{{ $p->nama ?? 'Nama Pegawai' }}</td></tr>
+          <tr><td class="center bold" style="border-bottom: none">{{ $p?->nama ?? 'Nama Pegawai' }}</td></tr>
         </table>
       </td>
     </tr>
     <tr>
       {{-- <td>&nbsp;</td> --}}
       <td class="center" style="border-top: none">
-        {{-- {{ $p->pangkat ?? '' }} <br> --}}
-        NIP. {{ $p->nip ?? '' }}
+        <!-- {{ $p?->pangkat ?? '' }} <br> -->
+        NIP. {{ $p?->nip ?? '' }}
       </td>
     </tr>
   </table>
@@ -237,22 +237,22 @@
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
       <td class="center" style="border-bottom: none">
-        {{ ($formCuti->plt_plh ? $formCuti->plt_plh . ' ' : '') . ucwords(strtolower(($kepalaSekolah->tugas_tambahan ?? ($kepalaSekolah->jabatan ?? 'Kepala Sekolah')))) }} <br>
-        {{ ucwords(strtolower($kepalaSekolah->unit_kerja ?? ($kepalaSekolah->unit_kerja ?? 'Dinas Pendidikan Provinsi Kepulauan Bangka Belitung')))}}
+        {{ ($formCuti->plt_plh ? $formCuti->plt_plh . ' ' : '') . ucwords(strtolower($kepalaSekolah?->tugas_tambahan ?? ($kepalaSekolah?->jabatan ?? 'Kepala Sekolah'))) }} <br>
+        {{ ucwords(strtolower($kepalaSekolah?->unit_kerja ?? 'Dinas Pendidikan Provinsi Kepulauan Bangka Belitung'))}}
       </td>
     </tr>
     <tr>
       <td class="sign-space" style="border-top: none; border-bottom: none">&nbsp;</td>
     </tr>
     <tr>
-      <td class="center bold" style="border-top:none;">{{ $kepalaSekolah->nama ?? '....................' }}
-        <br>{{ $kepalaSekolah->pangkat ?? '....................' }}
-        <br>NIP. {{$kepalaSekolah->nip ?? '....................'}}
+      <td class="center bold" style="border-top:none;">{{ $kepalaSekolah?->nama ?? '....................' }}
+        <br>{{ $kepalaSekolah?->pangkat ?? '....................' }}
+        <br>NIP. {{$kepalaSekolah?->nip ?? '....................'}}
       </td>
     </tr>
-    {{-- <tr>
-      <td class="center">NIP. {{ $kepalaSekolah->nip ?? '....................' }}</td>
-    </tr> --}}
+    <!-- <tr>
+      <td class="center">NIP. {{ $kepalaSekolah?->nip ?? '....................' }}</td>
+    </tr> -->
   </table>
 </div>
 
@@ -274,21 +274,21 @@
     </tr>
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
-      {{-- <td class="center">{{ ucwords(strtolower($kepalaCabang->tugas_tambahan ?? ($kepalaCabang->jabatan ?? 'Kepala Sekolah'))) }} <br> Provinsi Kepulauan Bangka Belitung</td> --}}
-      <td class="center" style="border-top: none;border-bottom: none;">{{ ($formCuti->plt_plh_kepala_cabang ? $formCuti->plt_plh_kepala_cabang . ' ' : '') . ($kepalaCabang->tugas_tambahan ?? ($kepalaCabang->jabatan ?? 'Kepala Sekolah')) }} <br> Provinsi Kepulauan Bangka Belitung</td>
+      <!-- <td class="center">{{ ucwords(strtolower($kepalaCabang?->tugas_tambahan ?? ($kepalaCabang?->jabatan ?? 'Kepala Sekolah'))) }} <br> Provinsi Kepulauan Bangka Belitung</td> -->
+      <td class="center" style="border-top: none;border-bottom: none;">{{ ($formCuti->plt_plh_kepala_cabang ? $formCuti->plt_plh_kepala_cabang . ' ' : '') . ($kepalaCabang?->tugas_tambahan ?? ($kepalaCabang?->jabatan ?? 'Kepala Sekolah')) }} <br> Provinsi Kepulauan Bangka Belitung</td>
     </tr>
     <tr>
       <td class="sign-space" style="border-top: none; border-bottom: none">&nbsp;</td>
     </tr>
     <tr>
-      <td class="center bold" style="border-top: none">{{ $kepalaCabang->nama ?? '....................' }}
-        <br>{{$kepalaCabang->pangkat ?? ($kepalaCabang->pangkat ?? 'Kepala Sekolah')}}
-        <br>NIP. {{$kepalaCabang->nip ?? ($kepalaCabang->nip ?? 'Kepala Sekolah')}}
+      <td class="center bold" style="border-top: none">{{ $kepalaCabang?->nama ?? '....................' }}
+        <br>{{$kepalaCabang?->pangkat ?? ($kepalaCabang?->pangkat ?? 'Kepala Sekolah')}}
+        <br>NIP. {{$kepalaCabang?->nip ?? ($kepalaCabang?->nip ?? 'Kepala Sekolah')}}
       </td>
     </tr>
-    {{-- <tr>
-      <td class="center">NIP. {{ $kepalaCabang->nip ?? '....................' }}</td>
-    </tr> --}}
+    <!-- <tr>
+      <td class="center">NIP. {{ $kepalaCabang?->nip ?? '....................' }}</td>
+    </tr> -->
   </table>
 </div>
 
