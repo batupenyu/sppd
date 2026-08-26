@@ -66,7 +66,7 @@
 <body>
 
 <h1>Formulir Permintaan dan Pemberian Cuti</h1>
-<div class="nomor">No. {{ $formCuti->nomor_surat ?: '800.1.11.4/......../2026' }}</div>
+<div class="nomor">Nomor. {{ $formCuti->nomor_surat ?: '800.1.11.4/......../2026' }}</div>
 <div style="float: inline-end; padding:4px">Tanggal : ..................................</div>
 
 @php
@@ -108,21 +108,21 @@
     <tr><td colspan="4" class="section-title">II. JENIS CUTI YANG DIAMBIL</td></tr>
     <tr>
       <td class="lbl2">1. Cuti Tahunan</td>
-      <td class="val2">{!! $jenisCuti === 'Cuti Tahunan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Tahunan' ? '<strong>✓</strong>' : '-' !!}</td>
       <td class="lbl2">2. Cuti Besar</td>
-      <td class="val2">{!! $jenisCuti === 'Cuti Besar' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Besar' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td class="lbl2">3. Cuti Sakit</td>
-      <td class="val2">{!! $jenisCuti === 'Cuti Sakit' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Sakit' ? '<strong>✓</strong>' : '-' !!}</td>
       <td class="lbl2">4. Cuti Melahirkan</td>
-      <td class="val2">{!! $jenisCuti === 'Cuti Melahirkan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Melahirkan' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td class="lbl2">5. Cuti Karena Alasan Penting</td>
-      <td class="val2">{!! $jenisCuti === 'Cuti Karena Alasan Penting' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti Karena Alasan Penting' ? '<strong>✓</strong>' : '-' !!}</td>
       <td class="lbl2">6. Cuti di Luar Tanggungan</td>
-      <td class="val2">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="val2">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
   </table>
 </div>
@@ -156,37 +156,37 @@
     <tr><td colspan="5" class="section-title">V. CATATAN CUTI</td></tr>
     <tr>
       <td colspan="2" class="center">1. CUTI TAHUNAN</td>
-      <td class="center">{!! $jenisCuti === 'Cuti Tahunan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="center">{!! $jenisCuti === 'Cuti Tahunan' ? '<strong>✓</strong>' : '-' !!}</td>
       <td class="r-lbl">2. CUTI BESAR</td>
-      <td class="r-val">{!! $jenisCuti === 'Cuti Besar' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Besar' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td style="width:12%;">Tahun</td>
       <td style="width:12%;">Sisa</td>
       <td style="width:16%;">Keterangan</td>
       <td class="r-lbl">3. CUTI SAKIT</td>
-      <td class="r-val">{!! $jenisCuti === 'Cuti Sakit' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Sakit' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N-2</td>
       <td>&nbsp;</td>
       <td>Sisa:</td>
       <td class="r-lbl">4. CUTI MELAHIRKAN</td>
-      <td class="r-val">{!! $jenisCuti === 'Cuti Melahirkan' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Melahirkan' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N-1</td>
       <td>&nbsp;</td>
       <td>Sisa:</td>
       <td class="r-lbl">5. CUTI KARENA ALASAN PENTING</td>
-      <td class="r-val">{!! $jenisCuti === 'Cuti Karena Alasan Penting' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti Karena Alasan Penting' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N</td>
       <td>&nbsp;</td>
       <td>Sisa:</td>
       <td class="r-lbl">6. CUTI DILUAR TANGGUNGAN NEGARA</td>
-      <td class="r-val">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>&#10003;</strong>' : '-' !!}</td>
+      <td class="r-val">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
   </table>
 </div>
