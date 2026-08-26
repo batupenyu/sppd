@@ -19,20 +19,20 @@
                     <table class="min-w-full table-auto">
                         <thead class="bg-gray-50 dark:bg-gray-700">
                             <tr>
-                                <th class="px-4 py-2 text-left">Nomor Surat</th>
-                                <th class="px-4 py-2 text-left">Jenis Cuti</th>
-                                <th class="px-4 py-2 text-left">Pegawai</th>
-                                <th class="px-4 py-2 text-left">Tanggal Surat</th>
+                                <th class="px-4 py-2 text-left">Nama</th>
+                                <th class="px-4 py-2 text-left">Tgl Awal</th>
+                                <th class="px-4 py-2 text-left">Tgl Selesai</th>
+                                <th class="px-4 py-2 text-left">Tahun Cuti</th>
                                 <th class="px-4 py-2 text-left">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200 dark:divide-gray-600">
                             @forelse($suratCutis as $suratCuti)
                             <tr>
-                                <td class="px-4 py-2">{{ $suratCuti->nomor_surat ?: '-' }}</td>
-                                <td class="px-4 py-2">{{ $suratCuti->jenis_cuti ?: '-' }}</td>
                                 <td class="px-4 py-2">{{ $suratCuti->pegawai->nama ?? '-' }}</td>
-                                <td class="px-4 py-2">{{ $suratCuti->tanggal_surat ? \Carbon\Carbon::parse($suratCuti->tanggal_surat)->format('d-m-Y') : '-' }}</td>
+                                <td class="px-4 py-2">{{ $suratCuti->tanggal_mulai_cuti ? \Carbon\Carbon::parse($suratCuti->tanggal_mulai_cuti)->format('d-m-Y') : '-' }}</td>
+                                <td class="px-4 py-2">{{ $suratCuti->tanggal_selesai_cuti ? \Carbon\Carbon::parse($suratCuti->tanggal_selesai_cuti)->format('d-m-Y') : '-' }}</td>
+                                <td class="px-4 py-2">{{ $suratCuti->tanggal_surat ? \Carbon\Carbon::parse($suratCuti->tanggal_surat)->format('Y') : '-' }}</td>
                                 <td class="px-4 py-2">
                                     <div class="flex items-center gap-3">
                                         <a href="{{ route('surat-cutis.print', $suratCuti) }}" class="text-blue-600 hover:text-blue-800" title="Cetak" aria-label="Cetak">

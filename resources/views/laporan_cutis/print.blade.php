@@ -199,7 +199,8 @@
                     @foreach($page['rows'] as $item)
                     <tr>
                         <td>{{ $item['number'] }}</td>
-                        <td>{{ $item['surat_cuti']->nomor_surat ?: '-' }}</td>
+                        {{-- <td>{{ $item['surat_cuti']->nomor_surat ?: '-' }}</td> --}}
+                        <td>-</td>
                         <td>{{ $item['surat_cuti']->tanggal_surat ? \App\Http\Controllers\SuratCutiController::formatTanggal($item['surat_cuti']->tanggal_surat, '%d-%m-%Y') : '-' }}</td>
                         <td>{{ $item['surat_cuti']->tanggal_mulai_cuti ? \App\Http\Controllers\SuratCutiController::formatTanggal($item['surat_cuti']->tanggal_mulai_cuti, '%d-%m-%Y') : '-' }}</td>
                         <td>{{ $item['surat_cuti']->tanggal_selesai_cuti ? \App\Http\Controllers\SuratCutiController::formatTanggal($item['surat_cuti']->tanggal_selesai_cuti, '%d-%m-%Y') : '-' }}</td>
