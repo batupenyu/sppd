@@ -245,7 +245,7 @@
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
       <td class="center" style="border-bottom: none">
-        {{ ($formCuti->plt_plh ? $formCuti->plt_plh . ' ' : '') . ucwords(strtolower($kepalaSekolah?->jabatan ?? ($kepalaSekolah?->jabatan ?? ''))) }} {{$kepalaSekolah?->unit_kerja ?? ''}} <br>
+        {{ ($formCuti->plt_plh ? $formCuti->plt_plh . '. ' : '') . ucwords(strtolower($kepalaSekolah?->jabatan ?? ($kepalaSekolah?->jabatan ?? ''))) }} {{$kepalaSekolah?->unit_kerja ?? ''}} <br>
         {{ ucwords(strtolower($kepalaSekolah?->nama_opd_indu ?? ''))}}
       </td>
     </tr>
@@ -282,8 +282,7 @@
     </tr>
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
-      <!-- <td class="center">{{ ucwords(strtolower($kepalaCabang?->tugas_tambahan ?? ($kepalaCabang?->jabatan ?? 'Kepala Sekolah'))) }} <br> Provinsi Kepulauan Bangka Belitung</td> -->
-      <td class="center" style="border-top: none;border-bottom: none;">{{ ($formCuti->plt_plh_kepala_cabang ? $formCuti->plt_plh_kepala_cabang . ' ' : '') . ($kepalaCabang?->tugas_tambahan ?? ($kepalaCabang?->jabatan ?? '')) }} {{$kepalaCabang?->unit_kerja ?? ''}}<br> {{ $kepalaCabang?->nama_opd_indu ?? '' }}</td>
+      <td class="center" style="border-top: none;border-bottom: none;">{{ ($formCuti->plt_plh_kepala_cabang ? $formCuti->plt_plh_kepala_cabang . '. ' : '') . ucwords(strtolower ($kepalaCabang?->jabatan ?? ($kepalaCabang?->jabatan ?? ''))) }} {{$kepalaCabang?->unit_kerja ?? ''}}<br> {{ $kepalaCabang?->nama_opd_indu ?? '' }}</td>
     </tr>
     <tr>
       <td class="sign-space" style="border-top: none; border-bottom: none">&nbsp;</td>

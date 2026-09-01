@@ -115,12 +115,12 @@
                             <label class="block font-medium mb-1">Plt / Plh</label>
                             <div class="flex gap-4">
                                 <label class="inline-flex items-center">
-                                    <input type="checkbox" name="plt_plh" value="Plt" class="rounded border-gray-300">
-                                    <span class="ml-2">Plt</span>
+                                    <input type="checkbox" name="plt_plh" value="Plt." class="rounded border-gray-300">
+                                    <span class="ml-2">Plt.</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="checkbox" name="plt_plh" value="Plh" class="rounded border-gray-300">
-                                    <span class="ml-2">Plh</span>
+                                    <input type="checkbox" name="plt_plh" value="Plh." class="rounded border-gray-300">
+                                    <span class="ml-2">Plh.</span>
                                 </label>
                             </div>
                         </div>
@@ -145,12 +145,12 @@
                             <label class="block font-medium mb-1">Plt / Plh</label>
                             <div class="flex gap-4">
                                 <label class="inline-flex items-center">
-                                    <input type="checkbox" name="plt_plh_kepala_cabang" value="Plt" class="rounded border-gray-300">
-                                    <span class="ml-2">Plt</span>
+                                    <input type="checkbox" name="plt_plh_kepala_cabang" value="Plt." class="rounded border-gray-300">
+                                    <span class="ml-2">Plt.</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input type="checkbox" name="plt_plh_kepala_cabang" value="Plh" class="rounded border-gray-300">
-                                    <span class="ml-2">Plh</span>
+                                    <input type="checkbox" name="plt_plh_kepala_cabang" value="Plh." class="rounded border-gray-300">
+                                    <span class="ml-2">Plh.</span>
                                 </label>
                             </div>
                         </div>
