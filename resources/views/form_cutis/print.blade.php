@@ -245,8 +245,8 @@
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
       <td class="center" style="border-bottom: none">
-        {{ ($formCuti->plt_plh ? $formCuti->plt_plh . ' ' : '') . ucwords(strtolower($kepalaSekolah?->tugas_tambahan ?? ($kepalaSekolah?->jabatan ?? 'Kepala Sekolah'))) }} <br>
-        {{ ucwords(strtolower($kepalaSekolah?->unit_kerja ?? 'Dinas Pendidikan Provinsi Kepulauan Bangka Belitung'))}}
+        {{ ($formCuti->plt_plh ? $formCuti->plt_plh . ' ' : '') . ucwords(strtolower($kepalaSekolah?->jabatan ?? ($kepalaSekolah?->jabatan ?? ''))) }} <br>
+        {{ ucwords(strtolower($kepalaSekolah?->nama_opd_indu ?? ''))}}
       </td>
     </tr>
     <tr>
@@ -283,15 +283,15 @@
     <tr>
       <td colspan="3" rowspan="5">&nbsp;</td>
       <!-- <td class="center">{{ ucwords(strtolower($kepalaCabang?->tugas_tambahan ?? ($kepalaCabang?->jabatan ?? 'Kepala Sekolah'))) }} <br> Provinsi Kepulauan Bangka Belitung</td> -->
-      <td class="center" style="border-top: none;border-bottom: none;">{{ ($formCuti->plt_plh_kepala_cabang ? $formCuti->plt_plh_kepala_cabang . ' ' : '') . ($kepalaCabang?->tugas_tambahan ?? ($kepalaCabang?->jabatan ?? 'Kepala Sekolah')) }} <br> Dinas Pendidikan Provinsi Kepulauan Bangka Belitung</td>
+      <td class="center" style="border-top: none;border-bottom: none;">{{ ($formCuti->plt_plh_kepala_cabang ? $formCuti->plt_plh_kepala_cabang . ' ' : '') . ($kepalaCabang?->tugas_tambahan ?? ($kepalaCabang?->jabatan ?? '')) }} <br> {{ $kepalaCabang?->nama_opd_indu ?? '' }}</td>
     </tr>
     <tr>
       <td class="sign-space" style="border-top: none; border-bottom: none">&nbsp;</td>
     </tr>
     <tr>
-      <td class="center bold" style="border-top: none">{{ $kepalaCabang?->nama ?? '....................' }}
-        <br>{{$kepalaCabang?->pangkat ?? ($kepalaCabang?->pangkat ?? 'Kepala Sekolah')}}
-        <br>NIP. {{$kepalaCabang?->nip ?? ($kepalaCabang?->nip ?? 'Kepala Sekolah')}}
+      <td class="center bold" style="border-top: none">{{ $kepalaCabang?->nama ?? '' }}
+        <br>{{$kepalaCabang?->pangkat ?? ($kepalaCabang?->pangkat ?? '')}}
+        <br>NIP. {{$kepalaCabang?->nip ?? ($kepalaCabang?->nip ?? '')}}
       </td>
     </tr>
     <!-- <tr>

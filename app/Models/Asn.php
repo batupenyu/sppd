@@ -34,6 +34,7 @@ class Asn extends Model
         'tmt_pengangkatan',
         'lembaga_pengangkatan',
         'unit_kerja',
+        'nama_opd_indu',
         'pangkat_golongan',
         'sumber_gaji',
         'nama_ibu_kandung',
