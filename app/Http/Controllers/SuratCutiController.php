@@ -15,7 +15,7 @@ class SuratCutiController extends Controller
 {
     public function index(): View
     {
-        $suratCutis = SuratCuti::with(['penandatangan', 'pegawai'])->latest()->paginate(10);
+        $suratCutis = SuratCuti::with(['penandatangan', 'pegawai'])->latest()->paginate(5);
 
         return view('surat_cutis.index', compact('suratCutis'));
     }

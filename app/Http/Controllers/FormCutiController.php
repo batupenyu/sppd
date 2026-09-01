@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Asn;
 use App\Models\FormCuti;
+use App\Models\LaporanCuti;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Http\RedirectResponse;
@@ -101,7 +102,44 @@ class FormCutiController extends Controller
     {
         $formCuti->load('pegawai', 'kepalaSekolah', 'kepalaCabang');
 
-        return view('form_cutis.print', compact('formCuti'));
+        $currentYear = Carbon::now()->year;
+        $laporanCuti = LaporanCuti::where('asn_id', $formCuti->pegawai_id)
+            ->where('tahun', $currentYear)
+            ->first();
+
+        $alokasiN2 = (int) ($laporanCuti->alokasi_awal_tahun_n_2 ?? 0);
+        $alokasiN1 = (int) ($laporanCuti->alokasi_awal_tahun_n_1 ?? 0);
+        $alokasiN  = (int) ($laporanCuti->alokasi_awal_tahun_n ?? 0);
+
+        $annualLeaveForms = FormCuti::where('pegawai_id', $formCuti->pegawai_id)
+            ->where('jenis_cuti', 'Cuti Tahunan')
+            ->whereNotNull('tanggal_mulai_cuti')
+            ->orderBy('tanggal_mulai_cuti')
+            ->get();
+
+        $akumulasiTotal = 0;
+        foreach ($annualLeaveForms as $fc) {
+            $akumulasiTotal += (int) ($fc->jumlah_hari ?? $this->calculateLeaveDays(
+                $fc->tanggal_mulai_cuti,
+                $fc->tanggal_selesai_cuti
+            ));
+        }
+
+        $remaining = $akumulasiTotal;
+        $sisaN2 = max(0, $alokasiN2 - $remaining);
+        $remaining = max(0, $remaining - $alokasiN2);
+        $sisaN1 = max(0, $alokasiN1 - $remaining);
+        $remaining = max(0, $remaining - $alokasiN1);
+        $sisaN  = max(0, $alokasiN - $remaining);
+
+        return view('form_cutis.print', compact(
+            'formCuti',
+            'laporanCuti',
+            'akumulasiTotal',
+            'sisaN2',
+            'sisaN1',
+            'sisaN',
+        ));
     }
 
     private function calculateLeaveDays($mulai, $selesai): int

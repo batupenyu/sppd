@@ -77,6 +77,9 @@
     $formattedMulai = $formCuti->tanggal_mulai_cuti ? \App\Http\Controllers\FormCutiController::formatTanggal($formCuti->tanggal_mulai_cuti, '%d/%m/%Y') : '';
     $formattedSelesai = $formCuti->tanggal_selesai_cuti ? \App\Http\Controllers\FormCutiController::formatTanggal($formCuti->tanggal_selesai_cuti, '%d/%m/%Y') : '';
     $masaKerja = \Carbon\Carbon::parse($p?->tmt_pengangkatan ?? now())->diff(\Carbon\Carbon::now())->format('%y Tahun %m Bulan');
+    $currentYear = \Carbon\Carbon::now()->year;
+    $yearN2 = $currentYear - 2;
+    $yearN1 = $currentYear - 1;
 @endphp
 
 <!-- I. DATA PEGAWAI -->
@@ -167,26 +170,31 @@
       <td class="r-lbl">3. CUTI SAKIT</td>
       <td class="r-val">{!! $jenisCuti === 'Cuti Sakit' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
-    <tr>
+     <tr>
       <td>N-2</td>
-      <td>&nbsp;</td>
-      <td>Sisa:</td>
+      <td>&nbsp; {{ $yearN2 }}</td>
+      <td>Sisa: {{ $sisaN2 }}</td>
       <td class="r-lbl">4. CUTI MELAHIRKAN</td>
       <td class="r-val">{!! $jenisCuti === 'Cuti Melahirkan' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N-1</td>
-      <td>&nbsp;</td>
-      <td>Sisa:</td>
+      <td>&nbsp; {{ $yearN1 }}</td>
+      <td>Sisa: {{ $sisaN1 }}</td>
       <td class="r-lbl">5. CUTI KARENA ALASAN PENTING</td>
       <td class="r-val">{!! $jenisCuti === 'Cuti Karena Alasan Penting' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
     <tr>
       <td>N</td>
-      <td>&nbsp;</td>
-      <td>Sisa:</td>
+      <td>&nbsp; {{ $currentYear }}</td>
+      <td>Sisa: {{ $sisaN }}</td>
       <td class="r-lbl">6. CUTI DILUAR TANGGUNGAN NEGARA</td>
       <td class="r-val">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>✓</strong>' : '-' !!}</td>
+    </tr>
+    <tr>
+      <td colspan="3">Akumulasi Total Cuti Tahunan: {{ $akumulasiTotal }}</td>
+      <td class="r-lbl">&nbsp;</td>
+      <td class="r-val">&nbsp;</td>
     </tr>
   </table>
 </div>
