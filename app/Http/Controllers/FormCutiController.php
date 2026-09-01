@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Asn;
 use App\Models\FormCuti;
+use App\Models\HariLibur;
 use App\Models\LaporanCuti;
+use App\Models\SuratCuti;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Illuminate\Http\RedirectResponse;
@@ -111,19 +113,10 @@ class FormCutiController extends Controller
         $alokasiN1 = (int) ($laporanCuti->alokasi_awal_tahun_n_1 ?? 0);
         $alokasiN  = (int) ($laporanCuti->alokasi_awal_tahun_n ?? 0);
 
-        $annualLeaveForms = FormCuti::where('pegawai_id', $formCuti->pegawai_id)
-            ->where('jenis_cuti', 'Cuti Tahunan')
-            ->whereNotNull('tanggal_mulai_cuti')
-            ->orderBy('tanggal_mulai_cuti')
-            ->get();
-
-        $akumulasiTotal = 0;
-        foreach ($annualLeaveForms as $fc) {
-            $akumulasiTotal += (int) ($fc->jumlah_hari ?? $this->calculateLeaveDays(
-                $fc->tanggal_mulai_cuti,
-                $fc->tanggal_selesai_cuti
-            ));
-        }
+        $akumulasiTotal = $this->calculateAkumulasiCutiTahunan(
+            $formCuti->pegawai_id,
+            $formCuti->tanggal_mulai_cuti
+        );
 
         $remaining = $akumulasiTotal;
         $sisaN2 = max(0, $alokasiN2 - $remaining);
@@ -140,6 +133,101 @@ class FormCutiController extends Controller
             'sisaN1',
             'sisaN',
         ));
+    }
+
+    private function calculateAkumulasiCutiTahunan(?int $pegawaiId, $beforeDate = null): int
+    {
+        if (! $pegawaiId) {
+            return 0;
+        }
+
+        $query = SuratCuti::where('pegawai_id', $pegawaiId)
+            ->where('jenis_cuti', 'Cuti Tahunan')
+            ->whereNotNull('tanggal_mulai_cuti')
+            ->whereNotNull('tanggal_selesai_cuti');
+
+        if ($beforeDate) {
+            $query->where('tanggal_mulai_cuti', '<=', $beforeDate);
+        }
+
+        $suratCutis = $query->orderBy('tanggal_mulai_cuti')->get();
+
+        $formCutiQuery = FormCuti::where('pegawai_id', $pegawaiId)
+            ->where('jenis_cuti', 'Cuti Tahunan')
+            ->whereNotNull('tanggal_mulai_cuti')
+            ->whereNotNull('tanggal_selesai_cuti');
+
+        if ($beforeDate) {
+            $formCutiQuery->where('tanggal_mulai_cuti', '<=', $beforeDate);
+        }
+
+        $formCutis = $formCutiQuery->orderBy('tanggal_mulai_cuti')->get();
+
+        $suratRanges = $suratCutis->map(function ($sc) {
+            return [
+                Carbon::parse($sc->tanggal_mulai_cuti)->startOfDay(),
+                Carbon::parse($sc->tanggal_selesai_cuti)->startOfDay(),
+            ];
+        })->toArray();
+
+        $akumulasiTotal = 0;
+
+        foreach ($suratCutis as $sc) {
+            $akumulasiTotal += $this->calculateWorkingDays(
+                $sc->tanggal_mulai_cuti,
+                $sc->tanggal_selesai_cuti
+            );
+        }
+
+        foreach ($formCutis as $fc) {
+            $fcStart = Carbon::parse($fc->tanggal_mulai_cuti)->startOfDay();
+            $fcEnd = Carbon::parse($fc->tanggal_selesai_cuti)->startOfDay();
+
+            $overlaps = false;
+            foreach ($suratRanges as [$scStart, $scEnd]) {
+                if ($fcStart->lte($scEnd) && $fcEnd->gte($scStart)) {
+                    $overlaps = true;
+                    break;
+                }
+            }
+
+            if (! $overlaps) {
+                $akumulasiTotal += $this->calculateWorkingDays(
+                    $fc->tanggal_mulai_cuti,
+                    $fc->tanggal_selesai_cuti
+                );
+            }
+        }
+
+        return $akumulasiTotal;
+    }
+
+    private function calculateWorkingDays($mulai, $selesai): int
+    {
+        if (! $mulai || ! $selesai) {
+            return 0;
+        }
+
+        $start = Carbon::parse($mulai)->startOfDay();
+        $end = Carbon::parse($selesai)->startOfDay();
+
+        if ($end->lt($start)) {
+            [$start, $end] = [$end, $start];
+        }
+
+        $holidays = HariLibur::whereBetween('tanggal', [$start->toDateString(), $end->toDateString()])
+            ->pluck('tanggal')
+            ->toArray();
+
+        $days = 0;
+        for ($date = $start->copy(); $date->lte($end); $date->addDay()) {
+            if ($date->isWeekend() || in_array($date->toDateString(), $holidays)) {
+                continue;
+            }
+            $days++;
+        }
+
+        return $days;
     }
 
     private function calculateLeaveDays($mulai, $selesai): int
