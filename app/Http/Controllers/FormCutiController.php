@@ -141,10 +141,13 @@ class FormCutiController extends Controller
             return 0;
         }
 
+        $currentYear = Carbon::now()->year;
+
         $query = SuratCuti::where('pegawai_id', $pegawaiId)
             ->where('jenis_cuti', 'Cuti Tahunan')
             ->whereNotNull('tanggal_mulai_cuti')
-            ->whereNotNull('tanggal_selesai_cuti');
+            ->whereNotNull('tanggal_selesai_cuti')
+            ->whereYear('tanggal_mulai_cuti', $currentYear);
 
         if ($beforeDate) {
             $query->where('tanggal_mulai_cuti', '<=', $beforeDate);
@@ -155,7 +158,8 @@ class FormCutiController extends Controller
         $formCutiQuery = FormCuti::where('pegawai_id', $pegawaiId)
             ->where('jenis_cuti', 'Cuti Tahunan')
             ->whereNotNull('tanggal_mulai_cuti')
-            ->whereNotNull('tanggal_selesai_cuti');
+            ->whereNotNull('tanggal_selesai_cuti')
+            ->whereYear('tanggal_mulai_cuti', $currentYear);
 
         if ($beforeDate) {
             $formCutiQuery->where('tanggal_mulai_cuti', '<=', $beforeDate);

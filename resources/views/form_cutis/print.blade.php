@@ -191,11 +191,11 @@
       <td class="r-lbl">6. CUTI DILUAR TANGGUNGAN NEGARA</td>
       <td class="r-val">{!! $jenisCuti === 'Cuti di Luar Tanggungan Negara' ? '<strong>✓</strong>' : '-' !!}</td>
     </tr>
-    <tr>
+    {{-- <tr>
       <td colspan="3">Akumulasi Total Cuti Tahunan: {{ $akumulasiTotal }}</td>
       <td class="r-lbl">&nbsp;</td>
       <td class="r-val">&nbsp;</td>
-    </tr>
+    </tr> --}}
   </table>
 </div>
 
