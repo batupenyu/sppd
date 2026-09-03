@@ -76,7 +76,7 @@
                             ],
                             [
                                 'label' => 'Surat Khusus & Umum',
-                                'routes' => ['surat-pengantars.*', 'surat-rekomendasis.*', 'surat-resmis.*', 'surat-undangans.*', 'surat-pernyataans.*', 'surat-santunans.*', 'surat-mewakili.*', 'surat-aktif-mengajars.*', 'persetujuan-magangs.*'],
+                                'routes' => ['surat-pengantars.*', 'surat-rekomendasis.*', 'surat-resmis.*', 'surat-undangans.*', 'surat-pernyataans.*', 'surat-santunans.*', 'surat-mewakili.*', 'surat-aktif-mengajars.*', 'persetujuan-magangs.*', 'surat-bersedias.*'],
                                 'items' => [
                                     ['label' => 'Surat Pengantar', 'route' => 'surat-pengantars.index', 'routeName' => 'surat-pengantars.*'],
                                     ['label' => 'Surat Rekomendasi', 'route' => 'surat-rekomendasis.index', 'routeName' => 'surat-rekomendasis.*'],
@@ -87,6 +87,7 @@
                                     ['label' => 'Surat Mewakili', 'route' => 'surat-mewakili.index', 'routeName' => 'surat-mewakili.*'],
                                     ['label' => 'Surat Aktif Mengajar', 'route' => 'surat-aktif-mengajars.index', 'routeName' => 'surat-aktif-mengajars.*'],
                                     ['label' => 'Persetujuan Magang', 'route' => 'persetujuan-magangs.index', 'routeName' => 'persetujuan-magangs.*'],
+                                    ['label' => 'Surat Bersedia/Tidak ', 'route' => 'surat-bersedias.index', 'routeName' => 'surat-bersedias.*'],
                                 ],
                             ],
                             [

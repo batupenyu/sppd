@@ -15,6 +15,7 @@ use App\Http\Controllers\FormCutiController;
 use App\Http\Controllers\SuratDispensasiController;
 use App\Http\Controllers\PersetujuanMagangController;
 use App\Http\Controllers\SuratAktifMengajarController;
+use App\Http\Controllers\SuratBersediaController;
 use App\Http\Controllers\SuratKeteranganController;
 use App\Http\Controllers\SuratKp4Controller;
 use App\Http\Controllers\SuratKp4OldController;
@@ -189,3 +190,7 @@ Route::delete('surat-penarikan-siswas/{surat_penarikan_siswa}', [SuratPenarikanS
 Route::get('surat-penarikan-siswas/{surat_penarikan_siswa}/print', [SuratPenarikanSiswaController::class, 'print'])->name('surat-penarikan-siswas.print');
 Route::resource('hari-liburs', HariLiburController::class)
     ->except(['show']);
+Route::resource('surat-bersedias', SuratBersediaController::class)
+    ->only(['index', 'create', 'store', 'edit', 'update']);
+Route::delete('surat-bersedias/{surat_bersedia}', [SuratBersediaController::class, 'destroy'])->name('surat-bersedias.destroy');
+Route::get('surat-bersedias/{surat_bersedia}/print', [SuratBersediaController::class, 'print'])->name('surat-bersedias.print');

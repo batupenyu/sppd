@@ -51,6 +51,9 @@ class FormCutiController extends Controller
             $validated['tanggal_selesai_cuti'] ?? null
         );
 
+        $validated['plt_plh'] = $validated['plt_plh'] ?? null;
+        $validated['plt_plh_kepala_cabang'] = $validated['plt_plh_kepala_cabang'] ?? null;
+
         $formCuti = FormCuti::create($validated);
 
         return redirect()->route('form-cutis.print', $formCuti)
@@ -86,6 +89,9 @@ class FormCutiController extends Controller
             $validated['tanggal_mulai_cuti'] ?? null,
             $validated['tanggal_selesai_cuti'] ?? null
         );
+
+        $validated['plt_plh'] = $validated['plt_plh'] ?? null;
+        $validated['plt_plh_kepala_cabang'] = $validated['plt_plh_kepala_cabang'] ?? null;
 
         $formCuti->update($validated);
 
