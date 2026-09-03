@@ -129,18 +129,37 @@ class SuratCutiController extends Controller
         }
 
         $fmt = [self::class, 'formatTanggal'];
-
-        if ($mulai->isSameDay($selesai)) {
-            $days = 1;
-            $daysTerbilang = 'satu';
-
-            return 'selama '.$days.' ('.$daysTerbilang.') hari, yaitu tanggal '.$fmt($mulai, '%d %B %Y');
-        }
-
-        $days = abs($mulai->diffInDays($selesai)) + 1;
+        $days = $this->countWorkingDays($mulai, $selesai);
         $daysTerbilang = $this->terbilangHari($days);
 
-        return 'selama '.$days.' ('.$daysTerbilang.') hari, yaitu tanggal '.$fmt($mulai, '%d %B %Y').' sampai dengan tanggal '.$fmt($selesai, '%d %B %Y');
+        if ($mulai->isSameDay($selesai)) {
+            return 'selama '.$days.' ('.$daysTerbilang.') hari kerja, yaitu tanggal '.$fmt($mulai, '%d %B %Y');
+        }
+
+        return 'selama '.$days.' ('.$daysTerbilang.') hari kerja, yaitu tanggal '.$fmt($mulai, '%d %B %Y').' sampai dengan tanggal '.$fmt($selesai, '%d %B %Y');
+    }
+
+    private function countWorkingDays($mulai, $selesai): int
+    {
+        $start = Carbon::parse($mulai)->copy()->startOfDay();
+        $end = Carbon::parse($selesai)->copy()->startOfDay();
+
+        if ($end->lessThan($start)) {
+            [$start, $end] = [$end, $start];
+        }
+
+        $workingDays = 0;
+        $cursor = $start->copy();
+
+        while ($cursor->lessThanOrEqualTo($end)) {
+            $dayOfWeek = (int) $cursor->format('N');
+            if ($dayOfWeek !== 6 && $dayOfWeek !== 7) {
+                $workingDays++;
+            }
+            $cursor->addDay();
+        }
+
+        return $workingDays;
     }
 
     private function terbilangHari(int $n): string

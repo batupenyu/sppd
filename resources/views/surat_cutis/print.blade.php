@@ -185,7 +185,7 @@
             <div class="signature-col">
                 <p>
                     Mengetahui,<br />
-                    {{ $penandatangan->tugas_tambahan ?? ($penandatangan->jabatan ?? '') }}
+                    {{ $penandatangan->tugas_tambahan ?? ($penandatangan->jabatan ?? '') }} {{ $penandatangan->unit_kerja ?? '' }}
                 </p>
                 <br /><br />
                 <p>
